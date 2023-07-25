@@ -1,0 +1,6 @@
+vdss_vcn_display_name="OCI-SCCA-LZ-VDSS-VCN-IAD"
+vdss_cidr_block="192.168.0.0/24"
+vdss_dns_label="vdssvnc"
+vdms_vcn_display_name="OCI-SCCA-LZ-VDMS-VCN-IAD"
+vdms_cidr_block="192.168.1.0/24"
+vdms_dns_label="vdmsvnc"
