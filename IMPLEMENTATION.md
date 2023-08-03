@@ -24,7 +24,7 @@ Most of the initial resource limits a new tenancy comes with should be sufficien
 However, there are 2 resource limits that will need to be increased in order to deploy the landing zone: 
 
 1. Monitoring/Alarms:  This limit should be raised to minimum 60 above the current limit (deployment includes 48).
-2. Service Connector Hub/Service Connector Count:  This limit should be raised to a minimum of 5 
+2. Service Connector Hub/Service Connector Count:   This limit should be raised to minimum 5 above the current limit (deployment includes 5).
 
 Example to check the limits in tenancy:
 
