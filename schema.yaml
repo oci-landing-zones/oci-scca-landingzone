@@ -278,7 +278,7 @@ variables:
     visible: enable_logging_compartment
   enable_bucket_replication:
     type: boolean
-    description: "Enable to replicate buckets to secondary region."
+    description: "Enable to replicate buckets to secondary region. The bucket should exist in secondary region."
     default: false
   remote_tenancy_ocid:
     type: string
