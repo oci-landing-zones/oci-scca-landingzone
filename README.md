@@ -1,31 +1,40 @@
-# SCCA Landing Zone
+# OCI SCCA Landing Zone
 
-SCCA Landing Zone repo
+This repository contains the Landing Zone to deploy to the Oracle Cloud Infrastructure platform that supports the requirements of DISA's SCCA. This landing zone is assembled from modules and templates that users can use in their default configuration or fork this repo and customize for their own use cases.
 
-## Testing Locally
-install the dependencies in a virtual enviroment
-```bash
-python -m venv scca-venv
-. scca-venv/bin/activate
-pip install -r test/requirements.txt
-```
+## Oracle Enterprise Landing Zone Secure Cloud Computing Architecture (SCCA)
 
-run the tests
-```
-pytest -v -k terraform test
-```
+The Oracle SCCA Landing Zone deploys a secure architecture that supports DISA SCCA requirements. The root template for this landing zone is located at [templates/oci-scca-landingzone](./templates/oci-scca-landingzone). Users can use the guides below to get started with the SCCA Landing Zone.
+
+- [Architecture Guide](./templates/oci-scca-landingzone/Architecture_Guide.md)
+- [Implementation Guide](./templates/oci-scca-landingzone/IMPLEMENTATION.md)
+- [Configuration Guide](./templates/oci-scca-landingzone/CONFIGURATION.md)
+
+## Deploy Using Oracle Resource Manager
+1. Click to deploy the stack
+
+[![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?zipUrl=https://github.com/oracle-quickstart/oci-scca-landingzone/archive/refs/heads/master.zip)
+
+    If you aren't already signed in, when prompted, enter the tenancy and user credentials. Review and accept the terms and conditions.
 
 
-## Style
+2. Select the region where you want to deploy the stack.
+3. For Working directory, select the root folder.
+4. Follow the on-screen prompts and instructions to create the stack.
+5. After creating the stack, click Terraform Actions, and select Plan.
+6. Wait for the job to be completed, and review the plan.
+7. To make any changes, return to the Stack Details page, click Edit Stack, and make the required changes. Then, run the Plan action again.
+8. If no further changes are necessary, return to the Stack Details page, click Terraform Actions, and select Apply.
 
-### Locals
-* Locals exist to reduce duplication and preform computations and transformation on inputs. 
-* Name local vars after the module it is used by and each variable by the corresponding module input 
-* Minimize data in locals - it further abstracts and convolutes the flow. This means using module outputs directly in module call rather than copying them into locals (exception being if you are tranforming the output).
-* Default values that are not user inputs can be hardcoded into the module call.
-* Locals and module calls do not need to be generic or dynamic - you can hardcode and reference any value.
 
-### Modules
-- Modules are used to create lightweight abstractions, so that you can describe your infrastructure in terms of its architecture. Do not use modules as thin wrappers - put multiple resources in a modules to form a logical unit.
-- It is better to create nested structures in the locals and loop in the module call rather than looping in the module itself.
-- Nested resources are looped over in the module and require nested locals but this is still better than creating a seperate module for the single nested resource (eg. subnets)
+## The Team
+
+This repository is developed and supported by the Oracle OCI Landing Zones team.
+
+## How to Contribute
+
+Interested in contributing?  See our contribution [guidelines](CONTRIBUTING.md) for details.
+
+## License
+
+This repository and its contents are licensed under [UPL 1.0](https://opensource.org/licenses/UPL).
