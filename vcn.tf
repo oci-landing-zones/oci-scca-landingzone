@@ -260,7 +260,7 @@ module "vdss_sgw" {
 }
 
 module "network_firewall" {
-  source = "./modules/network-firewall"
+  source                = "./modules/network-firewall"
 
   compartment_id               = module.vdss_compartment.compartment_id
   network_firewall_subnet_id   = module.vdss_network.subnets[local.vdss_network.subnet_map["OCI-SCCA-LZ-VDSS-SUB2"].name]
@@ -438,7 +438,8 @@ module "vdms_load_balancer" {
 }
 
 module "vdms_vtap" {
-  source = "./modules/vtap"
+  count                       = var.is_vtap_enabled ? 1 : 0
+  source                      = "./modules/vtap"
 
   compartment_id              = module.vdms_compartment.compartment_id
   vtap_source_type            = local.vdms_vtap.vtap_source_type
