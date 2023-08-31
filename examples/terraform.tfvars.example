@@ -23,6 +23,7 @@ logging_compartment_name   = "OCI-SCCA-LZ-Logging"
 vdms_compartment_name  = "OCI-SCCA-LZ-VDMS"
 vdms_vcn_cidr_block    = "192.168.1.0/24"
 vdms_subnet_cidr_block = "192.168.1.0/24"
+#is_vtap_enabled        = false # To Disable VTAP Service
 
 # VDSS
 vdss_compartment_name      = "OCI-SCCA-LZ-VDSS"

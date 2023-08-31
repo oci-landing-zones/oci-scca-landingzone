@@ -27,3 +27,8 @@ variable "vdms_subnet_cidr_block" {
   type    = string
   default = "192.168.1.0/24"
 }
+
+variable "is_vtap_enabled" {
+  type    = bool
+  default = true
+}
