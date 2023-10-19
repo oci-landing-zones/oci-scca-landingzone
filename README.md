@@ -4,7 +4,7 @@ This repository contains the Landing Zone to deploy to the Oracle Cloud Infrastr
 
 ## Oracle Enterprise Landing Zone Secure Cloud Computing Architecture (SCCA)
 
-The Oracle SCCA Landing Zone deploys a secure architecture that supports DISA SCCA requirements. The root template for this landing zone is located at [oci-scca-landingzone](../oci-scca-landingzone). Users can use the guides below to get started with the SCCA Landing Zone.
+The Oracle SCCA Landing Zone deploys a secure architecture that supports DISA SCCA requirements. The root template for this landing zone is located at oci-scca-landingzone. Users can use the guides below to get started with the SCCA Landing Zone.
 
 - [Deployment Guide](./DEPLOYMENT.md)
 - [Implementation Guide](./IMPLEMENTATION.md)
