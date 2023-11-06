@@ -189,8 +189,8 @@ module "workload_load_balancer" {
 }
 
 module "workload_vtap" {
-  count                       = var.is_vtap_enabled ? 1 : 0
-  source                      = "./modules/vtap"
+  count  = var.is_vtap_enabled ? 1 : 0
+  source = "./modules/vtap"
 
   compartment_id              = module.vdms_compartment.compartment_id
   vtap_source_type            = local.workload_vtap.vtap_source_type

@@ -23,29 +23,27 @@ resource "oci_network_firewall_network_firewall" "network_firewall" {
 resource "oci_network_firewall_network_firewall_policy" "network_firewall_policy" {
   display_name   = var.network_firewall_policy_name
   compartment_id = var.compartment_id
-
-  dynamic "ip_address_lists" {
-    for_each = var.ip_address_lists
-    content {
-      ip_address_list_name  = ip_address_lists.key
-      ip_address_list_value = ip_address_lists.value
-    }
-  }
-
-  dynamic "security_rules" {
-    for_each = var.security_rules
-    content {
-      name   = security_rules.key
-      action = security_rules.value.security_rules_action
-      # inspection = security_rules.value.security_rules_inspection
-
-      condition {
-        applications = security_rules.value.security_rules_condition_applications
-        destinations = security_rules.value.security_rules_condition_destinations
-        sources      = security_rules.value.security_rules_condition_sources
-        urls         = security_rules.value.security_rules_condition_urls
-      }
-    }
-  }
-
 }
+
+resource "oci_network_firewall_network_firewall_policy_address_list" "network_firewall_policy_address_list" {
+  for_each                   = var.ip_address_lists
+  network_firewall_policy_id = var.network_firewall_policy_id
+  type                       = var.network_firewall_policy_address_list_type
+  name                       = each.key
+  addresses                  = each.value
+}
+
+resource "oci_network_firewall_network_firewall_policy_security_rule" "network_firewall_policy_security_rule" {
+  for_each = var.security_rules
+  name = each.key
+  action = each.value.security_rules_action
+  condition {
+    application = each.value.security_rules_condition_application
+    destination_address = each.value.security_rules_condition_destination_address
+    source_address      = each.value.security_rules_condition_source_address
+    service             = each.value.security_rules_condition_service
+    url         = each.value.security_rules_condition_url
+  }
+  network_firewall_policy_id = var.network_firewall_policy_id
+}
+

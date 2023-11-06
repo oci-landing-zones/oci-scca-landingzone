@@ -554,7 +554,7 @@ locals {
 }
 
 module "vdms_critical_alarms" {
-  source = "./modules/alarm"
+  source                           = "./modules/alarm"
   compartment_id                   = module.vdms_compartment.compartment_id
   notification_topic_id            = module.vdms_critical_topic.topic_id
   is_enabled                       = local.vdms_critical_alarms.is_enabled
@@ -562,11 +562,11 @@ module "vdms_critical_alarms" {
   pending_duration                 = local.vdms_critical_alarms.pending_duration
   metric_compartment_id_in_subtree = local.vdms_critical_alarms.metric_compartment_id_in_subtree
 
-  alarm_map                        = local.vdms_critical_alarms.alarm_map
+  alarm_map = local.vdms_critical_alarms.alarm_map
 }
 
 module "vdms_warning_alarms" {
-  source = "./modules/alarm"
+  source                           = "./modules/alarm"
   compartment_id                   = module.vdms_compartment.compartment_id
   notification_topic_id            = module.vdms_warning_topic.topic_id
   is_enabled                       = local.vdms_warning_alarms.is_enabled
@@ -574,11 +574,11 @@ module "vdms_warning_alarms" {
   pending_duration                 = local.vdms_warning_alarms.pending_duration
   metric_compartment_id_in_subtree = local.vdms_warning_alarms.metric_compartment_id_in_subtree
 
-  alarm_map                        = local.vdms_warning_alarms.alarm_map
+  alarm_map = local.vdms_warning_alarms.alarm_map
 }
 
 module "vdss_critical_alarms" {
-  source = "./modules/alarm"
+  source                           = "./modules/alarm"
   compartment_id                   = module.vdss_compartment.compartment_id
   notification_topic_id            = module.vdss_critical_topic.topic_id
   is_enabled                       = local.vdss_critical_alarms.is_enabled
@@ -586,11 +586,11 @@ module "vdss_critical_alarms" {
   pending_duration                 = local.vdss_critical_alarms.pending_duration
   metric_compartment_id_in_subtree = local.vdss_critical_alarms.metric_compartment_id_in_subtree
 
-  alarm_map                        = local.vdss_critical_alarms.alarm_map
+  alarm_map = local.vdss_critical_alarms.alarm_map
 }
 
 module "vdss_warning_alarms" {
-  source = "./modules/alarm"
+  source                           = "./modules/alarm"
   compartment_id                   = module.vdss_compartment.compartment_id
   notification_topic_id            = module.vdss_critical_topic.topic_id
   is_enabled                       = local.vdss_critical_alarms.is_enabled
@@ -598,7 +598,7 @@ module "vdss_warning_alarms" {
   pending_duration                 = local.vdss_critical_alarms.pending_duration
   metric_compartment_id_in_subtree = local.vdss_critical_alarms.metric_compartment_id_in_subtree
 
-  alarm_map                        = local.vdss_critical_alarms.alarm_map
+  alarm_map = local.vdss_critical_alarms.alarm_map
 }
 
 module "alarm_policy" {
