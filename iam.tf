@@ -27,6 +27,9 @@ module "identity_domain" {
   domain_replica_region     = var.secondary_region
   group_names               = local.identity_domain.group_names
   dynamic_groups            = local.identity_domain.dynamic_groups
+  providers = {
+    oci = oci.home_region
+  }
 }
 
 locals {
@@ -148,6 +151,10 @@ module "bucket_replication_policy" {
   policy_name      = local.bucket_replication_policy.name
   description      = local.bucket_replication_policy.description
   statements       = local.bucket_replication_policy.statements
+
+  providers = {
+    oci = oci.home_region
+  }
 }
 
 module "vault_policy" {
@@ -156,6 +163,10 @@ module "vault_policy" {
   policy_name      = local.vault_policy.name
   description      = local.vault_policy.description
   statements       = local.vault_policy.statements
+
+  providers = {
+    oci = oci.home_region
+  }
 }
 
 module "key_policy" {
@@ -165,6 +176,10 @@ module "key_policy" {
   description      = local.key_policy.description
   statements       = local.key_policy.statements
   depends_on       = [module.master_encryption_key]
+
+  providers = {
+    oci = oci.home_region
+  }
 }
 
 module "cloud_guard_policy" {
@@ -173,9 +188,11 @@ module "cloud_guard_policy" {
   policy_name      = local.cloud_guard_policy.name
   description      = local.cloud_guard_policy.description
   statements       = local.cloud_guard_policy.statements
-  depends_on = [
-    module.home_compartment
-  ]
+  depends_on = [module.home_compartment]
+
+  providers = {
+    oci = oci.home_region
+  }
 }
 
 module "vdss_policy" {
@@ -184,6 +201,10 @@ module "vdss_policy" {
   policy_name      = local.vdss_policy.name
   description      = local.vdss_policy.description
   statements       = local.vdss_policy.statements
+
+  providers = {
+    oci = oci.home_region
+  }
 }
 
 module "vdms_policy" {
@@ -192,6 +213,10 @@ module "vdms_policy" {
   policy_name      = local.vdms_policy.name
   description      = local.vdms_policy.description
   statements       = local.vdms_policy.statements
+
+  providers = {
+    oci = oci.home_region
+  }
 }
 
 module "workload_policy" {
@@ -200,6 +225,10 @@ module "workload_policy" {
   policy_name      = local.workload_policy.name
   description      = local.workload_policy.description
   statements       = local.workload_policy.statements
+
+  providers = {
+    oci = oci.home_region
+  }
 }
 
 module "remote_tenancy_policy" {
@@ -209,4 +238,8 @@ module "remote_tenancy_policy" {
   policy_name      = local.remote_tenancy_policy.name
   description      = local.remote_tenancy_policy.description
   statements       = local.remote_tenancy_policy.statements
+
+  providers = {
+    oci = oci.home_region
+  }
 }

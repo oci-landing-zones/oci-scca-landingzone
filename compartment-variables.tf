@@ -70,3 +70,10 @@ variable "enable_logging_compartment" {
   description = "Set to true to enable logging compartment, to false if you already had existing buckets in another tenancy"
   default     = true
 }
+
+variable "home_region_deployment" {
+  type        = bool
+  description = "Set to true if deploying in home region"
+  default     = true
+}
+

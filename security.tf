@@ -442,6 +442,10 @@ module "vss_policy" {
   policy_name      = local.vss_policy.name
   description      = local.vss_policy.description
   statements       = local.vss_policy.statements
+
+  providers = {
+    oci = oci.home_region
+  }
 }
 
 module "vss" { # WAS THE SPEC ASKING TO CREATE A VSS TARGET AS WELL?
@@ -490,6 +494,9 @@ module "osms_policy" {
   policy_name      = local.osms_policy.name
   description      = local.osms_policy.description
   statements       = local.osms_policy.statements
+  providers = {
+    oci = oci.home_region
+  }
 }
 
 module "osms_dg_policy" {
@@ -499,6 +506,10 @@ module "osms_dg_policy" {
   policy_name      = local.osms_dg_policy.name
   description      = local.osms_dg_policy.description
   statements       = local.osms_dg_policy.statements
+
+  providers = {
+    oci = oci.home_region
+  }
 }
 
 module "lb_access_log" {
