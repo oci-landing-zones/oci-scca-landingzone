@@ -38,3 +38,11 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_key_ocid"></a> [key\_ocid](#output\_key\_ocid) | The OCID of the key created |
+
+## License
+
+Copyright (c) 2022,2023 Oracle and/or its affiliates.
+
+Licensed under the Universal Permissive License (UPL), Version 1.0.
+
+See [LICENSE](./LICENSE) for more details.

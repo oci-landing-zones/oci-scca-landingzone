@@ -304,3 +304,11 @@ Each workload receives a small set of monitoring Alarms per workload as well as 
 On successful deployment of the Landing Zone, Terraform will output the following values:
 * [bastion\_ocid](VARIABLES.md#output\_bastion\_ocid) - The ID of the Bastion configured in the Workload network. 
 * [policy\_to\_add](VARIABLES.md#output\_policy\_to\_add) - If the Remote logging option is selected (see [Logging](#remote-logging-configuration)), this will contain the text of the policy the remote tenant will need to add to their tenancy to allow logging to their buckets from the Landing Zone. 
+
+## License
+
+Copyright (c) 2022,2023 Oracle and/or its affiliates.
+
+Licensed under the Universal Permissive License (UPL), Version 1.0.
+
+See [LICENSE](./LICENSE) for more details.

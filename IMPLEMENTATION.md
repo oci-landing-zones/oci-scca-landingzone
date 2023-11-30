@@ -202,3 +202,11 @@ In the Stack page use the appropriate buttons to plan/apply/destroy your stack.
 
 ### For more information
 - [Resource Manager Overview](https://docs.oracle.com/en-us/iaas/Content/ResourceManager/Concepts/resourcemanager.htm)
+
+## License
+
+Copyright (c) 2022,2023 Oracle and/or its affiliates.
+
+Licensed under the Universal Permissive License (UPL), Version 1.0.
+
+See [LICENSE](./LICENSE) for more details.

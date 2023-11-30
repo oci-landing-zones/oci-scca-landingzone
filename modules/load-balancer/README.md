@@ -46,3 +46,11 @@ No modules.
 |------|-------------|
 | <a name="output_lb_id"></a> [lb\_id](#output\_lb\_id) | The OCID of the load balancer created |
 | <a name="output_waf_id"></a> [waf\_id](#output\_waf\_id) | The OCID of the web app firewall |
+
+## License
+
+Copyright (c) 2022,2023 Oracle and/or its affiliates.
+
+Licensed under the Universal Permissive License (UPL), Version 1.0.
+
+See [LICENSE](./LICENSE) for more details.
