@@ -77,3 +77,8 @@ variable "home_region_deployment" {
   default     = true
 }
 
+variable "backup_home_compartment_ocid" {
+  type        = string
+  description = "OCID of the home compartment in the secondary region"
+  default     = ""
+}

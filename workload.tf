@@ -121,7 +121,7 @@ locals {
 module "workload_compartment" {
   source = "./modules/compartment"
 
-  compartment_parent_id     = module.home_compartment.compartment_id
+  compartment_parent_id     = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.backup_home_compartment_ocid
   compartment_name          = local.workload_compartment.name
   compartment_description   = local.workload_compartment.description
   enable_compartment_delete = var.enable_compartment_delete
@@ -192,7 +192,7 @@ module "workload_vtap" {
   count  = var.is_vtap_enabled ? 1 : 0
   source = "./modules/vtap"
 
-  compartment_id              = module.vdms_compartment.compartment_id
+  compartment_id              = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.backup_vdms_compartment_ocid
   vtap_source_type            = local.workload_vtap.vtap_source_type
   vtap_source_id              = module.workload_load_balancer.lb_id
   vcn_id                      = module.workload_network.vcn_id

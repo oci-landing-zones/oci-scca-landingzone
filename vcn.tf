@@ -94,7 +94,7 @@ locals {
 module "drg" {
   source = "./modules/drg"
 
-  compartment_id         = module.vdss_compartment.compartment_id
+  compartment_id         = module.vdss_compartment[0].compartment_id
   drg_display_name       = local.drg.drg_display_name
   drg_vcn_attachments    = local.drg.drg_vcn_attachments
   drg_route_table_map    = local.drg.drg_route_table_map
@@ -243,7 +243,7 @@ module "vdss_network" {
   source = "./modules/vcn"
 
   vcn_cidr_block           = var.vdss_vcn_cidr_block
-  compartment_id           = module.vdss_compartment.compartment_id
+  compartment_id           = module.vdss_compartment[0].compartment_id
   vcn_display_name         = local.vdss_network.name
   vcn_dns_label            = local.vdss_network.vcn_dns_label
   lockdown_default_seclist = local.vdss_network.lockdown_default_seclist
@@ -253,7 +253,7 @@ module "vdss_network" {
 module "vdss_sgw" {
   source = "./modules/vcn-gateways"
 
-  compartment_id           = module.vdss_compartment.compartment_id
+  compartment_id           = module.vdss_compartment[0].compartment_id
   service_id               = local.vdss_sgw.service_id
   sgw_display_name         = local.vdss_sgw.sgw_display_name
   route_table_display_name = local.vdss_sgw.route_table_display_name
@@ -264,7 +264,7 @@ module "vdss_sgw" {
 module "network_firewall" {
   source = "./modules/network-firewall"
 
-  compartment_id                            = module.vdss_compartment.compartment_id
+  compartment_id                            = module.vdss_compartment[0].compartment_id
   network_firewall_subnet_id                = module.vdss_network.subnets[local.vdss_network.subnet_map["OCI-SCCA-LZ-VDSS-SUB2"].name]
   network_firewall_name                     = local.network_firewall.network_firewall_name
   network_firewall_policy_name              = local.network_firewall.network_firewall_policy_name
@@ -277,7 +277,7 @@ module "network_firewall" {
 module "vdss_route_table_default" {
   source = "./modules/route-table"
 
-  compartment_id           = module.vdss_compartment.compartment_id
+  compartment_id           = module.vdss_compartment[0].compartment_id
   route_table_display_name = local.vdss_route_table_default.route_table_display_name
   is_default               = local.vdss_route_table_default.is_default
   route_rules              = local.vdss_route_table_default.route_rules
@@ -288,7 +288,7 @@ module "vdss_route_table_default" {
 module "vdss_route_table_ingress" {
   source = "./modules/route-table"
 
-  compartment_id           = module.vdss_compartment.compartment_id
+  compartment_id           = module.vdss_compartment[0].compartment_id
   route_table_display_name = local.vdss_route_table_ingress.route_table_display_name
   route_rules              = local.vdss_route_table_ingress.route_rules
   vcn_id                   = module.vdss_network.vcn_id
@@ -298,7 +298,7 @@ module "vdss_route_table_ingress" {
 module "vdss_route_table_sub1" {
   source = "./modules/route-table"
 
-  compartment_id           = module.vdss_compartment.compartment_id
+  compartment_id           = module.vdss_compartment[0].compartment_id
   route_table_display_name = local.vdss_route_table_sub1.route_table_display_name
   route_rules              = local.vdss_route_table_sub1.route_rules
   vcn_id                   = module.vdss_network.vcn_id
@@ -309,7 +309,7 @@ module "vdss_route_table_sub1" {
 module "vdss_route_table_sub2" {
   source = "./modules/route-table"
 
-  compartment_id           = module.vdss_compartment.compartment_id
+  compartment_id           = module.vdss_compartment[0].compartment_id
   route_table_display_name = local.vdss_route_table_sub2.route_table_display_name
   route_rules              = local.vdss_route_table_sub2.route_rules
   vcn_id                   = module.vdss_network.vcn_id
@@ -321,7 +321,7 @@ module "vdss_route_table_sub2" {
 module "vdss_load_balancer" {
   source = "./modules/load-balancer"
 
-  compartment_id             = module.vdss_compartment.compartment_id
+  compartment_id             = module.vdss_compartment[0].compartment_id
   load_balancer_display_name = local.vdss_load_balancer.lb_name
   load_balancer_subnet_ids   = [local.vdss_load_balancer.lb_subnet]
   load_balancer_is_private   = true
@@ -412,7 +412,7 @@ module "vdms_network" {
   source = "./modules/vcn"
 
   vcn_cidr_block           = var.vdms_vcn_cidr_block
-  compartment_id           = module.vdms_compartment.compartment_id
+  compartment_id           = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.backup_vdms_compartment_ocid
   vcn_display_name         = local.vdms_network.name
   vcn_dns_label            = local.vdms_network.vcn_dns_label
   lockdown_default_seclist = local.vdms_network.lockdown_default_seclist
@@ -422,7 +422,7 @@ module "vdms_network" {
 module "vdms_route_table_egress" {
   source = "./modules/route-table"
 
-  compartment_id           = module.vdms_compartment.compartment_id
+  compartment_id           = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.backup_vdms_compartment_ocid
   route_table_display_name = local.vdms_route_table_egress.route_table_display_name
   route_rules              = local.vdms_route_table_egress.route_rules
   vcn_id                   = module.vdms_network.vcn_id
@@ -433,7 +433,7 @@ module "vdms_route_table_egress" {
 module "vdms_load_balancer" {
   source = "./modules/load-balancer"
 
-  compartment_id             = module.vdms_compartment.compartment_id
+  compartment_id             = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.backup_vdms_compartment_ocid
   load_balancer_display_name = local.vdms_load_balancer.lb_name
   load_balancer_subnet_ids   = [local.vdms_load_balancer.lb_subnet]
   load_balancer_is_private   = true
@@ -445,7 +445,7 @@ module "vdms_vtap" {
   count  = var.is_vtap_enabled ? 1 : 0
   source = "./modules/vtap"
 
-  compartment_id              = module.vdms_compartment.compartment_id
+  compartment_id              = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.backup_vdms_compartment_ocid
   vtap_source_type            = local.vdms_vtap.vtap_source_type
   vtap_source_id              = module.vdms_load_balancer.lb_id
   vcn_id                      = module.vdms_network.vcn_id

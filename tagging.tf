@@ -15,7 +15,7 @@ locals {
     }
     tag_default_map = {
       architecture_tag = {
-        compartment_id      = module.home_compartment.compartment_id
+        compartment_id      = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.backup_home_compartment_ocid
         tag_definition_name = "architecture_tag"
         value               = "2.0.0"
         is_required         = false

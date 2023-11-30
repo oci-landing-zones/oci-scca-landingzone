@@ -70,3 +70,9 @@ variable "enable_workload_critical_alarm" {
   default     = false
   description = "Enable critical alarms in Workload compartment"
 }
+
+variable "backup_vdms_compartment_ocid" {
+  type        = string
+  description = "OCID of the vdms compartment in the secondary region"
+  default     = ""
+}
