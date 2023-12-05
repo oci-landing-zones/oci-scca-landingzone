@@ -45,7 +45,7 @@ module "vdms_compartment" {
 
   count = var.home_region_deployment ? 1 : 0
 
-  compartment_parent_id     = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.backup_home_compartment_ocid
+  compartment_parent_id     = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.secondary_home_compartment_ocid
   compartment_name          = local.vdms_compartment.name
   compartment_description   = local.vdms_compartment.description
   enable_compartment_delete = var.enable_compartment_delete
@@ -59,7 +59,7 @@ module "vdss_compartment" {
   source = "./modules/compartment"
 
   count                     = var.home_region_deployment ? 1 : 0
-  compartment_parent_id     = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.backup_home_compartment_ocid
+  compartment_parent_id     = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.secondary_home_compartment_ocid
   compartment_name          = local.vdss_compartment.name
   compartment_description   = local.vdss_compartment.description
   enable_compartment_delete = var.enable_compartment_delete
@@ -72,8 +72,8 @@ module "vdss_compartment" {
 module "logging_compartment" {
   source = "./modules/compartment"
 
-  count                     = var.enable_logging_compartment ? 1 : 0
-  compartment_parent_id     = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.backup_home_compartment_ocid
+  count                     = var.enable_logging_compartment && var.home_region_deployment ? 1 : 0
+  compartment_parent_id     = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.secondary_home_compartment_ocid
   compartment_name          = local.logging_compartment.name
   compartment_description   = local.logging_compartment.description
   enable_compartment_delete = var.enable_compartment_delete
@@ -86,7 +86,7 @@ module "logging_compartment" {
 module "backup_compartment" {
   source                    = "./modules/compartment"
   count                     = var.home_region_deployment ? 1 : 0
-  compartment_parent_id     = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.backup_home_compartment_ocid
+  compartment_parent_id     = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.secondary_home_compartment_ocid
   compartment_name          = local.backup_compartment.name
   compartment_description   = local.backup_compartment.description
   enable_compartment_delete = var.enable_compartment_delete

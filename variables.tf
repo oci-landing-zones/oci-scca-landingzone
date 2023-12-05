@@ -29,3 +29,9 @@ variable "api_private_key_path" {
   description = "The local path to the API private key"
   default     = ""
 }
+
+variable "home_region_deployment" {
+  type        = bool
+  description = "Set to true if deploying in home region"
+  default     = true
+}

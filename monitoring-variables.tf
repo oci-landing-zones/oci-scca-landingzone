@@ -80,3 +80,4 @@ variable "enable_vdms_critical_alarm" {
   description = "Enable critical alarms in VDMS compartment"
 }
 
+

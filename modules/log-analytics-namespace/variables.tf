@@ -16,3 +16,9 @@ variable "is_onboarded" {
 variable "resource_label" {
   type = string
 }
+
+variable "home_region_deployment" {
+  type        = bool
+  description = "Set to true if deploying in home region"
+  default     = true
+}

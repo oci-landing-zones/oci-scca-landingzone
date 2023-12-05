@@ -71,14 +71,32 @@ variable "enable_logging_compartment" {
   default     = true
 }
 
-variable "home_region_deployment" {
-  type        = bool
-  description = "Set to true if deploying in home region"
-  default     = true
-}
-
-variable "backup_home_compartment_ocid" {
+variable "secondary_home_compartment_ocid" {
   type        = string
   description = "OCID of the home compartment in the secondary region"
+  default     = ""
+}
+
+variable "secondary_vdss_compartment_ocid" {
+  type        = string
+  description = "OCID of the vdss compartment in the secondary region"
+  default     = ""
+}
+
+variable "secondary_vdms_compartment_ocid" {
+  type        = string
+  description = "OCID of the vdms compartment in the secondary region"
+  default     = ""
+}
+
+variable "secondary_workload_compartment_ocid" {
+  type        = string
+  description = "OCID of the workload compartment in the secondary region"
+  default     = ""
+}
+
+variable "secondary_logging_compartment_ocid" {
+  type        = string
+  description = "OCID of the workload compartment in the secondary region"
   default     = ""
 }
