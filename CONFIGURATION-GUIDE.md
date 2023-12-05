@@ -307,7 +307,7 @@ On successful deployment of the Landing Zone, Terraform will output the followin
 
 ## License
 
-Copyright (c) 2022,2023 Oracle and/or its affiliates.
+Copyright (c) 2023 Oracle and/or its affiliates.
 
 Licensed under the Universal Permissive License (UPL), Version 1.0.
 

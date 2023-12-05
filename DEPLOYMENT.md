@@ -72,7 +72,7 @@ Or you can select the select the stack manually through the console starting fro
 6. In Create in Compartment dropdown, select the compartment to store the Stack.
 7. In Terraform Version dropdown, make sure to select 1.0.x at least. Lower Terraform versions are not supported.
 
-After completing the Stack Creation Wizard, the subsequent step prompts for variables values. **For reference on the variable values read the [User Guide](USER-GUIDE.md).**
+After completing the Stack Creation Wizard, the subsequent step prompts for variables values. **For reference on the variable values read the [User Guide](./VARIABLES.md#inputs).**
 
 After filling in the required input variables, click next to review the stack values and create the stack.
 
@@ -83,7 +83,7 @@ From the Stack page, use the appropriate buttons to plan/apply/destroy your stac
 
 ## License
 
-Copyright (c) 2022,2023 Oracle and/or its affiliates.
+Copyright (c) 2023 Oracle and/or its affiliates.
 
 Licensed under the Universal Permissive License (UPL), Version 1.0.
 
