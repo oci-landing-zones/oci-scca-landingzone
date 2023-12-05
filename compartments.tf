@@ -27,9 +27,9 @@ locals {
 }
 
 module "home_compartment" {
+  source = "./modules/compartment"
 
   count                     = var.home_region_deployment ? 1 : 0
-  source                    = "./modules/compartment"
   compartment_parent_id     = var.tenancy_ocid
   compartment_name          = local.home_compartment.name
   compartment_description   = local.home_compartment.description
@@ -84,7 +84,8 @@ module "logging_compartment" {
 }
 
 module "backup_compartment" {
-  source                    = "./modules/compartment"
+  source = "./modules/compartment"
+
   count                     = var.home_region_deployment ? 1 : 0
   compartment_parent_id     = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.secondary_home_compartment_ocid
   compartment_name          = local.backup_compartment.name
