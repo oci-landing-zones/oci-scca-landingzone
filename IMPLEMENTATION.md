@@ -72,7 +72,7 @@ The subnet CIDR blocks should be non-overlapping, and within their respective ne
 
 ![Architecture](</images/SCCA-CA.png> "Architecture")
 
-This architecture diagram illustrates the resources SCCA LZ deployes and desription for the major resources is listed below. Please refer [CONFIGURATION-GUIDE Document](CONFIGURATION-GUIDE.md) for the details of most of the resources.
+This architecture diagram illustrates the resources SCCA LZ deploys and description for the major resources is listed below. Please refer [CONFIGURATION-GUIDE Document](CONFIGURATION-GUIDE.md) for the details of most of the resources.
 
 
 ## Compartment Structure
@@ -194,7 +194,7 @@ Or you can select the select the stack manually through the console starting fro
 6. In Create in Compartment dropdown, select the compartment to store the Stack.
 7. In Terraform Version dropdown, make sure to select 1.0.x at least. Lower Terraform versions are not supported.
 
-After completing the Stack Creation Wizard, the subsequent step prompts for variables values. **For reference on the variable values read the [User Guide](USER-GUIDE.md).**
+After completing the Stack Creation Wizard, the subsequent step prompts for variables values. **For reference on the variable values read the [User Guide](./VARIABLES.md#inputs).**
 
 After filling in the required input variables, click next to review the stack values and create the stack.
 
