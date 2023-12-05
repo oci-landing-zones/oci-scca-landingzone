@@ -36,7 +36,7 @@ resource "oci_cloud_guard_target" "cloud_guard_target" {
 
   target_responder_recipes {
     responder_recipe_id = data.oci_cloud_guard_responder_recipes.responder_recipe.responder_recipe_collection.0.items.0.id
- }
+  }
 
   depends_on = [oci_cloud_guard_cloud_guard_configuration.cloud_guard_configuration]
 }
