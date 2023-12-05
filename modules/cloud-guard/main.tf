@@ -27,10 +27,6 @@ resource "oci_cloud_guard_target" "cloud_guard_target" {
   }
 
   target_detector_recipes {
-    detector_recipe_id = data.oci_cloud_guard_detector_recipes.wlp.detector_recipe_collection.0.items.0.id
-  }
-
-  target_detector_recipes {
     detector_recipe_id = data.oci_cloud_guard_detector_recipes.activity_detector_recipe.detector_recipe_collection.0.items.0.id
   }
 

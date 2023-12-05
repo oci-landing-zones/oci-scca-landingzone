@@ -4,12 +4,6 @@ data "oci_cloud_guard_detector_recipes" "configuration_detector_recipe" {
   display_name   = var.configuration_detector_recipe_display_name
 }
 
-data "oci_cloud_guard_detector_recipes" "wlp" {
-  provider       = oci.home_region
-  compartment_id = var.tenancy_ocid
-  display_name   = "Internal Security Posture Workload Protection Detector Recipe"
-}
-
 data "oci_cloud_guard_detector_recipes" "activity_detector_recipe" {
   provider       = oci.home_region
   compartment_id = var.tenancy_ocid
