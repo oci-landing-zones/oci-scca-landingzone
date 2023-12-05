@@ -18,6 +18,16 @@ variable "network_firewall_policy_name" {
   description = "The name of network firewall policy"
 }
 
+variable "network_firewall_policy_address_list_type" {
+  type        = string
+  description = "The type of the address list, either IP or FQDN"
+}
+
+variable "network_firewall_policy_id" {
+  type        = string
+  description = "The OCID of the network firewall policy"
+}
+
 variable "ip_address_lists" {
   type        = map(any)
   description = "The list of ip address"
