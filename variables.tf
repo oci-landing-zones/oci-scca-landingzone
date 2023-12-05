@@ -32,6 +32,6 @@ variable "api_private_key_path" {
 
 variable "home_region_deployment" {
   type        = bool
-  description = "Set to true if deploying in home region"
+  description = "Set to true if deploying in home region, set to false for Backup Region Deployment"
   default     = true
 }
