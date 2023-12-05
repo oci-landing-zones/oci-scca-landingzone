@@ -70,4 +70,3 @@ variable "enable_workload_critical_alarm" {
   default     = false
   description = "Enable critical alarms in Workload compartment"
 }
-

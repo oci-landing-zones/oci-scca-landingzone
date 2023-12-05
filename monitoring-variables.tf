@@ -79,5 +79,3 @@ variable "enable_vdms_critical_alarm" {
   default     = false
   description = "Enable critical alarms in VDMS compartment"
 }
-
-

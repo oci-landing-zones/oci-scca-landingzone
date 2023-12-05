@@ -1,7 +1,7 @@
 locals {
   identity_domain = {
     domain_description        = "OCI SCCA Landing Zone Identity Domain"
-    domain_display_name       = "OCI-SCCA-LZ-Domain-${local.region_key[0]}-${var.resource_label}-1"
+    domain_display_name       = "OCI-SCCA-LZ-Domain-${local.region_key[0]}-${var.resource_label}"
     domain_license_type       = "premium"
     domain_is_hidden_on_login = false
 
@@ -28,9 +28,6 @@ module "identity_domain" {
   domain_replica_region     = var.secondary_region
   group_names               = local.identity_domain.group_names
   dynamic_groups            = local.identity_domain.dynamic_groups
-  providers = {
-    oci = oci.home_region
-  }
 }
 
 locals {
@@ -152,10 +149,6 @@ module "bucket_replication_policy" {
   policy_name      = local.bucket_replication_policy.name
   description      = local.bucket_replication_policy.description
   statements       = local.bucket_replication_policy.statements
-
-  providers = {
-    oci = oci.home_region
-  }
 }
 
 module "vault_policy" {
@@ -165,7 +158,6 @@ module "vault_policy" {
   policy_name      = local.vault_policy.name
   description      = local.vault_policy.description
   statements       = local.vault_policy.statements
-
 }
 
 module "key_policy" {
@@ -186,10 +178,6 @@ module "cloud_guard_policy" {
   description      = local.cloud_guard_policy.description
   statements       = local.cloud_guard_policy.statements
   depends_on       = [module.home_compartment[0]]
-
-  providers = {
-    oci = oci.home_region
-  }
 }
 
 module "vdss_policy" {
@@ -199,7 +187,6 @@ module "vdss_policy" {
   policy_name      = local.vdss_policy.name
   description      = local.vdss_policy.description
   statements       = local.vdss_policy.statements
-
 }
 
 module "vdms_policy" {
@@ -209,7 +196,6 @@ module "vdms_policy" {
   policy_name      = local.vdms_policy.name
   description      = local.vdms_policy.description
   statements       = local.vdms_policy.statements
-
 }
 
 module "workload_policy" {
@@ -219,16 +205,13 @@ module "workload_policy" {
   policy_name      = local.workload_policy.name
   description      = local.workload_policy.description
   statements       = local.workload_policy.statements
-
 }
 
 module "remote_tenancy_policy" {
-  #  count            = var.enable_logging_compartment ? 0 : 1
   count            = var.home_region_deployment && !var.enable_logging_compartment ? 1 : 0
   source           = "./modules/policies"
   compartment_ocid = var.tenancy_ocid
   policy_name      = local.remote_tenancy_policy.name
   description      = local.remote_tenancy_policy.description
   statements       = local.remote_tenancy_policy.statements
-
 }

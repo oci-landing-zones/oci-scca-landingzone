@@ -17,7 +17,3 @@ data "oci_events_rules" "event_rules" {
 data "oci_log_analytics_namespaces" "logging_analytics_namespaces" {
   compartment_id = var.tenancy_ocid
 }
-
-data "oci_identity_compartments" "compartments" {
-  compartment_id = var.secondary_home_compartment_ocid
-}
