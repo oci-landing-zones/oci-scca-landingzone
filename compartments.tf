@@ -71,7 +71,7 @@ module "vdss_compartment" {
 module "logging_compartment" {
   source = "./modules/compartment"
 
-  count                     = var.enable_logging_compartment && var.home_region_deployment ? 1 : 0
+  count                     = var.home_region_deployment && var.enable_logging_compartment ? 1 : 0
   compartment_parent_id     = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.secondary_home_compartment_ocid
   compartment_name          = local.logging_compartment.name
   compartment_description   = local.logging_compartment.description

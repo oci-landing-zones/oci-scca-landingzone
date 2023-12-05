@@ -131,7 +131,7 @@ module "vdss_warning_topic" {
 # -----------------------------------------------------------------------------
 locals {
   logging_analytics = {
-    is_onboarded = false // if namespace module runs and set to true onboards else offboards
+    is_onboarded = true // if namespace module runs and set to true onboards else offboards
   }
 
   logging_analytics_default_group = {
@@ -233,9 +233,6 @@ module "default_logging_analytics_policy" {
   policy_name      = local.default_logging_analytics_policy.name
   description      = local.default_logging_analytics_policy.description
   statements       = local.default_logging_analytics_policy.statements
-  providers = {
-    oci = oci.home_region
-  }
 }
 
 module "audit_logging_analytics_policy" {
@@ -245,9 +242,6 @@ module "audit_logging_analytics_policy" {
   policy_name      = local.audit_logging_analytics_policy.name
   description      = local.audit_logging_analytics_policy.description
   statements       = local.audit_logging_analytics_policy.statements
-  providers = {
-    oci = oci.home_region
-  }
 }
 
 module "default_logging_analytics_service_connector" {
@@ -617,7 +611,4 @@ module "alarm_policy" {
   policy_name      = local.alarm_policy.name
   description      = local.alarm_policy.description
   statements       = local.alarm_policy.statements
-  providers = {
-    oci = oci.home_region
-  }
 }

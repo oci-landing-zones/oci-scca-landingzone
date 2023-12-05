@@ -31,8 +31,6 @@ provider "oci" {
   fingerprint         = var.api_fingerprint
   private_key_path    = var.api_private_key_path
   region              = var.region
-  auth                = "SecurityToken"
-  config_file_profile = "boat-login"
 }
 
 provider "oci" {
@@ -42,8 +40,6 @@ provider "oci" {
   fingerprint         = var.api_fingerprint
   private_key_path    = var.api_private_key_path
   region              = local.home_region[0]
-  auth                = "SecurityToken"
-  config_file_profile = "boat-login"
 }
 
 provider "oci" {
@@ -53,6 +49,4 @@ provider "oci" {
   fingerprint         = var.api_fingerprint
   private_key_path    = var.api_private_key_path
   region              = var.secondary_region
-  auth                = "SecurityToken"
-  config_file_profile = "boat-login"
 }

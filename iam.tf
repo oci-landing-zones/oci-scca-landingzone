@@ -143,7 +143,7 @@ locals {
 }
 
 module "bucket_replication_policy" {
-  count            = var.enable_logging_compartment && var.home_region_deployment ? 1 : 0
+  count            = var.home_region_deployment && var.enable_logging_compartment ? 1 : 0
   source           = "./modules/policies"
   compartment_ocid = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.secondary_home_compartment_ocid
   policy_name      = local.bucket_replication_policy.name
@@ -177,7 +177,9 @@ module "cloud_guard_policy" {
   policy_name      = local.cloud_guard_policy.name
   description      = local.cloud_guard_policy.description
   statements       = local.cloud_guard_policy.statements
-  depends_on       = [module.home_compartment[0]]
+  depends_on = [
+    module.home_compartment[0]
+  ]
 }
 
 module "vdss_policy" {

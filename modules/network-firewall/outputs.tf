@@ -10,6 +10,6 @@ output "firewall_ip_id" {
 }
 
 output "firewall_policy_id" {
-  value = oci_network_firewall_network_firewall_policy.network_firewall_policy.id
+  value       = oci_network_firewall_network_firewall_policy.network_firewall_policy.id
   description = "The OCID of the network firewall policy"
 }

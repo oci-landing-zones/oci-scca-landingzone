@@ -297,7 +297,7 @@ module "master_encryption_key" {
   shape_length        = local.master_encryption_key.length
   protection_mode     = local.master_encryption_key.protection_mode
   management_endpoint = module.central_vault.management_endpoint
-  #  depends_on          = [module.cloud_guard]
+  depends_on          = [module.cloud_guard]
 }
 
 module "service_event_stream" {
@@ -387,29 +387,29 @@ module "service_connector_policy" {
   statements       = local.service_connector_policy.statements
 }
 
-#module "cloud_guard" {
-#  source = "./modules/cloud-guard"
-#
-#  tenancy_ocid                               = var.tenancy_ocid
-#  region                                     = var.region
-#  status                                     = local.cloud_guard.status
-#  compartment_id                             = var.cloud_guard_target_tenancy ? var.tenancy_ocid : var.home_region_deployment ? module.home_compartment[0].compartment_id : var.secondary_home_compartment_ocid
-#  display_name                               = local.cloud_guard.display_name
-#  target_resource_id                         = var.cloud_guard_target_tenancy ? var.tenancy_ocid : var.home_region_deployment ? module.home_compartment[0].compartment_id : var.secondary_home_compartment_ocid
-#  target_resource_type                       = local.cloud_guard.target_resource_type
-#  description                                = local.cloud_guard.description
-#  configuration_detector_recipe_display_name = local.cloud_guard.configuration_detector_recipe_display_name
-#  activity_detector_recipe_display_name      = local.cloud_guard.activity_detector_recipe_display_name
-#  threat_detector_recipe_display_name        = local.cloud_guard.threat_detector_recipe_display_name
-#  responder_recipe_display_name              = local.cloud_guard.responder_recipe_display_name
-#  depends_on = [
-#    module.cloud_guard_policy
-#  ]
-#
-#  providers = {
-#    oci.home_region = oci.home_region
-#  }
-#}
+module "cloud_guard" {
+  source = "./modules/cloud-guard"
+
+  tenancy_ocid                               = var.tenancy_ocid
+  region                                     = var.region
+  status                                     = local.cloud_guard.status
+  compartment_id                             = var.cloud_guard_target_tenancy ? var.tenancy_ocid : var.home_region_deployment ? module.home_compartment[0].compartment_id : var.secondary_home_compartment_ocid
+  display_name                               = local.cloud_guard.display_name
+  target_resource_id                         = var.cloud_guard_target_tenancy ? var.tenancy_ocid : var.home_region_deployment ? module.home_compartment[0].compartment_id : var.secondary_home_compartment_ocid
+  target_resource_type                       = local.cloud_guard.target_resource_type
+  description                                = local.cloud_guard.description
+  configuration_detector_recipe_display_name = local.cloud_guard.configuration_detector_recipe_display_name
+  activity_detector_recipe_display_name      = local.cloud_guard.activity_detector_recipe_display_name
+  threat_detector_recipe_display_name        = local.cloud_guard.threat_detector_recipe_display_name
+  responder_recipe_display_name              = local.cloud_guard.responder_recipe_display_name
+  depends_on = [
+    module.cloud_guard_policy
+  ]
+
+  providers = {
+    oci.home_region = oci.home_region
+  }
+}
 
 locals {
   vss_policy = {

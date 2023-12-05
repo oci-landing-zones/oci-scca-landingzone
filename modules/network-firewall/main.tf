@@ -9,7 +9,7 @@ terraform {
 }
 
 resource "time_sleep" "network_firewall_ip_delay" {
-  depends_on = [oci_network_firewall_network_firewall.network_firewall]
+  depends_on      = [oci_network_firewall_network_firewall.network_firewall]
   create_duration = "90s"
 }
 
@@ -35,15 +35,14 @@ resource "oci_network_firewall_network_firewall_policy_address_list" "network_fi
 
 resource "oci_network_firewall_network_firewall_policy_security_rule" "network_firewall_policy_security_rule" {
   for_each = var.security_rules
-  name = each.key
-  action = each.value.security_rules_action
+  name     = each.key
+  action   = each.value.security_rules_action
   condition {
-    application = each.value.security_rules_condition_application
+    application         = each.value.security_rules_condition_application
     destination_address = each.value.security_rules_condition_destination_address
     source_address      = each.value.security_rules_condition_source_address
     service             = each.value.security_rules_condition_service
-    url         = each.value.security_rules_condition_url
+    url                 = each.value.security_rules_condition_url
   }
   network_firewall_policy_id = var.network_firewall_policy_id
 }
-
