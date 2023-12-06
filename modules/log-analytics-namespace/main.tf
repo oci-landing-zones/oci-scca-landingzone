@@ -37,6 +37,7 @@ locals {
   }
 }
 resource "oci_identity_policy" "policy" {
+  count          = var.home_region_deployment ? 1 : 0
   compartment_id = var.tenancy_ocid
   description    = local.la_root_policy.description
   name           = local.la_root_policy.name

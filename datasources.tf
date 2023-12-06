@@ -12,7 +12,7 @@ data "oci_core_services" "all_oci_services" {
 }
 
 data "oci_events_rules" "event_rules" {
-  compartment_id = module.vdms_compartment.compartment_id
+  compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.secondary_vdms_compartment_ocid
   depends_on = [
     module.vdms_critical_topic,
     module.vdms_warning_topic,
