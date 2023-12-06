@@ -65,3 +65,11 @@
 |------|-------------|
 | <a name="output_bastion_ocid"></a> [bastion\_ocid](#output\_bastion\_ocid) | n/a |
 | <a name="output_policy_to_add"></a> [policy\_to\_add](#output\_policy\_to\_add) | n/a |
+
+## License
+
+Copyright (c) 2023 Oracle and/or its affiliates.
+
+Licensed under the Universal Permissive License (UPL), Version 1.0.
+
+See [LICENSE](./LICENSE) for more details.

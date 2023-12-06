@@ -42,8 +42,17 @@ No modules.
 
 ## Outputs
 
+
 | Name                                                                                           | Description                         |
 |------------------------------------------------------------------------------------------------|-------------------------------------|
 | <a name="output_firewall_id"></a> [firewall\_id](#output\_firewall\_id)                        | The OCID of network firewall        |
 | <a name="output_firewall_ip_id"></a> [firewall\_ip\_id](#output\_firewall\_ip\_id)             | The OCID of network firewall ip     |
 | <a name="output_firewall_policy_id"></a> [firewall\_policy\_id](#output\_firewall\_policy\_id) | The OCID of network firewall policy |
+
+## License
+
+Copyright (c) 2023 Oracle and/or its affiliates.
+
+Licensed under the Universal Permissive License (UPL), Version 1.0.
+
+See [LICENSE](../../LICENSE) for more details.

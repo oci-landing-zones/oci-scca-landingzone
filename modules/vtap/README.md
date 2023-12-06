@@ -60,3 +60,11 @@ No modules.
 | <a name="output_nlb_backend_set_name"></a> [nlb\_backend\_set\_name](#output\_nlb\_backend\_set\_name) | The name of the network load balancer backend set |
 | <a name="output_nlb_id"></a> [nlb\_id](#output\_nlb\_id) | The OCID of the network load balancer |
 | <a name="output_vtap_id"></a> [vtap\_id](#output\_vtap\_id) | The OCID of the vtap created |
+
+## License
+
+Copyright (c) 2023 Oracle and/or its affiliates.
+
+Licensed under the Universal Permissive License (UPL), Version 1.0.
+
+See [LICENSE](../../LICENSE) for more details.

@@ -7,7 +7,7 @@ This configuration guide will detail the required and available configurations n
 
 ## Prerequisites
 
-This landing zone is designed to be deployed to a tenancy owned by the individual Mission Owner. The user deploying the Landing Zone must be a member of the Administrators group for the tenancy. The tenancy must have the required Resource Limits and have the Logging Analytics feature turned on. Detailed information on these prerequisites, how to check that your tenancy meets them, and enable needed features can be found in the [Implementation Document](Implementation.md).
+This landing zone is designed to be deployed to a tenancy owned by the individual Mission Owner. The user deploying the Landing Zone must be a member of the Administrators group for the tenancy. The tenancy must have the required Resource Limits and have the Logging Analytics feature turned on. Detailed information on these prerequisites, how to check that your tenancy meets them, and enable needed features can be found in the [Implementation Document](./IMPLEMENTATION.md).
 
 ## What we deploy
 
@@ -304,3 +304,11 @@ Each workload receives a small set of monitoring Alarms per workload as well as 
 On successful deployment of the Landing Zone, Terraform will output the following values:
 * [bastion\_ocid](VARIABLES.md#output\_bastion\_ocid) - The ID of the Bastion configured in the Workload network. 
 * [policy\_to\_add](VARIABLES.md#output\_policy\_to\_add) - If the Remote logging option is selected (see [Logging](#remote-logging-configuration)), this will contain the text of the policy the remote tenant will need to add to their tenancy to allow logging to their buckets from the Landing Zone. 
+
+## License
+
+Copyright (c) 2023 Oracle and/or its affiliates.
+
+Licensed under the Universal Permissive License (UPL), Version 1.0.
+
+See [LICENSE](./LICENSE) for more details.

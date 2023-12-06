@@ -39,3 +39,11 @@ No modules.
 |------|-------------|
 | <a name="output_route_table_id"></a> [route\_table\_id](#output\_route\_table\_id) | The OCID of the route table |
 | <a name="output_sgw_id"></a> [sgw\_id](#output\_sgw\_id) | The OCID of the service gateway |
+
+## License
+
+Copyright (c) 2023 Oracle and/or its affiliates.
+
+Licensed under the Universal Permissive License (UPL), Version 1.0.
+
+See [LICENSE](../../LICENSE) for more details.
