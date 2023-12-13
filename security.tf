@@ -546,9 +546,6 @@ module "os_write_log" {
   log_source_service  = local.os_write_log.log_source_service
   log_source_type     = local.os_write_log.log_source_type
 
-  providers = {
-    oci = oci.home_region
-  }
   depends_on = [module.service_event_log_bucket]
 }
 
@@ -563,9 +560,6 @@ module "os_read_log" {
   log_source_service  = local.os_read_log.log_source_service
   log_source_type     = local.os_read_log.log_source_type
 
-  providers = {
-    oci = oci.home_region
-  }
   depends_on = [module.service_event_log_bucket]
 }
 
