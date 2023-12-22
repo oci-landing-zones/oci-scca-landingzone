@@ -13,6 +13,7 @@ data "oci_core_services" "all_oci_services" {
 
 data "oci_events_rules" "event_rules" {
   compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.secondary_vdms_compartment_ocid
+  display_name = "All events in ${var.vdms_compartment_name}-${local.region_key[0]}-${var.resource_label}"
   depends_on = [
     module.vdms_critical_topic,
     module.vdms_warning_topic,
