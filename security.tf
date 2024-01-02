@@ -302,7 +302,7 @@ module "master_encryption_key" {
   shape_length        = local.master_encryption_key.length
   protection_mode     = local.master_encryption_key.protection_mode
   management_endpoint = module.central_vault.management_endpoint
-  depends_on          = [module.cloud_guard]
+#  depends_on          = [module.cloud_guard]
 }
 
 module "service_event_stream" {
@@ -330,8 +330,8 @@ module "default_log_service_connector" {
   log_group_id          = module.default_log_group.log_group_id
   target_bucket         = local.default_log_service_connector.target_bucket
   target_namespace      = local.default_log_service_connector.target_namespace
-  # Service connector needs at least one log on the log group, or it errors. 
-  # Also it takes time for it to recognize this. 
+  # Service connector needs at least one log on the log group, or it errors.
+  # Also it takes time for it to recognize this.
   depends_on = [
     time_sleep.first_log_delay
   ]
@@ -391,30 +391,30 @@ module "service_connector_policy" {
   description      = local.service_connector_policy.description
   statements       = local.service_connector_policy.statements
 }
-
-module "cloud_guard" {
-  source = "./modules/cloud-guard"
-
-  tenancy_ocid                               = var.tenancy_ocid
-  region                                     = var.region
-  status                                     = local.cloud_guard.status
-  compartment_id                             = var.cloud_guard_target_tenancy ? var.tenancy_ocid : var.home_region_deployment ? module.home_compartment[0].compartment_id : var.secondary_home_compartment_ocid
-  display_name                               = local.cloud_guard.display_name
-  target_resource_id                         = var.cloud_guard_target_tenancy ? var.tenancy_ocid : var.home_region_deployment ? module.home_compartment[0].compartment_id : var.secondary_home_compartment_ocid
-  target_resource_type                       = local.cloud_guard.target_resource_type
-  description                                = local.cloud_guard.description
-  configuration_detector_recipe_display_name = local.cloud_guard.configuration_detector_recipe_display_name
-  activity_detector_recipe_display_name      = local.cloud_guard.activity_detector_recipe_display_name
-  threat_detector_recipe_display_name        = local.cloud_guard.threat_detector_recipe_display_name
-  responder_recipe_display_name              = local.cloud_guard.responder_recipe_display_name
-  depends_on = [
-    module.cloud_guard_policy
-  ]
-
-  providers = {
-    oci.home_region = oci.home_region
-  }
-}
+#
+#module "cloud_guard" {
+#  source = "./modules/cloud-guard"
+#
+#  tenancy_ocid                               = var.tenancy_ocid
+#  region                                     = var.region
+#  status                                     = local.cloud_guard.status
+#  compartment_id                             = var.cloud_guard_target_tenancy ? var.tenancy_ocid : var.home_region_deployment ? module.home_compartment[0].compartment_id : var.secondary_home_compartment_ocid
+#  display_name                               = local.cloud_guard.display_name
+#  target_resource_id                         = var.cloud_guard_target_tenancy ? var.tenancy_ocid : var.home_region_deployment ? module.home_compartment[0].compartment_id : var.secondary_home_compartment_ocid
+#  target_resource_type                       = local.cloud_guard.target_resource_type
+#  description                                = local.cloud_guard.description
+#  configuration_detector_recipe_display_name = local.cloud_guard.configuration_detector_recipe_display_name
+#  activity_detector_recipe_display_name      = local.cloud_guard.activity_detector_recipe_display_name
+#  threat_detector_recipe_display_name        = local.cloud_guard.threat_detector_recipe_display_name
+#  responder_recipe_display_name              = local.cloud_guard.responder_recipe_display_name
+#  depends_on = [
+#    module.cloud_guard_policy
+#  ]
+#
+#  providers = {
+#    oci.home_region = oci.home_region
+#  }
+#}
 
 locals {
   vss_policy = {
@@ -597,6 +597,8 @@ module "event_log" {
   log_source_resource = local.event_log.log_source_resource
   log_source_service  = local.event_log.log_source_service
   log_source_type     = local.event_log.log_source_type
+
+  depends_on = [module.service_event_stream]
 }
 
 resource "time_sleep" "first_log_delay" {
