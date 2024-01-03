@@ -7,3 +7,7 @@ output "stream_id" {
   value       = oci_streaming_stream.stream.id
   description = "The OCID of the stream created"
 }
+
+output "event_rule_id" {
+  value = oci_events_rule.rule.id
+}
