@@ -23,6 +23,10 @@ resource "oci_network_firewall_network_firewall" "network_firewall" {
   network_firewall_policy_id = oci_network_firewall_network_firewall_policy.network_firewall_policy.id
   subnet_id                  = var.network_firewall_subnet_id
   display_name               = var.network_firewall_name
+
+  depends_on = [oci_network_firewall_network_firewall_policy.network_firewall_policy,
+    oci_network_firewall_network_firewall_policy_address_list.network_firewall_policy_address_list,
+    oci_network_firewall_network_firewall_policy_security_rule.network_firewall_policy_security_rule]
 }
 
 resource "oci_network_firewall_network_firewall_policy" "network_firewall_policy" {
