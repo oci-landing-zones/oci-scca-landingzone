@@ -134,7 +134,7 @@ locals {
     log_display_name    = "OCI-SCCA-LZ-EVENT-LOG-${var.resource_label}"
     log_type            = "SERVICE"
     log_source_category = "ruleexecutionlog"
-    log_source_resource = data.oci_events_rules.event_rules.rules[0].id
+    log_source_resource = module.service_event_stream.event_rule_id
     log_source_service  = "cloudevents"
     log_source_type     = "OCISERVICE"
   }
