@@ -146,20 +146,18 @@ locals {
   }
 
   network_firewall = {
-    network_firewall_name                     = "network-firewall"
-    network_firewall_policy_name              = "network-firewall-policy"
-    network_firewall_policy_address_list_type = "IP"
+    network_firewall_name        = "network-firewall"
+    network_firewall_policy_name = "network-firewall-policy"
     ip_address_lists = {
       "vcn-ips" = [var.vdss_vcn_cidr_block]
     }
     security_rules = {
       "reject-all-rule" = {
-        security_rules_action                        = "REJECT"
-        security_rules_condition_application         = []
-        security_rules_condition_destination_address = []
-        security_rules_condition_source_address      = []
-        security_rules_condition_service             = []
-        security_rules_condition_url                 = []
+        security_rules_action                 = "REJECT"
+        security_rules_condition_applications = []
+        security_rules_condition_destinations = []
+        security_rules_condition_sources      = []
+        security_rules_condition_urls         = []
       }
     }
   }
@@ -269,14 +267,12 @@ module "vdss_sgw" {
 module "network_firewall" {
   source = "./modules/network-firewall"
 
-  compartment_id                            = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.secondary_vdss_compartment_ocid
-  network_firewall_subnet_id                = module.vdss_network.subnets[local.vdss_network.subnet_map["OCI-SCCA-LZ-VDSS-SUB2"].name]
-  network_firewall_name                     = local.network_firewall.network_firewall_name
-  network_firewall_policy_name              = local.network_firewall.network_firewall_policy_name
-  ip_address_lists                          = local.network_firewall.ip_address_lists
-  network_firewall_policy_address_list_type = local.network_firewall.network_firewall_policy_address_list_type
-  security_rules                            = local.network_firewall.security_rules
-  network_firewall_policy_id                = module.network_firewall.firewall_policy_id
+  compartment_id               = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.secondary_vdss_compartment_ocid
+  network_firewall_subnet_id   = module.vdss_network.subnets[local.vdss_network.subnet_map["OCI-SCCA-LZ-VDSS-SUB2"].name]
+  network_firewall_name        = local.network_firewall.network_firewall_name
+  network_firewall_policy_name = local.network_firewall.network_firewall_policy_name
+  ip_address_lists             = local.network_firewall.ip_address_lists
+  security_rules               = local.network_firewall.security_rules
 }
 
 module "vdss_route_table_default" {

@@ -9,7 +9,7 @@ terraform {
   required_providers {
     oci = {
       source  = "oracle/oci"
-      version = "5.19.0" # November 2023 Release
+      version = "4.96.0" # October 05, 2022 Release
     }
   }
 }
@@ -31,27 +31,27 @@ locals {
 # Provider blocks for home region and alternate region(s)
 # -----------------------------------------------------------------------------
 provider "oci" {
-  tenancy_ocid        = var.tenancy_ocid
-  user_ocid           = var.current_user_ocid
-  fingerprint         = var.api_fingerprint
-  private_key_path    = var.api_private_key_path
-  region              = var.region
+  tenancy_ocid     = var.tenancy_ocid
+  user_ocid        = var.current_user_ocid
+  fingerprint      = var.api_fingerprint
+  private_key_path = var.api_private_key_path
+  region           = var.region
 }
 
 provider "oci" {
-  alias               = "home_region"
-  tenancy_ocid        = var.tenancy_ocid
-  user_ocid           = var.current_user_ocid
-  fingerprint         = var.api_fingerprint
-  private_key_path    = var.api_private_key_path
-  region              = local.home_region[0]
+  alias            = "home_region"
+  tenancy_ocid     = var.tenancy_ocid
+  user_ocid        = var.current_user_ocid
+  fingerprint      = var.api_fingerprint
+  private_key_path = var.api_private_key_path
+  region           = local.home_region[0]
 }
 
 provider "oci" {
-  alias               = "secondary_region"
-  tenancy_ocid        = var.tenancy_ocid
-  user_ocid           = var.current_user_ocid
-  fingerprint         = var.api_fingerprint
-  private_key_path    = var.api_private_key_path
-  region              = var.secondary_region
+  alias            = "secondary_region"
+  tenancy_ocid     = var.tenancy_ocid
+  user_ocid        = var.current_user_ocid
+  fingerprint      = var.api_fingerprint
+  private_key_path = var.api_private_key_path
+  region           = var.secondary_region
 }
