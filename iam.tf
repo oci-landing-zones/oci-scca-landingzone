@@ -154,6 +154,9 @@ module "bucket_replication_policy" {
   policy_name      = local.bucket_replication_policy.name
   description      = local.bucket_replication_policy.description
   statements       = local.bucket_replication_policy.statements
+  depends_on = [
+    module.logging_compartment[0]
+  ]
 }
 
 module "vault_policy" {
