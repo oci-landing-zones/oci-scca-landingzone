@@ -309,13 +309,13 @@ If the [home_region_deployment](VARIABLES.md#input_home_region_deployment) varia
 
 To deploy to a non-home region using the Terraform CLI, follow steps 1-3 in the [Implementation Guide](IMPLEMENTATION.md). Next, create a separate folder outside the Landing Zone root directory named home_region, and copy the terraform.tfstate, terraform.tfstate.backup, and terraform.tfvars files from the previous home region deployment into that folder. If you wish to make any future stack changes in the home region, you can move the contents of the home_region folder back into the Landing Zone root directory.
 
-Delete the terraform.tfstate and terraform.tfstate.backup in the current Landing Zone directory, ensuring the terraform.tfvars file is still remaining. In the terraform.tfvars file, set **home_region_deployment** to `false` and set **region** to the current, non-home region you are intending to deploy to. This is often the same region as the [secondary_region](VARIABLES.md#input_secondary_region)
+Delete the terraform.tfstate and terraform.tfstate.backup in the current Landing Zone directory, ensuring the terraform.tfvars file is still remaining. In the terraform.tfvars file, set **home_region_deployment** to `false` and set **region** to the current, non-home region you are intending to deploy to. This is often the same region as the [secondary_region](VARIABLES.md#input_secondary_region).
 
-Ensure you have access to the OCI Console, and log into it. Navigate to the Compartments section by searching "Compartments" in the top search bar. Find the compartment you previously deployed named "OCI-SCCA-LZ-Home" with your resource_label appended to it, and click on it.
+Next, ensure you have access to the OCI Console, and log into it. Navigate to the Compartments section by searching "Compartments" in the top search bar. Find the compartment you previously deployed named "OCI-SCCA-LZ-Home" with your resource_label appended to it, and click on it.
 
 For each compartment, you must copy its OCID value into its corresponding multi-region compartment OCID variable in the terraform.tfvars file. Follow the remaining steps listed in the [Implementation Guide](IMPLEMENTATION.md).
 
-To deploy to a non-home region using Resource Manager, follow the instructions in the [Implementation Guide](IMPLEMENTATION.md). 
+To deploy to a non-home region using Resource Manager, follow the instructions in the [Implementation Guide](IMPLEMENTATION.md). When the startup wizard prompts for Multi-Region variables, set **home_region_deployment** to `false` and set **region** to the current, non-home region you are intending to deploy to. This is often the same region as the [secondary_region](VARIABLES.md#input_secondary_region). In addition, copy the compartment OCID values for each compartment into its corresponding configuration variable. 
 
 #### Multi-Region configurations
 * [multi_region_home_compartment_ocid](VARIABLES.md#input_multi_region_home_compartment_ocid) - OCID of the home compartment created in home region for multi-region deployment.
