@@ -1,7 +1,7 @@
 title: SCCA Landing Zone
 description: SCCA Secure Landing Zone developed by OCI
 schemaVersion: 1.1.0
-version: "0.1.4"
+version: "1.1.0"
 locale: en
 variableGroups:
   - title: Provider Variables
@@ -13,6 +13,15 @@ variableGroups:
       - secondary_region
       - tenancy_ocid
       - current_user_ocid
+  - title: Multi-Region Variables
+    visible: true
+    variables:
+      - home_region_deployment
+      - multi_region_home_compartment_ocid
+      - multi_region_logging_compartment_ocid
+      - multi_region_vdss_compartment_ocid
+      - multi_region_vdms_compartment_ocid
+      - multi_region_workload_compartment_ocid
   - title: Compartment Variables
     visible: true
     variables:
@@ -115,6 +124,34 @@ variables:
     type: string
     description: OCID of the current user
     title: Current User OCID
+
+  #Multi-Region Variables
+  home_region_deployment:
+    type: bool
+    description: Set to true if deploying in home region, set to false for Backup Region Deployment
+    default: "True"
+    title: Home Region Deployment
+  multi_region_home_compartment_ocid:
+    type: string
+    description: OCID of the home compartment created in home region for multi-region deployment
+    title: Home Compartment OCID for Multi-Region
+  multi_region_logging_compartment_ocid:
+    type: string
+    description: OCID of the logging compartment created in home region for multi-region deployment
+    title: Logging Compartment OCID for Multi-Region
+  multi_region_vdss_compartment_ocid:
+    type: string
+    description: OCID of the VDSS compartment created in home region for multi-region deployment
+    title: VDSS Compartment OCID for Multi-Region
+  multi_region_vdms_compartment_ocid:
+    type: string
+    description: OCID of the VDMS compartment created in home region for multi-region deployment
+    title: VDMS Compartment OCID for Multi-Region
+  multi_region_workload_compartment_ocid:
+    type: string
+    description: OCID of the workload compartment created in home region for multi-region deployment
+    title: Workload Compartment OCID for Multi-Region
+
 
   #Compartment variables
   enable_logging_compartment:

@@ -20,7 +20,7 @@ locals {
     }
     tag_default_map = {
       architecture_tag = {
-        compartment_id      = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.secondary_home_compartment_ocid
+        compartment_id      = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.multi_region_home_compartment_ocid
         tag_definition_name = "architecture_tag"
         value               = "2.0.0"
         is_required         = false
