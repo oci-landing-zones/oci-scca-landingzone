@@ -300,7 +300,7 @@ Each workload receives a small set of monitoring Alarms per workload as well as 
 * [enable_workload_warning_alarm](VARIABLES.md#input_enable_workload_warning_alarm) - This enables all workload warning alarms on deployment of LZ. (Boolean) Default `false`
 * [enable_workload_critical_alarm](VARIABLES.md#input_enable_workload_critical_alarm) - This enables all workload critical alarms on deployment of LZ. (Boolean) Default `false`
 
-## Multi-R[compartments.tf](compartments.tf)egion
+## Multi-Region
 The Landing Zone can be deployed in a non-home region as long as there has already been a successful Landing Zone deployment in the home region and the non-home region is a designated paired region with the home region.
 
 This deployment can be controlled using the [home_region_deployment](VARIABLES.md#input_home_region_deployment) variable. This variable is set to `true` by default, which deploys all standard Landing Zone compartments and resources in the home region.
