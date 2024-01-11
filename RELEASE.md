@@ -17,7 +17,6 @@
 - Added OC2 Realm.
 
 ## v1.1.0 - 01/19/2024
-- Added OC3 Realm.
 - Added support for non-home region SCCA LZ deployment after existing home region SCCA LZ deployment for paired regions. Instructions are included in Configuration Guide.
 
 
