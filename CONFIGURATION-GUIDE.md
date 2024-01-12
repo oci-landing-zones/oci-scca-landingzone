@@ -310,7 +310,7 @@ If the [home_region_deployment](VARIABLES.md#input_home_region_deployment) varia
 To deploy to a non-home region using the Terraform CLI, follow steps 1-3 in the [Implementation Guide](IMPLEMENTATION.md) to create a new Landing Zone stack.
 
 In the terraform.tfvars file, set **home_region_deployment** to `false` and set **region** to the current, non-home region you are intending to deploy to. This is often the same region as the [secondary_region](VARIABLES.md#input_secondary_region).
-s
+
 Next, ensure you have access to the OCI Console, and log into it. Navigate to the Compartments section by searching "Compartments" in the top search bar. Find the compartment you previously deployed named "OCI-SCCA-LZ-Home" with your resource_label appended to it, and click on it.
 
 For each compartment, you must copy its OCID value into its corresponding multi-region compartment OCID variable in the terraform.tfvars file. Follow the remaining steps listed in the [Implementation Guide](IMPLEMENTATION.md).
