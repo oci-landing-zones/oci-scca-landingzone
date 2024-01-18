@@ -302,7 +302,7 @@ module "master_encryption_key" {
   shape_length        = local.master_encryption_key.length
   protection_mode     = local.master_encryption_key.protection_mode
   management_endpoint = module.central_vault.management_endpoint
-  depends_on          = [module.central_vault, module.cloud_guard[0]]
+  depends_on          = [module.central_vault]
 }
 
 module "service_event_stream" {
