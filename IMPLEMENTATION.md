@@ -1,6 +1,7 @@
 # Secure Landing Zone Implementation Guide
 
 ## Prerequisites
+
 ---
 ## User
 
@@ -68,14 +69,18 @@ CIDR Blocks will also need to be defined for the following Virtual Cloud Network
 These network CIDR blocks should be non-overlapping, and should not conflict with any on-premises network you may plan to connect with (e.g. with FastConnect)
 The subnet CIDR blocks should be non-overlapping, and within their respective network blocks. 
 
+## Multi-Region
+For information about configuring multi-region and non-home region deployment in paired regions, please refer to the Multi-Region section in the [CONFIGURATION-GUIDE Document](CONFIGURATION-GUIDE.md).
+
 ## SCCA Landing Zone Architecture
 
 ![Architecture](</images/SCCA-CA.png> "Architecture")
 
-This architecture diagram illustrates the resources SCCA LZ deploys and description for the major resources is listed below. Please refer [CONFIGURATION-GUIDE Document](CONFIGURATION-GUIDE.md) for the details of most of the resources.
+This architecture diagram illustrates the resources SCCA LZ deploys and description for the major resources is listed below. Please refer to [CONFIGURATION-GUIDE Document](CONFIGURATION-GUIDE.md) for the details of most of the resources.
 
 
 ## Compartment Structure
+
 ---
 For organization and access control purposes, resources created by the Secure Landing Zone are grouped together logically using OCI's Compartments feature.  These compartments are organized as follows:
 * **Home Compartment**: Named according to user selection. All resources created by the Secure Landing Zone are created within this compartment, or sub-compartments within it. 
@@ -86,6 +91,7 @@ For organization and access control purposes, resources created by the Secure La
     * **TF-Comfig Backup Compartment**: This will contain a single Object Storage bucket created in a *different* region from the one the Landing Zone was deployed in. Once the Landing Zone has been created through Terraform, a script will be available to upload the Terraform state file to this bucket for geographical redundancy of the Landing Zone's configuration. 
 
 ## Networking Structure
+
 ---
 For security, and flexibility purposes, the Secure Landing Zone configures the deployed networks in a "Hub and Spoke" model.  This consists of multiple, separate Virtual Cloud Networks (VCN's) connected together. 
 There is a a "Hub" network (named "OCI-SCCA-LZ-VDSS-VCN-*region*") containing a Dynamic Routing Gateway (DRG), which acts as the central router for all traffic, and a Network Firewall. Connected off of the DRG are multiple "Spoke" networks for workloads, management resources, etc.  All traffic into or out of any of the "Spoke" networks is routed through the Network Firewall for security purposes. This includes traffic to and from other Oracle Cloud services, such as Object Storage. 
@@ -135,6 +141,7 @@ For more information on VTAPs see: https://blogs.oracle.com/cloud-infrastructure
 
 ## Identity Structure
 
+---
 For control over users and user groups, a federatable Identity Domain is created in the **VDMS Compartment**. This Domain supports x509. To do so, the user deploying the landing zone will need to add the x509 Identity Provider (IdP) to the Domain and set up federation after the Landing Zone has deployed. 
 
 The Landing Zone also creates 3 User Groups, meant for subcomponent administrators. 
@@ -147,6 +154,7 @@ They are:
 The landing zone deploys policies that will grant administrative priviledges to members of each of those groups over resources in their respective compartments. 
 
 ## Workloads
+
 ---
 The landing zone will set up one initial workload configuration. In the future, a separate Terraform stack will be available to easily add additional workloads to a deployed Secure Landing Zone.
 
@@ -155,6 +163,7 @@ Note that Workload compartments and networks all contain a user provided *worklo
 ## Deployment of SCCA-LZ
 
 ## How to Deploy
+
 ---
 The Secure Landing Zone can be launched through Oracle Resource Manager or from the Terraform CLI.
 

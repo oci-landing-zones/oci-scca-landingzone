@@ -11,6 +11,14 @@ secondary_region     = ""
 tenancy_ocid         = ""
 current_user_ocid    = ""
 
+# MULTI-REGION DEPLOYMENT
+home_region_deployment = true
+multi_region_home_compartment_ocid     = ""
+multi_region_logging_compartment_ocid  = ""
+multi_region_vdms_compartment_ocid     = ""
+multi_region_vdss_compartment_ocid     = ""
+multi_region_workload_compartment_ocid = ""
+
 # COMPARTMENT 
 resource_label            = ""
 enable_compartment_delete = true

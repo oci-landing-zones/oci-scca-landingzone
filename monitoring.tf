@@ -52,12 +52,12 @@ locals {
   vdms_announcement_subscription = {
     subscription_display_name = "SCCA-LZ-Critical"
     filter_group_name         = "SCCA-LZ-Critical-Filter"
-    compartment_id            = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.secondary_vdms_compartment_ocid
+    compartment_id            = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
     topic_id                  = module.vdms_critical_topic.topic_id
     filter_groups = {
       "compartment_filter" = {
         filters_type  = "COMPARTMENT_ID"
-        filters_value = [var.home_region_deployment ? module.home_compartment[0].compartment_id : var.secondary_home_compartment_ocid]
+        filters_value = [var.home_region_deployment ? module.home_compartment[0].compartment_id : var.multi_region_home_compartment_ocid]
       }
       "type_filter" = {
         filters_type  = "ANNOUNCEMENT_TYPE"
@@ -70,7 +70,7 @@ locals {
 module "vdms_critical_topic" {
   source = "./modules/notification-topic"
 
-  compartment_id        = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.secondary_vdms_compartment_ocid
+  compartment_id        = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
   topic_name            = local.vdms_critical_topic.topic_name
   topic_description     = local.vdms_critical_topic.topic_description
   subscription_endpoint = var.vdms_critical_topic_endpoints
@@ -81,7 +81,7 @@ module "vdms_critical_topic" {
 module "vdms_warning_topic" {
   source = "./modules/notification-topic"
 
-  compartment_id        = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.secondary_vdms_compartment_ocid
+  compartment_id        = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
   topic_name            = local.vdms_warning_topic.topic_name
   topic_description     = local.vdms_warning_topic.topic_description
   subscription_endpoint = var.vdms_warning_topic_endpoints
@@ -91,7 +91,7 @@ module "vdms_warning_topic" {
 
 module "vdms_announcement_subscription" {
   source                    = "./modules/announcement-subscription"
-  compartment_id            = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.secondary_vdms_compartment_ocid
+  compartment_id            = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
   notification_topic_id     = module.vdms_critical_topic.topic_id
   subscription_display_name = local.vdms_announcement_subscription.subscription_display_name
   filter_groups             = local.vdms_announcement_subscription.filter_groups
@@ -114,7 +114,7 @@ locals {
 module "vdss_critical_topic" {
   source = "./modules/notification-topic"
 
-  compartment_id        = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.secondary_vdss_compartment_ocid
+  compartment_id        = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.multi_region_vdss_compartment_ocid
   topic_name            = local.vdss_critical_topic.topic_name
   topic_description     = local.vdss_critical_topic.topic_description
   subscription_endpoint = var.vdss_critical_topic_endpoints
@@ -124,7 +124,7 @@ module "vdss_critical_topic" {
 module "vdss_warning_topic" {
   source = "./modules/notification-topic"
 
-  compartment_id        = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.secondary_vdss_compartment_ocid
+  compartment_id        = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.multi_region_vdss_compartment_ocid
   topic_name            = local.vdss_warning_topic.topic_name
   topic_description     = local.vdss_warning_topic.topic_description
   subscription_endpoint = var.vdss_warning_topic_endpoints
@@ -157,11 +157,11 @@ locals {
 
     statements = [
       <<EOT
-      allow any-user to {LOG_ANALYTICS_LOG_GROUP_UPLOAD_LOGS} in compartment id ${var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.secondary_vdms_compartment_ocid} where all
+      allow any-user to {LOG_ANALYTICS_LOG_GROUP_UPLOAD_LOGS} in compartment id ${var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid} where all
       {
         request.principal.type='serviceconnector',
         target.loganalytics-log-group.id='${module.logging_analytics_default_group.log_group_ocid}',
-        request.principal.compartment.id='${var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.secondary_vdms_compartment_ocid}'
+        request.principal.compartment.id='${var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid}'
       }
       EOT
     ]
@@ -173,11 +173,11 @@ locals {
 
     statements = [
       <<EOT
-      allow any-user to {LOG_ANALYTICS_LOG_GROUP_UPLOAD_LOGS} in compartment id ${var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.secondary_vdms_compartment_ocid} where all
+      allow any-user to {LOG_ANALYTICS_LOG_GROUP_UPLOAD_LOGS} in compartment id ${var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid} where all
       {
         request.principal.type='serviceconnector',
         target.loganalytics-log-group.id='${module.logging_analytics_audit_group.log_group_ocid}',
-        request.principal.compartment.id='${var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.secondary_vdms_compartment_ocid}'
+        request.principal.compartment.id='${var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid}'
       }
       EOT
     ]
@@ -209,7 +209,7 @@ module "logging_analytics_namespace" {
 
 module "logging_analytics_default_group" {
   source         = "./modules/logging-analytics-log-group"
-  compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.secondary_vdms_compartment_ocid
+  compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
   tenancy_ocid   = var.tenancy_ocid
   namespace      = local.logging_analytics_default_group.namespace
   display_name   = local.logging_analytics_default_group.display_name
@@ -221,7 +221,7 @@ module "logging_analytics_default_group" {
 
 module "logging_analytics_audit_group" {
   source         = "./modules/logging-analytics-log-group"
-  compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.secondary_vdms_compartment_ocid
+  compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
   tenancy_ocid   = var.tenancy_ocid
   namespace      = local.logging_analytics_audit_group.namespace
   display_name   = local.logging_analytics_audit_group.display_name
@@ -234,7 +234,7 @@ module "logging_analytics_audit_group" {
 module "default_logging_analytics_policy" {
   source           = "./modules/policies"
   count            = var.home_region_deployment ? 1 : 0
-  compartment_ocid = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.secondary_vdms_compartment_ocid
+  compartment_ocid = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
   policy_name      = local.default_logging_analytics_policy.name
   description      = local.default_logging_analytics_policy.description
   statements       = local.default_logging_analytics_policy.statements
@@ -243,7 +243,7 @@ module "default_logging_analytics_policy" {
 module "audit_logging_analytics_policy" {
   source           = "./modules/policies"
   count            = var.home_region_deployment ? 1 : 0
-  compartment_ocid = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.secondary_home_compartment_ocid
+  compartment_ocid = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.multi_region_home_compartment_ocid
   policy_name      = local.audit_logging_analytics_policy.name
   description      = local.audit_logging_analytics_policy.description
   statements       = local.audit_logging_analytics_policy.statements
@@ -251,7 +251,7 @@ module "audit_logging_analytics_policy" {
 
 module "default_logging_analytics_service_connector" {
   source              = "./modules/service-connector-logging-analytics"
-  compartment_id      = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.secondary_vdms_compartment_ocid
+  compartment_id      = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
   display_name        = local.default_logging_analytics_service_connector.display_name
   source_kind         = local.default_logging_analytics_service_connector.source_kind
   source_log_group_id = module.default_log_group.log_group_id
@@ -266,7 +266,7 @@ module "default_logging_analytics_service_connector" {
 
 module "audit_logging_analytics_service_connector" {
   source              = "./modules/service-connector-logging-analytics"
-  compartment_id      = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.secondary_vdms_compartment_ocid
+  compartment_id      = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
   display_name        = local.audit_logging_analytics_service_connector.display_name
   source_kind         = local.audit_logging_analytics_service_connector.source_kind
   source_log_group_id = local.audit_logging_analytics_service_connector.log_group_id
@@ -282,14 +282,14 @@ locals {
   alarm_map_log = var.enable_logging_compartment ? {
     objectstorage_UncommittedParts_alarm = {
       display_name          = "objectstorage_UncommittedParts_alarm"
-      metric_compartment_id = var.home_region_deployment ? module.logging_compartment[0].compartment_id : var.secondary_logging_compartment_ocid
+      metric_compartment_id = var.home_region_deployment ? module.logging_compartment[0].compartment_id : var.multi_region_logging_compartment_ocid
       namespace             = "oci_objectstorage"
       query                 = "UncommittedParts[1m].count() > 0"
       severity              = "WARNING"
     }
     objectstorage_ClientErrors_alarm = {
       display_name          = "objectstorage_ClientErrors_alarm"
-      metric_compartment_id = var.home_region_deployment ? module.logging_compartment[0].compartment_id : var.secondary_logging_compartment_ocid
+      metric_compartment_id = var.home_region_deployment ? module.logging_compartment[0].compartment_id : var.multi_region_logging_compartment_ocid
       namespace             = "oci_objectstorage"
       query                 = "ClientErrors[1m].sum() > 0"
       severity              = "WARNING"
@@ -299,35 +299,35 @@ locals {
   alarm_map_std = {
     bastion_activesession_alarm = {
       display_name          = "bastion_activesession_alarm"
-      metric_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.secondary_vdms_compartment_ocid
+      metric_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
       namespace             = "oci_bastion"
       query                 = "activeSessions[1m].sum() > 0"
       severity              = "WARNING"
     }
     network_lbPeakBandwidth_alarm = {
       display_name          = "network_lbPeakBandwidth_alarm"
-      metric_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.secondary_vdms_compartment_ocid
+      metric_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
       namespace             = "oci_lbaas"
       query                 = "PeakBandwidth[1m].mean() < 8"
       severity              = "WARNING"
     }
     network_vcnVnicConntrackUtilPercent_alarm = {
       display_name          = "network_vcnVnicConntrackUtilPercent_alarm"
-      metric_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.secondary_vdms_compartment_ocid
+      metric_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
       namespace             = "oci_vcn"
       query                 = "VnicConntrackUtilPercent[1m].mean() > 80"
       severity              = "WARNING"
     }
     network_vcnVnicEgressDropThrottle_alarm = {
       display_name          = "network_vcnVnicEgressDropThrottle_alarm"
-      metric_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.secondary_vdms_compartment_ocid
+      metric_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
       namespace             = "oci_vcn"
       query                 = "VnicEgressDropThrottle[1m].mean() > 0"
       severity              = "WARNING"
     }
     network_vcnVnicIngressDropThrottle_alarm = {
       display_name          = "network_vcnVnicIngressDropThrottle_alarm"
-      metric_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.secondary_vdms_compartment_ocid
+      metric_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
       namespace             = "oci_vcn"
       query                 = "VnicIngressDropThrottle[1m].mean() > 0"
       severity              = "WARNING"
@@ -351,56 +351,56 @@ locals {
     alarm_map = {
       sch_error_alarm = {
         display_name          = "sch_error_alarm"
-        metric_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.secondary_vdms_compartment_ocid
+        metric_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
         namespace             = "oci_service_connector_hub"
         query                 = "ServiceConnectorHubErrors[1m].sum() > 0"
         severity              = "CRITICAL"
       }
       stream_putfault_alarm = {
         display_name          = "stream_putfault_alarm"
-        metric_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.secondary_vdms_compartment_ocid
+        metric_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
         namespace             = "oci_streaming"
         query                 = "PutMessagesFault.Count[1m].sum() > 0"
         severity              = "CRITICAL"
       }
       stream_getfault_alarm = {
         display_name          = "stream_getfault_alarm"
-        metric_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.secondary_vdms_compartment_ocid
+        metric_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
         namespace             = "oci_streaming"
         query                 = "GetMessagesFault.Count[1m].sum() > 0"
         severity              = "CRITICAL"
       }
       vss_SecurityVulnerability_alarm = {
         display_name          = "vss_SecurityVulnerability_alarm"
-        metric_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.secondary_vdms_compartment_ocid
+        metric_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
         namespace             = "oci_vss"
         query                 = "SecurityVulnerability[1m].sum() > 0"
         severity              = "CRITICAL"
       }
       network_lbUnHealthyBackendServers_alarm = {
         display_name          = "network_lbUnHealthyBackendServers_alarm"
-        metric_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.secondary_vdms_compartment_ocid
+        metric_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
         namespace             = "oci_lbaas"
         query                 = "UnHealthyBackendServers[1m].mean() > 0"
         severity              = "CRITICAL"
       }
       network_lbFailedSSLClientCertVerify_alarm = {
         display_name          = "network_lbFailedSSLClientCertVerify_alarm"
-        metric_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.secondary_vdms_compartment_ocid
+        metric_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
         namespace             = "oci_lbaas"
         query                 = "FailedSSLClientCertVerify[1m].mean() > 0"
         severity              = "CRITICAL"
       }
       network_lbFailedSSLHandshake_alarm = {
         display_name          = "network_lbFailedSSLHandshake_alarm"
-        metric_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.secondary_vdms_compartment_ocid
+        metric_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
         namespace             = "oci_lbaas"
         query                 = "FailedSSLHandshake[1m].mean() > 0"
         severity              = "CRITICAL"
       }
       network_vcnVnicConntrackIsFull_alarm = {
         display_name          = "network_vcnVnicConntrackIsFull_alarm"
-        metric_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.secondary_vdms_compartment_ocid
+        metric_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
         namespace             = "oci_vcn"
         query                 = "VnicConntrackIsFull[1m].mean() > 0"
         severity              = "CRITICAL"
@@ -416,84 +416,84 @@ locals {
     alarm_map = {
       network_sgwDropsToService_alarm = {
         display_name          = "network_sgwDropsToService_alarm"
-        metric_compartment_id = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.secondary_vdss_compartment_ocid
+        metric_compartment_id = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.multi_region_vdss_compartment_ocid
         namespace             = "oci_service_gateway"
         query                 = "sgwDropsToService[1m].mean() > 0"
         severity              = "CRITICAL"
       }
       network_sgwDropsFromService_alarm = {
         display_name          = "network_sgwDropsFromService_alarm"
-        metric_compartment_id = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.secondary_vdss_compartment_ocid
+        metric_compartment_id = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.multi_region_vdss_compartment_ocid
         namespace             = "oci_service_gateway"
         query                 = "sgwDropsFromService[1m].mean() > 0"
         severity              = "CRITICAL"
       }
       network_fwLandAttacksCount_alarm = {
         display_name          = "network_sgwDropsFromService_alarm"
-        metric_compartment_id = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.secondary_vdss_compartment_ocid
+        metric_compartment_id = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.multi_region_vdss_compartment_ocid
         namespace             = "oci_network_firewall"
         query                 = "LandAttacksCount[1m].mean() > 0"
         severity              = "CRITICAL"
       }
       network_fwIPSpoofCount_alarm = {
         display_name          = "network_fwIPSpoofCount_alarm"
-        metric_compartment_id = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.secondary_vdss_compartment_ocid
+        metric_compartment_id = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.multi_region_vdss_compartment_ocid
         namespace             = "oci_network_firewall"
         query                 = "IPSpoofCount[1m].mean() > 0"
         severity              = "CRITICAL"
       }
       network_fwPingOfDeathAttacksCount_alarm = {
         display_name          = "network_fwPingOfDeathAttacksCount_alarm"
-        metric_compartment_id = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.secondary_vdss_compartment_ocid
+        metric_compartment_id = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.multi_region_vdss_compartment_ocid
         namespace             = "oci_network_firewall"
         query                 = "PingOfDeathAttacksCount[1m].mean() > 0"
         severity              = "CRITICAL"
       }
       network_fwTeardropAttacksCount_alarm = {
         display_name          = "network_fwTeardropAttacksCount_alarm"
-        metric_compartment_id = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.secondary_vdss_compartment_ocid
+        metric_compartment_id = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.multi_region_vdss_compartment_ocid
         namespace             = "oci_network_firewall"
         query                 = "PingOfDeathAttacksCount[1m].mean() > 0"
         severity              = "CRITICAL"
       }
       network_lbUnHealthyBackendServers_alarm = {
         display_name          = "network_lbUnHealthyBackendServers_alarm"
-        metric_compartment_id = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.secondary_vdss_compartment_ocid
+        metric_compartment_id = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.multi_region_vdss_compartment_ocid
         namespace             = "oci_lbaas"
         query                 = "UnHealthyBackendServers[1m].mean() > 0"
         severity              = "CRITICAL"
       }
       network_lbFailedSSLClientCertVerify_alarm = {
         display_name          = "network_lbFailedSSLClientCertVerify_alarm"
-        metric_compartment_id = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.secondary_vdss_compartment_ocid
+        metric_compartment_id = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.multi_region_vdss_compartment_ocid
         namespace             = "oci_lbaas"
         query                 = "FailedSSLClientCertVerify[1m].mean() > 0"
         severity              = "CRITICAL"
       }
       network_lbFailedSSLHandshake_alarm = {
         display_name          = "network_lbFailedSSLHandshake_alarm"
-        metric_compartment_id = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.secondary_vdss_compartment_ocid
+        metric_compartment_id = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.multi_region_vdss_compartment_ocid
         namespace             = "oci_lbaas"
         query                 = "FailedSSLHandshake[1m].mean() > 0"
         severity              = "CRITICAL"
       }
       network_vcnVnicConntrackIsFull_alarm = {
         display_name          = "network_vcnVnicConntrackIsFull_alarm"
-        metric_compartment_id = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.secondary_vdss_compartment_ocid
+        metric_compartment_id = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.multi_region_vdss_compartment_ocid
         namespace             = "oci_vcn"
         query                 = "VnicConntrackIsFull[1m].mean() > 0"
         severity              = "CRITICAL"
       }
       network_oci_nat_gateway_alarm = {
         display_name          = "network_oci_nat_gateway_alarm"
-        metric_compartment_id = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.secondary_vdss_compartment_ocid
+        metric_compartment_id = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.multi_region_vdss_compartment_ocid
         namespace             = "oci_nat_gateway"
         query                 = "DropsToNATgw[1m].mean() > 0"
         severity              = "CRITICAL"
       }
       network_fast_connect_status_alarm = {
         display_name          = "network_fast_connect_status_alarm"
-        metric_compartment_id = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.secondary_vdss_compartment_ocid
+        metric_compartment_id = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.multi_region_vdss_compartment_ocid
         namespace             = "oci_fastconnect"
         query                 = "ConnectionState[1m].mean() == 0"
         severity              = "CRITICAL"
@@ -510,28 +510,28 @@ locals {
     alarm_map = {
       network_lbPeakBandwidth_alarm = {
         display_name          = "network_lbPeakBandwidth_alarm"
-        metric_compartment_id = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.secondary_vdss_compartment_ocid
+        metric_compartment_id = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.multi_region_vdss_compartment_ocid
         namespace             = "oci_lbaas"
         query                 = "PeakBandwidth[1m].mean() < 8"
         severity              = "WARNING"
       }
       network_vcnVnicConntrackUtilPercent_alarm = {
         display_name          = "network_vcnVnicConntrackUtilPercent_alarm"
-        metric_compartment_id = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.secondary_vdss_compartment_ocid
+        metric_compartment_id = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.multi_region_vdss_compartment_ocid
         namespace             = "oci_vcn"
         query                 = "VnicConntrackUtilPercent[1m].mean() > 80"
         severity              = "WARNING"
       }
       network_vcnVnicEgressDropThrottle_alarm = {
         display_name          = "network_vcnVnicEgressDropThrottle_alarm"
-        metric_compartment_id = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.secondary_vdss_compartment_ocid
+        metric_compartment_id = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.multi_region_vdss_compartment_ocid
         namespace             = "oci_vcn"
         query                 = "VnicEgressDropThrottle[1m].mean() > 80"
         severity              = "WARNING"
       }
       network_vcnVnicIngressDropThrottle_alarm = {
         display_name          = "network_vcnVnicIngressDropThrottle_alarm"
-        metric_compartment_id = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.secondary_vdss_compartment_ocid
+        metric_compartment_id = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.multi_region_vdss_compartment_ocid
         namespace             = "oci_vcn"
         query                 = "VnicIngressDropThrottle[1m].mean() > 80"
         severity              = "WARNING"
@@ -545,7 +545,7 @@ locals {
 
     statements = [
       <<EOT
-        Allow group OCI-SCCA-LZ-Domain-${local.region_key[0]}/VDSSAdmin  to read metrics in compartment id ${var.home_region_deployment ? module.home_compartment[0].compartment_id : var.secondary_home_compartment_ocid} where any {
+        Allow group OCI-SCCA-LZ-Domain-${local.region_key[0]}/VDSSAdmin  to read metrics in compartment id ${var.home_region_deployment ? module.home_compartment[0].compartment_id : var.multi_region_home_compartment_ocid} where any {
           target.metrics.namespace='oci_vcn',
           target.metrics.namespace='oci_vpn',
           target.metrics.namespace='oci_fastconnect',
@@ -563,7 +563,7 @@ locals {
 
 module "vdms_critical_alarms" {
   source                           = "./modules/alarm"
-  compartment_id                   = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.secondary_vdms_compartment_ocid
+  compartment_id                   = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
   notification_topic_id            = module.vdms_critical_topic.topic_id
   is_enabled                       = local.vdms_critical_alarms.is_enabled
   message_format                   = local.vdms_critical_alarms.message_format
@@ -575,7 +575,7 @@ module "vdms_critical_alarms" {
 
 module "vdms_warning_alarms" {
   source                           = "./modules/alarm"
-  compartment_id                   = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.secondary_vdms_compartment_ocid
+  compartment_id                   = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
   notification_topic_id            = module.vdms_warning_topic.topic_id
   is_enabled                       = local.vdms_warning_alarms.is_enabled
   message_format                   = local.vdms_warning_alarms.message_format
@@ -587,7 +587,7 @@ module "vdms_warning_alarms" {
 
 module "vdss_critical_alarms" {
   source                           = "./modules/alarm"
-  compartment_id                   = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.secondary_vdss_compartment_ocid
+  compartment_id                   = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.multi_region_vdss_compartment_ocid
   notification_topic_id            = module.vdss_critical_topic.topic_id
   is_enabled                       = local.vdss_critical_alarms.is_enabled
   message_format                   = local.vdss_critical_alarms.message_format
@@ -599,7 +599,7 @@ module "vdss_critical_alarms" {
 
 module "vdss_warning_alarms" {
   source                           = "./modules/alarm"
-  compartment_id                   = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.secondary_vdss_compartment_ocid
+  compartment_id                   = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.multi_region_vdss_compartment_ocid
   notification_topic_id            = module.vdss_critical_topic.topic_id
   is_enabled                       = local.vdss_critical_alarms.is_enabled
   message_format                   = local.vdss_critical_alarms.message_format
@@ -612,7 +612,7 @@ module "vdss_warning_alarms" {
 module "alarm_policy" {
   source           = "./modules/policies"
   count            = var.home_region_deployment ? 1 : 0
-  compartment_ocid = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.secondary_home_compartment_ocid
+  compartment_ocid = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.multi_region_home_compartment_ocid
   policy_name      = local.alarm_policy.name
   description      = local.alarm_policy.description
   statements       = local.alarm_policy.statements

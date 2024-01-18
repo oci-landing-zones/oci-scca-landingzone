@@ -14,7 +14,7 @@ locals {
     dynamic_groups = {
       osms_dynamic_group = {
         dynamic_group_name = "OCI-SCCA-LZ-Instance-Group-${var.resource_label}"
-        matching_rule      = "Any { instance.compartment.id = '${var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.secondary_vdms_compartment_ocid}', instance.compartment.id = '${var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.secondary_vdss_compartment_ocid}', instance.compartment.id = '${var.home_region_deployment ? module.workload_compartment[0].compartment_id : var.secondary_workload_compartment_ocid}', instance.compartment.id = '${var.home_region_deployment ? module.home_compartment[0].compartment_id : var.secondary_home_compartment_ocid}'}"
+        matching_rule      = "Any { instance.compartment.id = '${var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid}', instance.compartment.id = '${var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.multi_region_vdss_compartment_ocid}', instance.compartment.id = '${var.home_region_deployment ? module.workload_compartment[0].compartment_id : var.multi_region_workload_compartment_ocid}', instance.compartment.id = '${var.home_region_deployment ? module.home_compartment[0].compartment_id : var.multi_region_home_compartment_ocid}'}"
       }
     }
   }
@@ -23,7 +23,7 @@ locals {
 module "identity_domain" {
   source                    = "./modules/identity-domain"
   count                     = var.home_region_deployment ? 1 : 0
-  compartment_id            = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.secondary_vdms_compartment_ocid
+  compartment_id            = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
   domain_description        = local.identity_domain.domain_description
   domain_display_name       = local.identity_domain.domain_display_name
   domain_license_type       = local.identity_domain.domain_license_type
@@ -150,7 +150,7 @@ locals {
 module "bucket_replication_policy" {
   count            = var.home_region_deployment && var.enable_logging_compartment ? 1 : 0
   source           = "./modules/policies"
-  compartment_ocid = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.secondary_home_compartment_ocid
+  compartment_ocid = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.multi_region_home_compartment_ocid
   policy_name      = local.bucket_replication_policy.name
   description      = local.bucket_replication_policy.description
   statements       = local.bucket_replication_policy.statements
@@ -162,7 +162,7 @@ module "bucket_replication_policy" {
 module "vault_policy" {
   source           = "./modules/policies"
   count            = var.home_region_deployment ? 1 : 0
-  compartment_ocid = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.secondary_home_compartment_ocid
+  compartment_ocid = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.multi_region_home_compartment_ocid
   policy_name      = local.vault_policy.name
   description      = local.vault_policy.description
   statements       = local.vault_policy.statements
@@ -171,7 +171,7 @@ module "vault_policy" {
 module "key_policy" {
   source           = "./modules/policies"
   count            = var.home_region_deployment ? 1 : 0
-  compartment_ocid = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.secondary_home_compartment_ocid
+  compartment_ocid = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.multi_region_home_compartment_ocid
   policy_name      = local.key_policy.name
   description      = local.key_policy.description
   statements       = local.key_policy.statements
@@ -193,7 +193,7 @@ module "cloud_guard_policy" {
 module "vdss_policy" {
   source           = "./modules/policies"
   count            = var.home_region_deployment ? 1 : 0
-  compartment_ocid = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.secondary_home_compartment_ocid
+  compartment_ocid = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.multi_region_home_compartment_ocid
   policy_name      = local.vdss_policy.name
   description      = local.vdss_policy.description
   statements       = local.vdss_policy.statements
@@ -202,7 +202,7 @@ module "vdss_policy" {
 module "vdms_policy" {
   source           = "./modules/policies"
   count            = var.home_region_deployment ? 1 : 0
-  compartment_ocid = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.secondary_home_compartment_ocid
+  compartment_ocid = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.multi_region_home_compartment_ocid
   policy_name      = local.vdms_policy.name
   description      = local.vdms_policy.description
   statements       = local.vdms_policy.statements
@@ -211,7 +211,7 @@ module "vdms_policy" {
 module "workload_policy" {
   source           = "./modules/policies"
   count            = var.home_region_deployment ? 1 : 0
-  compartment_ocid = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.secondary_home_compartment_ocid
+  compartment_ocid = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.multi_region_home_compartment_ocid
   policy_name      = local.workload_policy.name
   description      = local.workload_policy.description
   statements       = local.workload_policy.statements
