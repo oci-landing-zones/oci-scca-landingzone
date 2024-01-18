@@ -394,7 +394,7 @@ module "service_connector_policy" {
 
 module "cloud_guard" {
   source = "./modules/cloud-guard"
-
+  count                                      = var.home_region_deployment ? 1 : 0
   tenancy_ocid                               = var.tenancy_ocid
   region                                     = var.region
   status                                     = local.cloud_guard.status
