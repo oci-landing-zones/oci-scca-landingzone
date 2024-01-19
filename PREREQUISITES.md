@@ -89,3 +89,11 @@ python destroy_lz.py  --help
 
 [1]: https://cloud.oracle.com/loganalytics/home "Logging Analytics Home page."
 [2]: https://cloud.oracle.com/support/create?type=limit "Request a service Limit Increase."
+
+## License
+
+Copyright (c) 2023 Oracle and/or its affiliates.
+
+Licensed under the Universal Permissive License (UPL), Version 1.0.
+
+See [LICENSE](./LICENSE) for more details.

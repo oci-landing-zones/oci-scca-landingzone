@@ -1,3 +1,7 @@
+# ###################################################################################################### #
+# Copyright (c) 2023 Oracle and/or its affiliates, All rights reserved.                                  #
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl. #
+# ###################################################################################################### #
 
 variable "home_compartment_name" {
   type        = string
@@ -69,4 +73,34 @@ variable "enable_logging_compartment" {
   type        = bool
   description = "Set to true to enable logging compartment, to false if you already had existing buckets in another tenancy"
   default     = true
+}
+
+variable "multi_region_home_compartment_ocid" {
+  type        = string
+  description = "OCID of the home compartment created in home region for multi-region deployment"
+  default     = ""
+}
+
+variable "multi_region_logging_compartment_ocid" {
+  type        = string
+  description = "OCID of the workload compartment created in home region for multi-region deployment"
+  default     = ""
+}
+
+variable "multi_region_vdss_compartment_ocid" {
+  type        = string
+  description = "OCID of the vdss compartment created in home region for multi-region deployment"
+  default     = ""
+}
+
+variable "multi_region_vdms_compartment_ocid" {
+  type        = string
+  description = "OCID of the vdms compartment created in home region for multi-region deployment"
+  default     = ""
+}
+
+variable "multi_region_workload_compartment_ocid" {
+  type        = string
+  description = "OCID of the workload compartment created in home region for multi-region deployment"
+  default     = ""
 }

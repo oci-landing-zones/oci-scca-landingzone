@@ -1,3 +1,8 @@
+# ###################################################################################################### #
+# Copyright (c) 2023 Oracle and/or its affiliates, All rights reserved.                                  #
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl. #
+# ###################################################################################################### #
+
 # Reference
 # https://github.com/oracle-quickstart/oci-network-firewall/tree/master/oci-network-firewall-reference-architecture
 terraform {
@@ -9,7 +14,7 @@ terraform {
 }
 
 resource "time_sleep" "network_firewall_ip_delay" {
-  depends_on = [oci_network_firewall_network_firewall.network_firewall]
+  depends_on      = [oci_network_firewall_network_firewall.network_firewall]
   create_duration = "90s"
 }
 
@@ -18,6 +23,8 @@ resource "oci_network_firewall_network_firewall" "network_firewall" {
   network_firewall_policy_id = oci_network_firewall_network_firewall_policy.network_firewall_policy.id
   subnet_id                  = var.network_firewall_subnet_id
   display_name               = var.network_firewall_name
+
+  depends_on = [oci_network_firewall_network_firewall_policy.network_firewall_policy]
 }
 
 resource "oci_network_firewall_network_firewall_policy" "network_firewall_policy" {
@@ -37,7 +44,6 @@ resource "oci_network_firewall_network_firewall_policy" "network_firewall_policy
     content {
       name   = security_rules.key
       action = security_rules.value.security_rules_action
-      # inspection = security_rules.value.security_rules_inspection
 
       condition {
         applications = security_rules.value.security_rules_condition_applications
@@ -47,5 +53,4 @@ resource "oci_network_firewall_network_firewall_policy" "network_firewall_policy
       }
     }
   }
-
 }

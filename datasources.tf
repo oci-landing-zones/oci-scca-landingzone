@@ -1,3 +1,8 @@
+# ###################################################################################################### #
+# Copyright (c) 2023 Oracle and/or its affiliates, All rights reserved.                                  #
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl. #
+# ###################################################################################################### #
+
 data "oci_core_services" "all_oci_services" {
   filter {
     name   = "name"
@@ -7,7 +12,8 @@ data "oci_core_services" "all_oci_services" {
 }
 
 data "oci_events_rules" "event_rules" {
-  compartment_id = module.vdms_compartment.compartment_id
+  compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
+  display_name   = "All events in ${var.vdms_compartment_name}-${local.region_key[0]}-${var.resource_label}"
   depends_on = [
     module.vdms_critical_topic,
     module.vdms_warning_topic,

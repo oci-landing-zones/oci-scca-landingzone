@@ -1,3 +1,8 @@
+# ###################################################################################################### #
+# Copyright (c) 2023 Oracle and/or its affiliates, All rights reserved.                                  #
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl. #
+# ###################################################################################################### #
+
 variable "vdms_critical_topic_endpoints" {
   type        = list(string)
   default     = []
@@ -79,4 +84,3 @@ variable "enable_vdms_critical_alarm" {
   default     = false
   description = "Enable critical alarms in VDMS compartment"
 }
-

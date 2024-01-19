@@ -1,3 +1,7 @@
+# ###################################################################################################### #
+# Copyright (c) 2023 Oracle and/or its affiliates, All rights reserved.                                  #
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl. #
+# ###################################################################################################### #
 
 locals {
   home_compartment = {
@@ -29,6 +33,7 @@ locals {
 module "home_compartment" {
   source = "./modules/compartment"
 
+  count                     = var.home_region_deployment ? 1 : 0
   compartment_parent_id     = var.tenancy_ocid
   compartment_name          = local.home_compartment.name
   compartment_description   = local.home_compartment.description
@@ -42,7 +47,8 @@ module "home_compartment" {
 module "vdms_compartment" {
   source = "./modules/compartment"
 
-  compartment_parent_id     = module.home_compartment.compartment_id
+  count                     = var.home_region_deployment ? 1 : 0
+  compartment_parent_id     = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.multi_region_home_compartment_ocid
   compartment_name          = local.vdms_compartment.name
   compartment_description   = local.vdms_compartment.description
   enable_compartment_delete = var.enable_compartment_delete
@@ -55,7 +61,8 @@ module "vdms_compartment" {
 module "vdss_compartment" {
   source = "./modules/compartment"
 
-  compartment_parent_id     = module.home_compartment.compartment_id
+  count                     = var.home_region_deployment ? 1 : 0
+  compartment_parent_id     = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.multi_region_home_compartment_ocid
   compartment_name          = local.vdss_compartment.name
   compartment_description   = local.vdss_compartment.description
   enable_compartment_delete = var.enable_compartment_delete
@@ -68,8 +75,8 @@ module "vdss_compartment" {
 module "logging_compartment" {
   source = "./modules/compartment"
 
-  count                     = var.enable_logging_compartment ? 1 : 0
-  compartment_parent_id     = module.home_compartment.compartment_id
+  count                     = var.home_region_deployment && var.enable_logging_compartment ? 1 : 0
+  compartment_parent_id     = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.multi_region_home_compartment_ocid
   compartment_name          = local.logging_compartment.name
   compartment_description   = local.logging_compartment.description
   enable_compartment_delete = var.enable_compartment_delete
@@ -82,7 +89,8 @@ module "logging_compartment" {
 module "backup_compartment" {
   source = "./modules/compartment"
 
-  compartment_parent_id     = module.home_compartment.compartment_id
+  count                     = var.home_region_deployment ? 1 : 0
+  compartment_parent_id     = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.multi_region_home_compartment_ocid
   compartment_name          = local.backup_compartment.name
   compartment_description   = local.backup_compartment.description
   enable_compartment_delete = var.enable_compartment_delete

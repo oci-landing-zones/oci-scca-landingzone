@@ -45,3 +45,11 @@ No modules.
 |------|-------------|
 | <a name="output_drg_attachment_all_attributes"></a> [drg\_attachment\_all\_attributes](#output\_drg\_attachment\_all\_attributes) | all attributes related to drg attachment |
 | <a name="output_drg_id"></a> [drg\_id](#output\_drg\_id) | id of drg if it is created |
+
+## License
+
+Copyright (c) 2023 Oracle and/or its affiliates.
+
+Licensed under the Universal Permissive License (UPL), Version 1.0.
+
+See [LICENSE](../../LICENSE) for more details.

@@ -1,3 +1,8 @@
+# ###################################################################################################### #
+# Copyright (c) 2023 Oracle and/or its affiliates, All rights reserved.                                  #
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl. #
+# ###################################################################################################### #
+
 # PROVIDER
 api_fingerprint      = ""
 api_private_key_path = ""
@@ -5,6 +10,14 @@ region               = ""
 secondary_region     = ""
 tenancy_ocid         = ""
 current_user_ocid    = ""
+
+# MULTI-REGION DEPLOYMENT
+home_region_deployment = true
+multi_region_home_compartment_ocid     = ""
+multi_region_logging_compartment_ocid  = ""
+multi_region_vdms_compartment_ocid     = ""
+multi_region_vdss_compartment_ocid     = ""
+multi_region_workload_compartment_ocid = ""
 
 # COMPARTMENT 
 resource_label            = ""
@@ -23,6 +36,7 @@ logging_compartment_name   = "OCI-SCCA-LZ-Logging"
 vdms_compartment_name  = "OCI-SCCA-LZ-VDMS"
 vdms_vcn_cidr_block    = "192.168.1.0/24"
 vdms_subnet_cidr_block = "192.168.1.0/24"
+#is_vtap_enabled        = false # To Disable VTAP Service
 
 # VDSS
 vdss_compartment_name      = "OCI-SCCA-LZ-VDSS"
@@ -48,4 +62,4 @@ workload_warning_topic_endpoints = []
 
 # SECURITY
 bastion_client_cidr_block_allow_list = []
-
+realm_key = ""

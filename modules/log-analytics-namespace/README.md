@@ -32,14 +32,23 @@ No modules.
 
 ## Inputs
 
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
-| <a name="input_compartment_id"></a> [compartment\_id](#input\_compartment\_id) | The OCID of the root compartment. | `string` | n/a | yes |
-| <a name="input_is_onboarded"></a> [is\_onboarded](#input\_is\_onboarded) | Use true if tenancy is to be onboarded to logging analytics and false if tenancy is to be offboarded. | `bool` | n/a | yes |
-| <a name="input_resource_label"></a> [resource\_label](#input\_resource\_label) | n/a | `string` | n/a | yes |
-| <a name="input_tenancy_ocid"></a> [tenancy\_ocid](#input\_tenancy\_ocid) | The OCID of tenancy | `string` | n/a | yes |
+| Name                                                                                          | Description | Type   | Default | Required |
+|-----------------------------------------------------------------------------------------------|-------------|--------|---------|:--------:|
+| <a name="input_compartment_id"></a> [compartment\_id](#input\_compartment\_id)                | The OCID of the root compartment. | `string` | n/a | yes |
+| <a name="input_is_onboarded"></a> [is\_onboarded](#input\_is\_onboarded)                      | Use true if tenancy is to be onboarded to logging analytics and false if tenancy is to be offboarded. | `bool` | n/a | yes |
+| <a name="input_resource_label"></a> [resource\_label](#input\_resource\_label)                | n/a | `string` | n/a | yes |
+| <a name="input_tenancy_ocid"></a> [tenancy\_ocid](#input\_tenancy\_ocid)                      | The OCID of tenancy | `string` | n/a | yes |
+| <a name="input_home_region_deployment"></a> [home\_region\_deployment](#input\_home\_region\_deployment) | Set to true if deploying in home region | `bool` | n/a | yes |
 
 ## Outputs
 
 No outputs.
-<!-- END_TF_DOCS -->    
+<!-- END_TF_DOCS -->
+
+## License
+
+Copyright (c) 2023 Oracle and/or its affiliates.
+
+Licensed under the Universal Permissive License (UPL), Version 1.0.
+
+See [LICENSE](../../LICENSE) for more details.

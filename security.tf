@@ -1,3 +1,8 @@
+# ###################################################################################################### #
+# Copyright (c) 2023 Oracle and/or its affiliates, All rights reserved.                                  #
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl. #
+# ###################################################################################################### #
+
 locals {
 
   // TODO: need backup bucket spec
@@ -129,7 +134,7 @@ locals {
     log_display_name    = "OCI-SCCA-LZ-EVENT-LOG-${var.resource_label}"
     log_type            = "SERVICE"
     log_source_category = "ruleexecutionlog"
-    log_source_resource = data.oci_events_rules.event_rules.rules[0].id
+    log_source_resource = module.service_event_stream.event_rule_id
     log_source_service  = "cloudevents"
     log_source_type     = "OCISERVICE"
   }
@@ -190,8 +195,9 @@ locals {
 
 module "backup_bucket" {
   source                              = "./modules/bucket"
+  count                               = var.home_region_deployment ? 1 : 0
   tenancy_ocid                        = var.tenancy_ocid
-  compartment_id                      = module.backup_compartment.compartment_id
+  compartment_id                      = module.backup_compartment[0].compartment_id
   name                                = local.backup_bucket.name
   kms_key_id                          = ""
   storage_tier                        = var.bucket_storage_tier
@@ -210,7 +216,7 @@ module "audit_log_bucket" {
   count                               = var.enable_logging_compartment ? 1 : 0
   source                              = "./modules/bucket"
   tenancy_ocid                        = var.tenancy_ocid
-  compartment_id                      = module.logging_compartment[0].compartment_id
+  compartment_id                      = var.home_region_deployment ? module.logging_compartment[0].compartment_id : var.multi_region_logging_compartment_ocid
   name                                = local.audit_log_bucket.name
   kms_key_id                          = module.master_encryption_key.key_ocid
   storage_tier                        = var.bucket_storage_tier
@@ -232,7 +238,7 @@ module "default_log_bucket" {
   count                               = var.enable_logging_compartment ? 1 : 0
   source                              = "./modules/bucket"
   tenancy_ocid                        = var.tenancy_ocid
-  compartment_id                      = module.logging_compartment[0].compartment_id
+  compartment_id                      = var.home_region_deployment ? module.logging_compartment[0].compartment_id : var.multi_region_logging_compartment_ocid
   name                                = local.default_log_bucket.name
   kms_key_id                          = module.master_encryption_key.key_ocid
   storage_tier                        = var.bucket_storage_tier
@@ -254,7 +260,7 @@ module "service_event_log_bucket" {
   count                               = var.enable_logging_compartment ? 1 : 0
   source                              = "./modules/bucket"
   tenancy_ocid                        = var.tenancy_ocid
-  compartment_id                      = module.logging_compartment[0].compartment_id
+  compartment_id                      = var.home_region_deployment ? module.logging_compartment[0].compartment_id : var.multi_region_logging_compartment_ocid
   name                                = local.service_event_log_bucket.name
   kms_key_id                          = module.master_encryption_key.key_ocid
   storage_tier                        = var.bucket_storage_tier
@@ -274,7 +280,7 @@ module "service_event_log_bucket" {
 
 module "central_vault" {
   source                   = "./modules/vault"
-  compartment_id           = module.vdms_compartment.compartment_id
+  compartment_id           = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
   display_name             = local.central_vault.name
   vault_type               = local.central_vault.type
   enable_vault_replication = local.central_vault.enable_vault_replication
@@ -283,24 +289,25 @@ module "central_vault" {
 
 module "default_log_group" {
   source         = "./modules/log_group"
-  compartment_id = module.vdms_compartment.compartment_id
+  compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
   display_name   = local.default_log_group.name
   description    = local.default_log_group.description
 }
 
 module "master_encryption_key" {
   source              = "./modules/key"
-  compartment_ocid    = module.vdms_compartment.compartment_id
+  compartment_ocid    = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
   display_name        = local.master_encryption_key.name
   shape_algorithm     = local.master_encryption_key.algorithm
   shape_length        = local.master_encryption_key.length
   protection_mode     = local.master_encryption_key.protection_mode
   management_endpoint = module.central_vault.management_endpoint
+  depends_on          = [module.central_vault]
 }
 
 module "service_event_stream" {
   source                 = "./modules/stream"
-  compartment_id         = module.vdms_compartment.compartment_id
+  compartment_id         = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
   stream_pool_name       = local.service_event_stream.stream_pool_name
   stream_name            = local.service_event_stream.stream_name
   kms_key_id             = module.master_encryption_key.key_ocid
@@ -315,16 +322,16 @@ module "service_event_stream" {
 module "default_log_service_connector" {
   source                = "./modules/service-connector"
   tenancy_ocid          = var.tenancy_ocid
-  compartment_id        = module.vdms_compartment.compartment_id
-  source_compartment_id = module.vdms_compartment.compartment_id
+  compartment_id        = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
+  source_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
   display_name          = local.default_log_service_connector.display_name
   source_kind           = local.default_log_service_connector.source_kind
   target_kind           = local.default_log_service_connector.target_kind
   log_group_id          = module.default_log_group.log_group_id
   target_bucket         = local.default_log_service_connector.target_bucket
   target_namespace      = local.default_log_service_connector.target_namespace
-  # Service connector needs at least one log on the log group, or it errors. 
-  # Also it takes time for it to recognize this. 
+  # Service connector needs at least one log on the log group, or it errors.
+  # Also it takes time for it to recognize this.
   depends_on = [
     time_sleep.first_log_delay
   ]
@@ -333,8 +340,8 @@ module "default_log_service_connector" {
 module "audit_log_service_connector" {
   source                = "./modules/service-connector"
   tenancy_ocid          = var.tenancy_ocid
-  compartment_id        = module.vdms_compartment.compartment_id
-  source_compartment_id = module.home_compartment.compartment_id
+  compartment_id        = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
+  source_compartment_id = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.multi_region_home_compartment_ocid
   display_name          = local.audit_log_service_connector.display_name
   source_kind           = local.audit_log_service_connector.source_kind
   target_kind           = local.audit_log_service_connector.target_kind
@@ -346,8 +353,8 @@ module "audit_log_service_connector" {
 module "service_events_service_connector" {
   source                = "./modules/service-connector"
   tenancy_ocid          = var.tenancy_ocid
-  compartment_id        = module.vdms_compartment.compartment_id
-  source_compartment_id = module.vdms_compartment.compartment_id
+  compartment_id        = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
+  source_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
   display_name          = local.service_events_service_connector.display_name
   source_kind           = local.service_events_service_connector.source_kind
   target_kind           = local.service_events_service_connector.target_kind
@@ -359,13 +366,13 @@ module "service_events_service_connector" {
 
 locals {
   svc_conn_policy_std_statements = [
-    "Allow any-user to read log-content in compartment id ${module.home_compartment.compartment_id} where all {request.principal.type='serviceconnector'}",
-    "Allow any-user to read log-groups in compartment id ${module.home_compartment.compartment_id} where all {request.principal.type='serviceconnector'}",
-    "Allow any-user to {STREAM_READ, STREAM_CONSUME} in compartment id ${module.vdms_compartment.compartment_id} where all {request.principal.type='serviceconnector', target.stream.id='${module.service_event_stream.stream_id}', request.principal.compartment.id='${module.vdms_compartment.compartment_id}'}",
+    "Allow any-user to read log-content in compartment id ${var.home_region_deployment ? module.home_compartment[0].compartment_id : var.multi_region_home_compartment_ocid} where all {request.principal.type='serviceconnector'}",
+    "Allow any-user to read log-groups in compartment id ${var.home_region_deployment ? module.home_compartment[0].compartment_id : var.multi_region_home_compartment_ocid} where all {request.principal.type='serviceconnector'}",
+    "Allow any-user to {STREAM_READ, STREAM_CONSUME} in compartment id ${var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid} where all {request.principal.type='serviceconnector', target.stream.id='${module.service_event_stream.stream_id}', request.principal.compartment.id='${var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid}'}",
   ]
   svc_conn_policy_log_comp_statements = var.enable_logging_compartment ? [
-    "Allow any-user to manage objects in compartment id ${module.logging_compartment[0].compartment_id} where all {request.principal.type='serviceconnector', target.bucket.name='*_archive', request.principal.compartment.id='${module.vdms_compartment.compartment_id}'}",
-    "Allow any-user to manage objects in compartment id ${module.logging_compartment[0].compartment_id} where all {request.principal.type='serviceconnector', any{target.bucket.name='${local.audit_log_bucket.name}', target.bucket.name='${local.default_log_bucket.name}', target.bucket.name='${local.service_event_log_bucket.name}'}, request.principal.compartment.id='${module.vdms_compartment.compartment_id}'}",
+    "Allow any-user to manage objects in compartment id ${var.home_region_deployment ? module.logging_compartment[0].compartment_id : var.multi_region_logging_compartment_ocid} where all {request.principal.type='serviceconnector', target.bucket.name='*_archive', request.principal.compartment.id='${var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid}'}",
+    "Allow any-user to manage objects in compartment id ${var.home_region_deployment ? module.logging_compartment[0].compartment_id : var.multi_region_logging_compartment_ocid} where all {request.principal.type='serviceconnector', any{target.bucket.name='${local.audit_log_bucket.name}', target.bucket.name='${local.default_log_bucket.name}', target.bucket.name='${local.service_event_log_bucket.name}'}, request.principal.compartment.id='${var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid}'}",
   ] : []
 
   service_connector_policy = {
@@ -378,7 +385,8 @@ locals {
 module "service_connector_policy" {
   source = "./modules/policies"
 
-  compartment_ocid = module.home_compartment.compartment_id
+  count            = var.home_region_deployment ? 1 : 0
+  compartment_ocid = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.multi_region_home_compartment_ocid
   policy_name      = local.service_connector_policy.name
   description      = local.service_connector_policy.description
   statements       = local.service_connector_policy.statements
@@ -386,13 +394,13 @@ module "service_connector_policy" {
 
 module "cloud_guard" {
   source = "./modules/cloud-guard"
-
+  count                                      = var.home_region_deployment ? 1 : 0
   tenancy_ocid                               = var.tenancy_ocid
   region                                     = var.region
   status                                     = local.cloud_guard.status
-  compartment_id                             = var.cloud_guard_target_tenancy ? var.tenancy_ocid : module.home_compartment.compartment_id
+  compartment_id                             = var.cloud_guard_target_tenancy ? var.tenancy_ocid : var.home_region_deployment ? module.home_compartment[0].compartment_id : var.multi_region_home_compartment_ocid
   display_name                               = local.cloud_guard.display_name
-  target_resource_id                         = var.cloud_guard_target_tenancy ? var.tenancy_ocid : module.home_compartment.compartment_id
+  target_resource_id                         = var.cloud_guard_target_tenancy ? var.tenancy_ocid : var.home_region_deployment ? module.home_compartment[0].compartment_id : var.multi_region_home_compartment_ocid
   target_resource_type                       = local.cloud_guard.target_resource_type
   description                                = local.cloud_guard.description
   configuration_detector_recipe_display_name = local.cloud_guard.configuration_detector_recipe_display_name
@@ -437,7 +445,8 @@ locals {
 module "vss_policy" {
   source = "./modules/policies"
 
-  compartment_ocid = module.home_compartment.compartment_id
+  count            = var.home_region_deployment ? 1 : 0
+  compartment_ocid = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.multi_region_home_compartment_ocid
   policy_name      = local.vss_policy.name
   description      = local.vss_policy.description
   statements       = local.vss_policy.statements
@@ -446,8 +455,8 @@ module "vss_policy" {
 module "vss" { # WAS THE SPEC ASKING TO CREATE A VSS TARGET AS WELL?
   source = "./modules/vss"
 
-  compartment_ocid                           = module.vdms_compartment.compartment_id
-  target_compartment_ocid                    = module.vdms_compartment.compartment_id
+  compartment_ocid                           = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
+  target_compartment_ocid                    = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
   host_scan_recipe_agent_settings_scan_level = local.vss.host_scan_recipe_agent_settings_scan_level
   host_scan_recipe_port_settings_scan_level  = local.vss.host_scan_recipe_port_settings_scan_level
   agent_cis_benchmark_settings_scan_level    = local.vss.agent_cis_benchmark_settings_scan_level
@@ -465,10 +474,10 @@ locals {
     description = "OCI SCCA Landing Zone OS Management Service Dynamic Group Policy"
 
     statements = [
-      # "Allow dynamic-group ${module.osms_dynamic_group.name} to read instance-family in compartment ${module.home_compartment.compartment_name}",
-      # "Allow dynamic-group ${module.osms_dynamic_group.name} to use osms-managed-instances in compartment ${module.home_compartment.compartment_name}"
-      "Allow dynamic-group ${local.identity_domain.dynamic_groups.osms_dynamic_group.dynamic_group_name} to read instance-family in compartment ${module.home_compartment.compartment_name}",
-      "Allow dynamic-group ${local.identity_domain.dynamic_groups.osms_dynamic_group.dynamic_group_name} to use osms-managed-instances in compartment ${module.home_compartment.compartment_name}"
+      # "Allow dynamic-group ${module.osms_dynamic_group.name} to read instance-family in compartment ${module.home_compartment[0].compartment_name}",
+      # "Allow dynamic-group ${module.osms_dynamic_group.name} to use osms-managed-instances in compartment ${module.home_compartment[0].compartment_name}"
+      "Allow dynamic-group ${local.identity_domain.dynamic_groups.osms_dynamic_group.dynamic_group_name} to read instance-family in compartment ${var.home_compartment_name}-${local.region_key[0]}-${var.resource_label}",
+      "Allow dynamic-group ${local.identity_domain.dynamic_groups.osms_dynamic_group.dynamic_group_name} to use osms-managed-instances in compartment ${var.home_compartment_name}-${local.region_key[0]}-${var.resource_label}"
     ]
   }
 
@@ -485,6 +494,7 @@ locals {
 module "osms_policy" {
   source = "./modules/policies"
 
+  count            = var.home_region_deployment ? 1 : 0
   compartment_ocid = var.tenancy_ocid
   policy_name      = local.osms_policy.name
   description      = local.osms_policy.description
@@ -494,7 +504,8 @@ module "osms_policy" {
 module "osms_dg_policy" {
   source = "./modules/policies"
 
-  compartment_ocid = module.home_compartment.compartment_id
+  count            = var.home_region_deployment ? 1 : 0
+  compartment_ocid = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.multi_region_home_compartment_ocid
   policy_name      = local.osms_dg_policy.name
   description      = local.osms_dg_policy.description
   statements       = local.osms_dg_policy.statements
@@ -535,9 +546,6 @@ module "os_write_log" {
   log_source_service  = local.os_write_log.log_source_service
   log_source_type     = local.os_write_log.log_source_type
 
-  providers = {
-    oci = oci.home_region
-  }
   depends_on = [module.service_event_log_bucket]
 }
 
@@ -552,9 +560,6 @@ module "os_read_log" {
   log_source_service  = local.os_read_log.log_source_service
   log_source_type     = local.os_read_log.log_source_type
 
-  providers = {
-    oci = oci.home_region
-  }
   depends_on = [module.service_event_log_bucket]
 }
 
@@ -592,6 +597,8 @@ module "event_log" {
   log_source_resource = local.event_log.log_source_resource
   log_source_service  = local.event_log.log_source_service
   log_source_type     = local.event_log.log_source_type
+
+  depends_on = [module.service_event_stream]
 }
 
 resource "time_sleep" "first_log_delay" {
@@ -626,7 +633,7 @@ module "firewall_traffic_log" {
 module "bastion" {
   source = "./modules/bastion"
 
-  compartment_id                       = module.vdms_compartment.compartment_id
+  compartment_id                       = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
   target_subnet_id                     = local.bastion.target_subnet_id
   bastion_client_cidr_block_allow_list = local.bastion.bastion_client_cidr_block_allow_list
   bastion_name                         = local.bastion.name

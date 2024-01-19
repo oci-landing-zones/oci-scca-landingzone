@@ -1,3 +1,8 @@
+# ###################################################################################################### #
+# Copyright (c) 2023 Oracle and/or its affiliates, All rights reserved.                                  #
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl. #
+# ###################################################################################################### #
+
 terraform {
   required_providers {
     oci = {
@@ -32,6 +37,7 @@ locals {
   }
 }
 resource "oci_identity_policy" "policy" {
+  count          = var.home_region_deployment ? 1 : 0
   compartment_id = var.tenancy_ocid
   description    = local.la_root_policy.description
   name           = local.la_root_policy.name

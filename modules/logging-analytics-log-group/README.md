@@ -36,3 +36,11 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_log_group_ocid"></a> [log\_group\_ocid](#output\_log\_group\_ocid) | The OCID of log group created |
+
+## License
+
+Copyright (c) 2023 Oracle and/or its affiliates.
+
+Licensed under the Universal Permissive License (UPL), Version 1.0.
+
+See [LICENSE](../../LICENSE) for more details.

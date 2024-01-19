@@ -7,7 +7,7 @@ This configuration guide will detail the required and available configurations n
 
 ## Prerequisites
 
-This landing zone is designed to be deployed to a tenancy owned by the individual Mission Owner. The user deploying the Landing Zone must be a member of the Administrators group for the tenancy. The tenancy must have the required Resource Limits and have the Logging Analytics feature turned on. Detailed information on these prerequisites, how to check that your tenancy meets them, and enable needed features can be found in the [Implementation Document](Implementation.md).
+This landing zone is designed to be deployed to a tenancy owned by the individual Mission Owner. The user deploying the Landing Zone must be a member of the Administrators group for the tenancy. The tenancy must have the required Resource Limits and have the Logging Analytics feature turned on. Detailed information on these prerequisites, how to check that your tenancy meets them, and enable needed features can be found in the [Implementation Document](IMPLEMENTATION.md).
 
 ## What we deploy
 
@@ -46,6 +46,7 @@ This is the basic information Terraform needs to connect to OCI. If you deploy t
 * [workload_name](VARIABLES.md#input_workload_name) - A name for the sample workload. Each workload in the LZ should have a unique name.
 * [resource_label](VARIABLES.md#input_resource_label) - Some resources, such as policies and CloudGuard configurations, need to be deployed globally to the tenancy. This is a short (3-4 char) string appended to resource names to distinguish them in case more than one Landing Zone is deployed. This should be unique per tenancy. 
 * [bastion_client_cidr_block_allow_list](VARIABLES.md#input_bastion_client_cidr_block_allow_list) - A list of strings, describing CIDR blocks allowed to connect to the Bastion deployed in the sample Workload network. 
+* [home_region_deployment](VARIABLES.md#input_home_region_deployment) - A boolean to indicate whether the current stack deployment is to the home region or a non-home region.
 
 ### Deployment
 
@@ -58,13 +59,13 @@ These configurations will be enough to deploy a landing zone with the default co
 
 ![Architecture](</images/SCCA-CA.png> "Architecture")
 
-This architecture diagram illustrates the resources SCCA LZ deployes and the details for most of these resources is listed below. 
+This architecture diagram illustrates the resources SCCA LZ deploys and the details for most of these resources is listed below. 
 
 
 ## Compartment
 
 For organization and access control purposes, resources created by the Secure Landing Zone are grouped together logically using OCI's Compartments feature. These compartments are organized as follows:
-* **Home Compartment**:  Most resources created by the Landing Zone are created within this compartment, or sub-compartments within it. It’s name is set by [home_compartment_name](VARIABLES.md#input_home_compartment_name) variable. Default is _"OCI-SCCA-LZ-Home"_. This name must be unique within the tenancy.
+* **Home Compartment**:  Most resources created by the Landing Zone are created within this compartment, or sub-compartments within it. Its name is set by [home_compartment_name](VARIABLES.md#input_home_compartment_name) variable. Default is _"OCI-SCCA-LZ-Home"_. This name must be unique within the tenancy.
     * **VDSS Compartment**: All core network resources are placed here. It's name is set by [vdss_compartment_name](VARIABLES.md#input_vdss_compartment_name) variable. Default is _"OCI-SCCA-LZ-VDSS"_. This name must be unique within the LZ. 
     * **VDMS Compartment**: Security resources are placed here. It's name is set by [vdms_compartment_name](VARIABLES.md#input_vdms_compartment_name) variable. Default is _"OCI-SCCA-LZ-VDMS"_. This name must be unique within the LZ. 
     * **Workload Compartment**: This is the compartment for the initial workload. It's name will start with _"OCI-SCCA-LZ-"_, and have the [Workload Name](VARIABLES.md#input_workload_name) and [Mission Owner Key](VARIABLES.md#input_mission_owner_key) appended to it. 
@@ -276,7 +277,7 @@ This is a "Spoke" network for workload applications.
 * Connected to that subnet is a Load Balancer with WAF enabled, for use by any workload applications.
 
 #### Workload DB Network:
-This is a an additional "Spoke" network for workload applications to allow greater isolation for potentially sensitive databases. 
+This is an additional "Spoke" network for workload applications to allow greater isolation for potentially sensitive databases. 
 * This network is named "OCI-SCCA-LZ-Workload-DB-VCN-**workload_name**-**region**".
 * It is found in the Workload ("OCI-SCCA-LZ-**workload_name**") compartment.
 * Like all "Spoke" networks, it is only connected to the DRG.
@@ -299,8 +300,40 @@ Each workload receives a small set of monitoring Alarms per workload as well as 
 * [enable_workload_warning_alarm](VARIABLES.md#input_enable_workload_warning_alarm) - This enables all workload warning alarms on deployment of LZ. (Boolean) Default `false`
 * [enable_workload_critical_alarm](VARIABLES.md#input_enable_workload_critical_alarm) - This enables all workload critical alarms on deployment of LZ. (Boolean) Default `false`
 
+## Multi-Region
+The Landing Zone can be deployed in a non-home region as long as there has already been a successful Landing Zone deployment in the home region and the non-home region is a designated paired region with the home region.
+
+This deployment can be controlled using the [home_region_deployment](VARIABLES.md#input_home_region_deployment) variable. This variable is set to `true` by default, which deploys all standard Landing Zone compartments and resources in the home region.
+
+If the [home_region_deployment](VARIABLES.md#input_home_region_deployment) variable is set to `false`, then the Landing Zone is configured for a non-home region deployment. This creates all the standard Landing Zone resources previously deployed in the home region, **except** identity resources such as compartments, policies, and domains. This is because identity resources can only be created in the home region.
+
+To deploy to a non-home region using the Terraform CLI, follow steps 1-3 in the [Implementation Guide](IMPLEMENTATION.md) to create a new Landing Zone stack.
+
+In the terraform.tfvars file, set **home_region_deployment** to `false` and set **region** to the current, non-home region you are intending to deploy to. This is often the same region as the [secondary_region](VARIABLES.md#input_secondary_region).
+
+Next, ensure you have access to the OCI Console, and log into it. Navigate to the Compartments section by searching "Compartments" in the top search bar. Find the compartment you previously deployed named "OCI-SCCA-LZ-Home" with your resource_label appended to it, and click on it.
+
+For each compartment, you must copy its OCID value into its corresponding multi-region compartment OCID variable in the terraform.tfvars file. Follow the remaining steps listed in the [Implementation Guide](IMPLEMENTATION.md).
+
+To deploy to a non-home region using Resource Manager, follow the instructions in the [Implementation Guide](IMPLEMENTATION.md). When the startup wizard prompts for Multi-Region variables, set **home_region_deployment** to `false` and set **region** to the current, non-home region you are intending to deploy to. This is often the same region as the [secondary_region](VARIABLES.md#input_secondary_region). In addition, copy the compartment OCID values for each compartment into its corresponding configuration variable. 
+
+#### Multi-Region configurations
+* [multi_region_home_compartment_ocid](VARIABLES.md#input_multi_region_home_compartment_ocid) - OCID of the home compartment created in home region for multi-region deployment.
+* [multi_region_logging_compartment_ocid](VARIABLES.md#input_multi_region_logging_compartment_ocid) - OCID of the logging compartment created in home region for multi-region deployment.
+* [multi_region_vdss_compartment_ocid](VARIABLES.md#input_multi_region_vdss_compartment_ocid) - OCID of the VDSS compartment created in home region for multi-region deployment.
+* [multi_region_vdms_compartment_ocid](VARIABLES.md#input_multi_region_vdms_compartment_ocid) - OCID of the VDMS compartment created in home region for multi-region deployment.
+* [multi_region_workload_compartment_ocid](VARIABLES.md#input_multi_region_workload_compartment_ocid) - OCID of the workload compartment created in home region for multi-region deployment.
+
 ## Terraform Outputs
 
 On successful deployment of the Landing Zone, Terraform will output the following values:
 * [bastion\_ocid](VARIABLES.md#output\_bastion\_ocid) - The ID of the Bastion configured in the Workload network. 
 * [policy\_to\_add](VARIABLES.md#output\_policy\_to\_add) - If the Remote logging option is selected (see [Logging](#remote-logging-configuration)), this will contain the text of the policy the remote tenant will need to add to their tenancy to allow logging to their buckets from the Landing Zone. 
+
+## License
+
+Copyright (c) 2023 Oracle and/or its affiliates.
+
+Licensed under the Universal Permissive License (UPL), Version 1.0.
+
+See [LICENSE](./LICENSE) for more details.

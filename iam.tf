@@ -1,3 +1,8 @@
+# ###################################################################################################### #
+# Copyright (c) 2023 Oracle and/or its affiliates, All rights reserved.                                  #
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl. #
+# ###################################################################################################### #
+
 locals {
   identity_domain = {
     domain_description        = "OCI SCCA Landing Zone Identity Domain"
@@ -9,7 +14,7 @@ locals {
     dynamic_groups = {
       osms_dynamic_group = {
         dynamic_group_name = "OCI-SCCA-LZ-Instance-Group-${var.resource_label}"
-        matching_rule      = "Any { instance.compartment.id = '${module.vdms_compartment.compartment_id}', instance.compartment.id = '${module.vdss_compartment.compartment_id}', instance.compartment.id = '${module.workload_compartment.compartment_id}', instance.compartment.id = '${module.home_compartment.compartment_id}'}"
+        matching_rule      = "Any { instance.compartment.id = '${var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid}', instance.compartment.id = '${var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.multi_region_vdss_compartment_ocid}', instance.compartment.id = '${var.home_region_deployment ? module.workload_compartment[0].compartment_id : var.multi_region_workload_compartment_ocid}', instance.compartment.id = '${var.home_region_deployment ? module.home_compartment[0].compartment_id : var.multi_region_home_compartment_ocid}'}"
       }
     }
   }
@@ -17,7 +22,8 @@ locals {
 
 module "identity_domain" {
   source                    = "./modules/identity-domain"
-  compartment_id            = module.vdms_compartment.compartment_id
+  count                     = var.home_region_deployment ? 1 : 0
+  compartment_id            = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
   domain_description        = local.identity_domain.domain_description
   domain_display_name       = local.identity_domain.domain_display_name
   domain_license_type       = local.identity_domain.domain_license_type
@@ -35,7 +41,7 @@ locals {
     description = "OCI SCCA Landing Zone Bucket Replication Service Policy"
 
     statements = [
-      "Allow service objectstorage-${var.region}, objectstorage-${var.secondary_region} to manage object-family in compartment ${module.logging_compartment[0].compartment_name}"
+      "Allow service objectstorage-${var.region}, objectstorage-${var.secondary_region} to manage object-family in compartment ${var.logging_compartment_name}-${local.region_key[0]}-${var.resource_label}"
     ]
   }
 
@@ -109,9 +115,9 @@ locals {
     name        = "OCI-SCCA-LZ-VDSS-Policy"
     description = "This account corresponds to all transit services corresponding to the DISA SCCA Virtual Data Center Security Stack (VDSS)"
     statements = [
-      "Allow group ${local.identity_domain.domain_display_name}/VDSSAdmin to manage all-resources in compartment ${module.vdss_compartment.compartment_name}",
-      "Allow group ${local.identity_domain.domain_display_name}/VDSSAdmin to use key-delegate in compartment ${module.vdms_compartment.compartment_name} where target.key.id = ${module.master_encryption_key.key_ocid}",
-      "Allow group ${local.identity_domain.domain_display_name}/VDSSAdmin to manage virtual-network-family in compartment ${module.home_compartment.compartment_name}",
+      "Allow group ${local.identity_domain.domain_display_name}/VDSSAdmin to manage all-resources in compartment ${var.vdss_compartment_name}-${local.region_key[0]}-${var.resource_label}",
+      "Allow group ${local.identity_domain.domain_display_name}/VDSSAdmin to use key-delegate in compartment ${var.vdms_compartment_name}-${local.region_key[0]}-${var.resource_label} where target.key.id = ${module.master_encryption_key.key_ocid}",
+      "Allow group ${local.identity_domain.domain_display_name}/VDSSAdmin to manage virtual-network-family in compartment ${var.home_compartment_name}-${local.region_key[0]}-${var.resource_label}",
     ]
   }
 
@@ -119,15 +125,15 @@ locals {
     name        = "OCI-SCCA-LZ-VDMS-Policy"
     description = "This account corresponds to all of the core services required for managing the operations of the environment, the Virtual Data Center Management Stack (VDMS)"
     statements = [
-      "Allow group ${local.identity_domain.domain_display_name}/VDMSAdmin to manage all-resources in compartment ${module.vdms_compartment.compartment_name}",
-      "Allow group ${local.identity_domain.domain_display_name}/VDMSAdmin to read threat-intel-family in compartment ${module.home_compartment.compartment_name}",
-      "Allow group ${local.identity_domain.domain_display_name}/VDMSAdmin to manage vss-family in compartment ${module.home_compartment.compartment_name}",
-      "Allow group ${local.identity_domain.domain_display_name}/VDMSAdmin to manage cloudevents-rules in compartment ${module.home_compartment.compartment_name}",
-      "Allow group ${local.identity_domain.domain_display_name}/VDMSAdmin to manage bastion-family in compartment ${module.home_compartment.compartment_name}",
-      "Allow group ${local.identity_domain.domain_display_name}/VDMSAdmin to manage virtual-network-family in compartment ${module.home_compartment.compartment_name}",
-      "Allow group ${local.identity_domain.domain_display_name}/VDMSAdmin to read instance-family in compartment ${module.home_compartment.compartment_name}",
-      "Allow group ${local.identity_domain.domain_display_name}/VDMSAdmin to read instance-agent-plugins in compartment ${module.home_compartment.compartment_name}",
-      "Allow group ${local.identity_domain.domain_display_name}/VDMSAdmin to inspect work-requests in compartment ${module.home_compartment.compartment_name}"
+      "Allow group ${local.identity_domain.domain_display_name}/VDMSAdmin to manage all-resources in compartment ${var.vdms_compartment_name}-${local.region_key[0]}-${var.resource_label}",
+      "Allow group ${local.identity_domain.domain_display_name}/VDMSAdmin to read threat-intel-family in compartment ${var.home_compartment_name}-${local.region_key[0]}-${var.resource_label}",
+      "Allow group ${local.identity_domain.domain_display_name}/VDMSAdmin to manage vss-family in compartment ${var.home_compartment_name}-${local.region_key[0]}-${var.resource_label}",
+      "Allow group ${local.identity_domain.domain_display_name}/VDMSAdmin to manage cloudevents-rules in compartment ${var.home_compartment_name}-${local.region_key[0]}-${var.resource_label}",
+      "Allow group ${local.identity_domain.domain_display_name}/VDMSAdmin to manage bastion-family in compartment ${var.home_compartment_name}-${local.region_key[0]}-${var.resource_label}",
+      "Allow group ${local.identity_domain.domain_display_name}/VDMSAdmin to manage virtual-network-family in compartment ${var.home_compartment_name}-${local.region_key[0]}-${var.resource_label}",
+      "Allow group ${local.identity_domain.domain_display_name}/VDMSAdmin to read instance-family in compartment ${var.home_compartment_name}-${local.region_key[0]}-${var.resource_label}",
+      "Allow group ${local.identity_domain.domain_display_name}/VDMSAdmin to read instance-agent-plugins in compartment ${var.home_compartment_name}-${local.region_key[0]}-${var.resource_label}",
+      "Allow group ${local.identity_domain.domain_display_name}/VDMSAdmin to inspect work-requests in compartment ${var.home_compartment_name}-${local.region_key[0]}-${var.resource_label}"
     ]
   }
 
@@ -135,24 +141,28 @@ locals {
     name        = "OCI-SCCA-LZ-Workload-Policy"
     description = "This account is required for the management of the Mission Application workloads."
     statements = [
-      "Allow group ${local.identity_domain.domain_display_name}/WorkloadAdmin to manage all-resources in compartment ${module.workload_compartment.compartment_name}",
-      "Allow group ${local.identity_domain.domain_display_name}/WorkloadAdmin to use key-delegate in compartment ${module.vdms_compartment.compartment_name} where target.key.id = ${module.master_encryption_key.key_ocid}"
+      "Allow group ${local.identity_domain.domain_display_name}/WorkloadAdmin to manage all-resources in compartment OCI-SCCA-LZ-${var.workload_name}-${var.mission_owner_key}",
+      "Allow group ${local.identity_domain.domain_display_name}/WorkloadAdmin to use key-delegate in compartment ${var.vdms_compartment_name}-${local.region_key[0]}-${var.resource_label} where target.key.id = ${module.master_encryption_key.key_ocid}"
     ]
   }
 }
 
 module "bucket_replication_policy" {
-  count            = var.enable_logging_compartment ? 1 : 0
+  count            = var.home_region_deployment && var.enable_logging_compartment ? 1 : 0
   source           = "./modules/policies"
-  compartment_ocid = module.home_compartment.compartment_id
+  compartment_ocid = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.multi_region_home_compartment_ocid
   policy_name      = local.bucket_replication_policy.name
   description      = local.bucket_replication_policy.description
   statements       = local.bucket_replication_policy.statements
+  depends_on = [
+    module.logging_compartment[0]
+  ]
 }
 
 module "vault_policy" {
   source           = "./modules/policies"
-  compartment_ocid = module.home_compartment.compartment_id
+  count            = var.home_region_deployment ? 1 : 0
+  compartment_ocid = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.multi_region_home_compartment_ocid
   policy_name      = local.vault_policy.name
   description      = local.vault_policy.description
   statements       = local.vault_policy.statements
@@ -160,7 +170,8 @@ module "vault_policy" {
 
 module "key_policy" {
   source           = "./modules/policies"
-  compartment_ocid = module.home_compartment.compartment_id
+  count            = var.home_region_deployment ? 1 : 0
+  compartment_ocid = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.multi_region_home_compartment_ocid
   policy_name      = local.key_policy.name
   description      = local.key_policy.description
   statements       = local.key_policy.statements
@@ -169,18 +180,20 @@ module "key_policy" {
 
 module "cloud_guard_policy" {
   source           = "./modules/policies"
+  count            = var.home_region_deployment ? 1 : 0
   compartment_ocid = var.tenancy_ocid
   policy_name      = local.cloud_guard_policy.name
   description      = local.cloud_guard_policy.description
   statements       = local.cloud_guard_policy.statements
   depends_on = [
-    module.home_compartment
+    module.home_compartment[0]
   ]
 }
 
 module "vdss_policy" {
   source           = "./modules/policies"
-  compartment_ocid = module.home_compartment.compartment_id
+  count            = var.home_region_deployment ? 1 : 0
+  compartment_ocid = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.multi_region_home_compartment_ocid
   policy_name      = local.vdss_policy.name
   description      = local.vdss_policy.description
   statements       = local.vdss_policy.statements
@@ -188,7 +201,8 @@ module "vdss_policy" {
 
 module "vdms_policy" {
   source           = "./modules/policies"
-  compartment_ocid = module.home_compartment.compartment_id
+  count            = var.home_region_deployment ? 1 : 0
+  compartment_ocid = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.multi_region_home_compartment_ocid
   policy_name      = local.vdms_policy.name
   description      = local.vdms_policy.description
   statements       = local.vdms_policy.statements
@@ -196,14 +210,15 @@ module "vdms_policy" {
 
 module "workload_policy" {
   source           = "./modules/policies"
-  compartment_ocid = module.home_compartment.compartment_id
+  count            = var.home_region_deployment ? 1 : 0
+  compartment_ocid = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.multi_region_home_compartment_ocid
   policy_name      = local.workload_policy.name
   description      = local.workload_policy.description
   statements       = local.workload_policy.statements
 }
 
 module "remote_tenancy_policy" {
-  count            = var.enable_logging_compartment ? 0 : 1
+  count            = var.home_region_deployment && !var.enable_logging_compartment ? 1 : 0
   source           = "./modules/policies"
   compartment_ocid = var.tenancy_ocid
   policy_name      = local.remote_tenancy_policy.name
