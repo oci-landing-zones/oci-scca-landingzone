@@ -9,8 +9,9 @@ locals {
     domain_display_name       = "OCI-SCCA-LZ-Domain-${local.region_key[0]}-${var.resource_label}"
     domain_license_type       = "premium"
     domain_is_hidden_on_login = false
-
-    group_names = ["VDSSAdmin", "VDMSAdmin", "WorkloadAdmin"]
+    vdss_admin_group_name     = "VDSSAdmin"
+    vdms_admin_group_name     = "VDMSAdmin"
+    workload_admin_group_name = "WorkloadAdmin"
     dynamic_groups = {
       osms_dynamic_group = {
         dynamic_group_name = "OCI-SCCA-LZ-Instance-Group-${var.resource_label}"
@@ -31,8 +32,31 @@ module "identity_domain" {
   domain_home_region        = var.region
   enable_domain_replication = var.enable_domain_replication
   domain_replica_region     = var.secondary_region
-  group_names               = local.identity_domain.group_names
-  dynamic_groups            = local.identity_domain.dynamic_groups
+}
+
+module "vdss_admin_group" {
+  source                   = "./modules/non-default-domain-group"
+  idcs_endpoint            = module.identity_domain[0].domain.url
+  group_display_name       = local.identity_domain.vdss_admin_group_name
+}
+
+module "vdms_admin_group" {
+  source                   = "./modules/non-default-domain-group"
+  idcs_endpoint            = module.identity_domain[0].domain.url
+  group_display_name       = local.identity_domain.vdms_admin_group_name
+}
+
+module "workload_admin_group" {
+  source                   = "./modules/non-default-domain-group"
+  idcs_endpoint            = module.identity_domain[0].domain.url
+  group_display_name       = local.identity_domain.workload_admin_group_name
+}
+
+module "osms_dynamic_group" {
+  source                   = "./modules/identity-domain-dynamic-group"
+  idcs_endpoint            = module.identity_domain[0].domain.url
+  group_display_name       = local.identity_domain.dynamic_groups.osms_dynamic_group.dynamic_group_name
+  matching_rule            = local.identity_domain.dynamic_groups.osms_dynamic_group.matching_rule
 }
 
 locals {
