@@ -7,6 +7,7 @@
 # Create DRG Resources
 # -----------------------------------------------------------------------------
 locals {
+  workload_additionalsubnets_cidr_blocks = var.workload_additionalsubnets_cidr_blocks != [] ? var.workload_additionalsubnets_cidr_blocks : []
   drg = {
     drg_display_name = "OCI-SCCA-LZ-VDSS-DRG-HUB-${local.region_key[0]}"
     drg_vcn_attachments = {
@@ -161,9 +162,7 @@ locals {
       }
     }
   }
-
-  vdss_route_table_ingress = {
-    route_table_display_name = "VDSS-VCN-Ingress"
+  vdss_route_table_rules = {
     route_rules = {
       "all-to-nfw" = {
         network_entity_id = module.network_firewall.firewall_ip_id
@@ -179,13 +178,23 @@ locals {
         network_entity_id = module.network_firewall.firewall_ip_id
         destination       = data.oci_core_services.all_oci_services.services[0]["cidr_block"]
         destination_type  = "SERVICE_CIDR_BLOCK"
+      }
+    }
+    route_rules_workload = {
+      for index, route in local.workload_additionalsubnets_cidr_blocks : "workload-rule-${index}" => {
+        network_entity_id = module.network_firewall.firewall_ip_id
+        destination       = route
+        destination_type  = "CIDR_BLOCK"
       }
     }
   }
 
-  vdss_route_table_default = {
-    is_default               = true
-    route_table_display_name = "VDSS-Default"
+  vdss_route_table_entry = {
+    route_table_display_name = "VDSS-VCN-Ingress"
+    route_rules              = merge(local.vdss_route_table_rules.route_rules, local.vdss_route_table_rules.route_rules_workload)
+  }
+  
+  vdss_route_table_rules_default = {
     route_rules = {
       "all-to-nfw" = {
         network_entity_id = module.network_firewall.firewall_ip_id
@@ -203,6 +212,19 @@ locals {
         destination_type  = "SERVICE_CIDR_BLOCK"
       }
     }
+    route_rules_workload = {
+      for index, route in local.workload_additionalsubnets_cidr_blocks : "workload-rule-${index}" => {
+        network_entity_id = module.network_firewall.firewall_ip_id
+        destination       = route
+        destination_type  = "CIDR_BLOCK"
+      }
+    }
+  }
+
+  vdss_route_table_entry_default = {
+    route_table_display_name = "VDSS-Default"
+    is_default               = true
+    route_rules              = merge(local.vdss_route_table_rules_default.route_rules, local.vdss_route_table_rules_default.route_rules_workload)
   }
 
   vdss_route_table_sub2 = {
@@ -279,9 +301,9 @@ module "vdss_route_table_default" {
   source = "./modules/route-table"
 
   compartment_id           = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.multi_region_vdss_compartment_ocid
-  route_table_display_name = local.vdss_route_table_default.route_table_display_name
-  is_default               = local.vdss_route_table_default.is_default
-  route_rules              = local.vdss_route_table_default.route_rules
+  route_table_display_name = local.vdss_route_table_entry_default.route_table_display_name
+  is_default               = local.vdss_route_table_entry_default.is_default
+  route_rules              = local.vdss_route_table_entry_default.route_rules
   vcn_id                   = module.vdss_network.vcn_id
   default_route_table_id   = module.vdss_network.vcn.default_route_table_id
 }
@@ -290,8 +312,8 @@ module "vdss_route_table_ingress" {
   source = "./modules/route-table"
 
   compartment_id           = var.home_region_deployment ? module.vdss_compartment[0].compartment_id : var.multi_region_vdss_compartment_ocid
-  route_table_display_name = local.vdss_route_table_ingress.route_table_display_name
-  route_rules              = local.vdss_route_table_ingress.route_rules
+  route_table_display_name = local.vdss_route_table_entry.route_table_display_name
+  route_rules              = local.vdss_route_table_entry.route_rules
   vcn_id                   = module.vdss_network.vcn_id
 
 }
@@ -349,10 +371,7 @@ locals {
     }
   }
 
-  vdms_route_table_egress = {
-    route_table_display_name = "VDMS-VCN-Egress"
-    subnet_id                = module.vdms_network.subnets[local.vdms_network.subnet_map["OCI-SCCA-LZ-VDMS-SUB1"].name]
-    subnet_name              = "OCI-SCCA-LZ-VDMS-SUB1"
+  vdms_route_table_egress_route_rule ={
     route_rules = {
       "vdss" = {
         network_entity_id = module.drg.drg_id
@@ -375,6 +394,19 @@ locals {
         destination_type  = "SERVICE_CIDR_BLOCK"
       }
     }
+    route_rules_workload = {
+      for index, route in local.workload_additionalsubnets_cidr_blocks : "workload-rule-${index}" => {
+        network_entity_id = module.drg.drg_id
+        destination       = route
+        destination_type  = "CIDR_BLOCK"
+      }
+    }
+  }
+  vdms_route_table_egress = {
+    route_table_display_name = "VDMS-VCN-Egress"
+    subnet_id                = module.vdms_network.subnets[local.vdms_network.subnet_map["OCI-SCCA-LZ-VDMS-SUB1"].name]
+    subnet_name              = "OCI-SCCA-LZ-VDMS-SUB1"
+    route_rules              = merge(local.vdms_route_table_egress_route_rule.route_rules, local.vdms_route_table_egress_route_rule.route_rules_workload)
   }
 
   vdms_load_balancer = {
