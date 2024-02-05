@@ -51,7 +51,7 @@ workload_vcn_cidr_block       = "192.168.2.0/24"
 workload_subnet_cidr_block    = "192.168.2.0/24"
 workload_db_vcn_cidr_block    = "192.168.3.0/24"
 workload_db_subnet_cidr_block = "192.168.3.0/24"
-workload_additionalsubnets_cidr_blocks = [""]
+workload_additionalsubnets_cidr_blocks = []
 
 # MONITORING
 vdms_critical_topic_endpoints = []
@@ -60,6 +60,7 @@ vdss_critical_topic_endpoints = []
 vdss_warning_topic_endpoints = []
 workload_critical_topic_endpoints = []
 workload_warning_topic_endpoints = []
+onboard_log_analytics = false
 
 # SECURITY
 bastion_client_cidr_block_allow_list = []
