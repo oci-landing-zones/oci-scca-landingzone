@@ -10,3 +10,7 @@ output "domain" {
 output "url" {
   value = oci_identity_domain.domain.url
 }
+
+output "name" {
+  value = oci_identity_domain.domain.display_name
+}
