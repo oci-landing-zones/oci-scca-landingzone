@@ -19,6 +19,10 @@
 ## v1.1.0 - 01/19/2024
 - Added support for non-home region SCCA LZ deployment after existing home region SCCA LZ deployment for paired regions. Instructions are included in Configuration Guide.
 
+## v1.2.0 - 01/19/2024
+- Added support for workload expansion
+- Refactored the identity domain group creation modules
+
 
 ## License
 
