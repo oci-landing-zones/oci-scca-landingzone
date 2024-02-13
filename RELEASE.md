@@ -22,6 +22,7 @@
 ## v1.2.0 - 02/14/2024
 - Added support for workload expansion
 - Refactored the identity domain group creation modules
+- Removed the Python Dependencies for identity domain group creation
 
 
 ## License
