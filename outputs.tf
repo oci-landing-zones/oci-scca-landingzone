@@ -15,3 +15,26 @@ output "policy_to_add" {
   admit any-user of tenancy SCCA-LZ-Tenancy to manage object-family in tenancy
   EOT
 }
+output "idcs_endpoint" {
+  value = module.identity_domain[0].domain.url
+}
+
+output "vdms_compartment_name" {
+  value = module.vdms_compartment[0].compartment_name
+}
+
+output "home_compartment_id" {
+  value = module.home_compartment[0].compartment_id
+}
+
+output "drg_id" {
+  value = module.drg.drg_id
+}
+
+output "identity_domain_name" {
+  value = module.identity_domain[0].name
+}
+
+output "key_ocid" {
+  value = module.master_encryption_key.key_ocid
+}

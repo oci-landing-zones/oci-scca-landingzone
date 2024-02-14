@@ -37,3 +37,8 @@ variable "is_vtap_enabled" {
   type    = bool
   default = true
 }
+variable "workload_additionalsubnets_cidr_blocks" {
+  type        = list(string)
+  default     = []
+  description = "A list of subnets cidr blocks in additional workload stack in prod"
+}
