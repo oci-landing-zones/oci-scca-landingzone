@@ -36,25 +36,29 @@ module "identity_domain" {
 
 module "vdss_admin_group" {
   source                   = "./modules/non-default-domain-group"
-  idcs_endpoint            = module.identity_domain[0].domain.url
+  count                    = var.home_region_deployment ? 1 : 0
+  idcs_endpoint            = var.home_region_deployment ? module.identity_domain[0].domain.url : null
   group_display_name       = local.identity_domain.vdss_admin_group_name
 }
 
 module "vdms_admin_group" {
   source                   = "./modules/non-default-domain-group"
-  idcs_endpoint            = module.identity_domain[0].domain.url
+  count                    = var.home_region_deployment ? 1 : 0
+  idcs_endpoint            = var.home_region_deployment ? module.identity_domain[0].domain.url : null
   group_display_name       = local.identity_domain.vdms_admin_group_name
 }
 
 module "workload_admin_group" {
   source                   = "./modules/non-default-domain-group"
-  idcs_endpoint            = module.identity_domain[0].domain.url
+  count                    = var.home_region_deployment ? 1 : 0
+  idcs_endpoint            = var.home_region_deployment ? module.identity_domain[0].domain.url : null
   group_display_name       = local.identity_domain.workload_admin_group_name
 }
 
 module "osms_dynamic_group" {
   source                   = "./modules/identity-domain-dynamic-group"
-  idcs_endpoint            = module.identity_domain[0].domain.url
+  count                    = var.home_region_deployment ? 1 : 0
+  idcs_endpoint            = var.home_region_deployment ? module.identity_domain[0].domain.url : null
   group_display_name       = local.identity_domain.dynamic_groups.osms_dynamic_group.dynamic_group_name
   matching_rule            = local.identity_domain.dynamic_groups.osms_dynamic_group.matching_rule
 }

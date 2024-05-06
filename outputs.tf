@@ -16,15 +16,15 @@ output "policy_to_add" {
   EOT
 }
 output "idcs_endpoint" {
-  value = module.identity_domain[0].domain.url
+  value = var.home_region_deployment ? module.identity_domain[0].domain.url : null
 }
 
 output "vdms_compartment_name" {
-  value = module.vdms_compartment[0].compartment_name
+  value = var.home_region_deployment ? module.vdms_compartment[0].compartment_name : null
 }
 
 output "home_compartment_id" {
-  value = module.home_compartment[0].compartment_id
+  value = var.home_region_deployment ? module.home_compartment[0].compartment_id : null
 }
 
 output "drg_id" {
@@ -32,7 +32,7 @@ output "drg_id" {
 }
 
 output "identity_domain_name" {
-  value = module.identity_domain[0].name
+  value = var.home_region_deployment ? module.identity_domain[0].name : null
 }
 
 output "key_ocid" {
