@@ -30,6 +30,7 @@ variable "enable_vault_replication" {
 variable "master_encryption_key_name" {
   type    = string
   default = "OCI-SCCA-LZ-MSK"
+  description = "Master Encryption Key Name"
 }
 
 // Cloud Guard Variable
