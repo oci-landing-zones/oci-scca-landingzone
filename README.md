@@ -30,9 +30,13 @@ The Oracle SCCA Landing Zone deploys a secure architecture that supports DISA SC
 
 This repository is developed and supported by the Oracle OCI Landing Zones team.
 
-## How to Contribute
+## Contributing
 
-Interested in contributing?  See our contribution [guidelines](CONTRIBUTING.md) for details.
+This project welcomes contributions from the community. Before submitting a pull request, please [review our contribution guide](./CONTRIBUTING.md)
+
+## Security
+
+Please consult the [security guide](./SECURITY.md) for our responsible security vulnerability disclosure process
 
 ## License
 
