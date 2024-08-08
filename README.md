@@ -32,7 +32,7 @@ This repository is developed and supported by the Oracle OCI Landing Zones team.
 
 ## Contributing
 
-This project welcomes contributions from the community. Before submitting a pull request, please [review our contribution guide](./CONTRIBUTING.md)
+Interested in contributing? See our contribution [guidelines](CONTRIBUTING.md) for details.
 
 ## Security
 
