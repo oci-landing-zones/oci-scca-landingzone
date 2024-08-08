@@ -12,6 +12,7 @@ variable "backup_bucket_name" {
 variable "central_vault_name" {
   type    = string
   default = "OCI-SCCA-LZ-Central-Vault"
+  description = "Vault Name"
 }
 
 variable "central_vault_type" {
