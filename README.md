@@ -12,7 +12,7 @@ The Oracle SCCA Landing Zone deploys a secure architecture that supports DISA SC
 ## Deploy Using Oracle Resource Manager
 1. Click to deploy the stack
 
-[![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?zipUrl=https://github.com/oracle-quickstart/oci-scca-landingzone/archive/refs/heads/master.zip)
+[![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?zipUrl=https://github.com/oci-landing-zones/oci-scca-landingzone/archive/refs/heads/master.zip)
 
     If you aren't already signed in, when prompted, enter the tenancy and user credentials. Review and accept the terms and conditions.
 
@@ -44,4 +44,4 @@ Copyright (c) 2023 Oracle and/or its affiliates.
 
 Licensed under the Universal Permissive License (UPL), Version 1.0.
 
-See [LICENSE](./LICENSE) for more details.
+See [LICENSE](./LICENSE.txt) for more details.

@@ -6,6 +6,7 @@
 variable "vdss_vcn_cidr_block" {
   type    = string
   default = "192.168.0.0/24"
+  description = ""
 }
 
 variable "vdms_vcn_cidr_block" {
