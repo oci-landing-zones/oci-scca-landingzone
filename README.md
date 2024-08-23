@@ -1,5 +1,7 @@
 # OCI SCCA Landing Zone
 
+Welcome to the [OCI Landing Zones (OLZ) Community](https://github.com/oci-landing-zones)! OCI Landing Zones simplify onboarding and running on OCI by providing design guidance, best practices, and pre-configured Terraform deployment templates for various architectures and use cases. These enable customers to easily provision a secure tenancy foundation in the cloud along with all required services, and reliably scale as workloads expand.
+
 This repository contains the Landing Zone to deploy to the Oracle Cloud Infrastructure platform that supports the requirements of DISA's SCCA. This landing zone is assembled from modules and templates that users can use in their default configuration or fork this repo and customize for their own use cases.
 
 ## Oracle Enterprise Landing Zone Secure Cloud Computing Architecture (SCCA)
