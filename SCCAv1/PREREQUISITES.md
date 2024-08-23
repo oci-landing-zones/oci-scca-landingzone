@@ -28,7 +28,7 @@ However, there are 2 resource limits that will need to be increased in order to 
 
 Requests to raise these limits can be done through the [request a service limit increase][2] page. 
 
-### Deleting the Stack
+### Deleting the Stack 
 
 Certain resources created by the Landing Zone stack can block deletion of the stack. If testing the stack, it is recommended to not enable these services.
 
@@ -92,7 +92,7 @@ python destroy_lz.py  --help
 
 ## License
 
-Copyright (c) 2024 Oracle and/or its affiliates.
+Copyright (c) 2023 Oracle and/or its affiliates.
 
 Licensed under the Universal Permissive License (UPL), Version 1.0.
 
