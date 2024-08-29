@@ -1,16 +1,6 @@
-# Prerequisites for Deploying Landing Zone
+# Prerequisites for Deploying Managed SCCA Broker Landing Zone
 
-SCCA Landing Zone
-
-## User
-
-The SCCA Landing Zone should be deployed by a user who is a member of the Administrators group for the tenancy.
-
-## Region
-
-The Landing Zone should be deployed to the tenancy's Home Region. 
-
-## Tenancy
+Prerequistes Guide ([Follow PREREQUISITES Guide](./official_documentation/PREREQUISITES.md))
 
 ### Logging Analytics
 
@@ -20,70 +10,16 @@ There will be a dark grey box at the top of the page. On the right hand side of 
 
 ### Resource Limits
 
-Most of the initial resource limits a new tenancy comes with should be sufficient to deploy 1 SCCA Landing Zone. 
-However, there are 2 resource limits that will need to be increased in order to deploy the landing zone: 
-
-1. Monitoring/Alarms:  This limit should be raised to a minimum of 48. 
-2. Service Connector Hub/Service Connector Count:  This limit should be raised to a minimum of 5. 
-
-Requests to raise these limits can be done through the [request a service limit increase][2] page. 
-
-[1]: https://cloud.oracle.com/loganalytics/home "Logging Analytics Home page."
-[2]: https://cloud.oracle.com/support/create?type=limit "Request a service Limit Increase."
-
+Most of the initial resource limits a new tenancy comes with should be sufficient to deploy Managed SCCA LZ, Parent Template, Child Template and Workload Template.
+Resource Limit Managed SCCA LZ ([Follow PREREQUISITES Guide Section 6](./official_documentation/PREREQUISITES.md))
 
 # How to Deploy
 
-Deploy the SCCA Landing Zone using the OCI Resource Manager or the OCI Terraform provider.
-
-## Terraform CLI
-1. Set up API keys to work with your OCI account. Follow the instructions [here](https://docs.oracle.com/en-us/iaas/Content/API/Concepts/apisigningkey.htm).
-
-2. Visit the GitHub page to clone the Terraform template: [REPLACE]()
-
-3. Create a terraform.tfvars file in the root of the repository and populate it with the required variables or override existing variables. 
-
-    Note: An example tfvars file is included for reference. Using this file is the preferred way to run the stack from the CLI, because of the large number of variables to manage. 
-
-4. From the root of the module run the following commands to deploy the terraform.
-   * `terraform init`
-   * `terraform plan`
-   * `terraform apply`
-
-5. Terraform will provision your resources and provide outputs once it completes.
-
-### For more information 
-- [Deploy to OCI using Terraform tutorials](https://docs.oracle.com/en-us/iaas/developer-tutorials/tutorials/tf-provider/01-summary.htm).
-
-- [OCI provider documentation](https://registry.terraform.io/providers/oracle/oci/latest/docs).
-
-## Resource Manager
-
-To deploy using Resource Manager, the stack must be imported into the console in one of 2 ways:
-
-Use the `Deploy to Oracle Cloud` button which will take you directly to OCI Resource Manager if you are logged in. You can skip to step 4 if you use this.
-Or you can select the select the stack manually through the console starting from step 1.
-
-1. From the console home page, navigate to `Developer Services -> Resource Manager -> Stacks`.
-2. Select the compartment you want to create the stack in and select `Create stack`.
-3. Select `Template -> Select Template -> Architecture -> SCCA Landing Zone`.
-4. In Working Directory, make sure the root folder is selected.
-5. In Name, give the stack a name or accept the default.
-6. In Create in Compartment dropdown, select the compartment to store the Stack.
-7. In Terraform Version dropdown, make sure to select 1.0.x at least. Lower Terraform versions are not supported.
-
-After completing the Stack Creation Wizard, the subsequent step prompts for variables values. **For reference on the variable values read the [User Guide](VARIABLES.md#inputs).**
-
-After filling in the required input variables, click next to review the stack values and create the stack.
-
-From the Stack page, use the appropriate buttons to plan/apply/destroy your stack.
-
-### For more information
-- [Resource Manager Overview](https://docs.oracle.com/en-us/iaas/Content/ResourceManager/Concepts/resourcemanager.htm)
+Deploy Managed SCCA LZ via Terraform CLI ([Follow Implementation Guide](./official_documentation/IMPLEMENTATION-GUIDE.md))
 
 ## License
 
-Copyright (c) 2023 Oracle and/or its affiliates.
+Copyright (c) 2024 Oracle and/or its affiliates.
 
 Licensed under the Universal Permissive License (UPL), Version 1.0.
 

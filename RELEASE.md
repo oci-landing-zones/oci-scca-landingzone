@@ -1,33 +1,18 @@
-# Release Notes
+# OCI SCCA Landing Zone Release Notes
 
-## v0.1.0 - 10/12/2022
-- Initial LA release
+## v2.0.0 - 2024-09-29
+- The initial release of version 2.0.0 of the Managed SCCA Broker Landing Zone Landing Zone is designed to deploy an environment that supports Secure Cloud Computing Architecture (SCCA) standards for the U.S. Department of Defense (DoD) in a OCI multi-tenancy environment. 
 
-## v0.1.8 - 03/20/2023
-- Updated iam script to support dynamic groups for creation of osms dynamic group.
-- Added options to replicate identity-domain and object storage buckets.
 
-## v0.1.9 - 03/28/2023
-- Added cleanup script to simplify destroying the stack. Instructions on usage are included in the Prerequisites documentation.
-- Added replication to secondary region for identity domain, buckets, and vault. Updated options in ORM schema.
-- Fixed OSMS issue moving OSMS into identity domain and updating IAM group script to support dynamic group creation.
-- Added Known Issues to Prerequisites documentation and updated variable descriptions.
+- Known Issues
+  * 400-InvalidParameter Error in CreateServiceConnector operation:  This can occasionally happen due to logs taking longer than normal to create while setting up the logging infrastructure.  This will correct itself when the logs finish creating. Later Apply jobs in CLI  `terraform apply` should succeed.
+  * 429-TooManyRequests Error: A tenancy making a large number of OCI API requests in rapid succession may be throttled by the API.  The solution is to wait some period of time (a few minutes) and retry the terraform operation again.  This is rarely seen on `terraform apply` but may occasionally be seen on `terraform destroy` runs, as the delete operations are much faster than create, and Terraform makes many API calls. 
 
-## v0.1.10 - 04/13/2023
-- Added OC2 Realm.
-
-## v1.1.0 - 01/19/2024
-- Added support for non-home region SCCA LZ deployment after existing home region SCCA LZ deployment for paired regions. Instructions are included in Configuration Guide.
-
-## v1.2.0 - 02/14/2024
-- Added support for workload expansion
-- Refactored the identity domain group creation modules
-- Removed the Python Dependencies for identity domain group creation
 
 
 ## License
 
-Copyright (c) 2023 Oracle and/or its affiliates.
+Copyright (c) 2024 Oracle and/or its affiliates.
 
 Licensed under the Universal Permissive License (UPL), Version 1.0.
 

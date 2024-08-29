@@ -1,4 +1,0 @@
-compartment_parent_id     = ""
-compartment_name          = "TEST"
-compartment_description   = "TEST Compartment"
-enable_compartment_delete = true

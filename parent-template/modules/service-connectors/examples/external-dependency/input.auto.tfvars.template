@@ -1,0 +1,61 @@
+# Copyright (c) 2023 Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+#--------------------------------------------------------------------------------------------------------------------------------------
+# 1. Rename this file to <project-name>.auto.tfvars, where <project-name> is a name of your choice.
+# 2. Provide values for "Tenancy Connectivity Variables".
+# 3. Replace <REPLACE-BY-COMPARTMENT-REFERENCE> placeholders by the appropriate compartment references, 
+#    expected to be found in the OCI Object Storage object specified in oci_compartments_dependency.
+# 4. Replace <REPLACE-BY-STREAM-REFERENCE> placeholder by the appropriate stream reference, 
+#    expected to be found in the OCI Object Storage object specified in oci_streams_dependency.
+# 5. Replace <REPLACE-BY-BUCKET-NAME> placeholder by the OCI Object Storage bucket for configuration sharing across modules.
+# 6. Replace <REPLACE-BY-OBJECT-NAME-FOR-COMPARTMENTS> placeholder by the OCI Object Storage object with the compartments references. This 
+#    object is tipically stored in OCI Object Storage by the module that manages compartments.
+# 7. Replace <REPLACE-BY-OBJECT-NAME-FOR-TOPICS> placeholder by the OCI Object Storage object to with the topic references. This 
+#    object is tipically stored in OCI Object Storage by the module that manages topics.
+#--------------------------------------------------------------------------------------------------------------------------------------
+
+#---------------------------------------
+# Tenancy Connectivity Variables
+#---------------------------------------
+
+tenancy_ocid         = "<tenancy OCID>"             # Get this from OCI Console (after logging in, go to top-right-most menu item and click option "Tenancy: <your tenancy name>").
+user_ocid            = "<user OCID>"                # Get this from OCI Console (after logging in, go to top-right-most menu item and click option "My profile").
+fingerprint          = "<PEM key fingerprint>"      # The fingerprint can be gathered from your user account. In the "My profile page, click "API keys" on the menu in left hand side).
+private_key_path     = "<path to the private key>"  # This is the full path on your local system to the API signing private key.
+private_key_password = ""                           # This is the password that protects the private key, if any.
+home_region          = "<your tenancy home region>" # This is your tenancy home region, where Service Connector policies are created.
+region               = "<your tenancy region>"      # This is your tenancy region, where all other resources are created. It can be the same as home_region.
+
+#---------------------------------------
+# Input variable
+#---------------------------------------
+
+service_connectors_configuration = {
+  default_compartment_id = "<REPLACE-BY-COMPARTMENT-REFERENCE>" # Default compartment ocid for all resources. It's overriden by compartment_ocid in each object.
+  
+  service_connectors = {
+    SERVICE-CONNECTOR = {
+      display_name = "sample-service-connector"
+      source = {
+        kind = "logging"
+        audit_logs = [
+          {cmp_id = "ALL"} # "ALL" means all tenancy audit logs.
+        ] 
+        non_audit_logs = [
+          {cmp_id = "<REPLACE-BY-COMPARTMENT-REFERENCE>"} # Compartment where logs other than audit logs are stored.
+        ] 
+      }
+      target = {
+        kind = "streaming"
+        stream_id = "<REPLACE-BY-STREAM-REFERENCE>",
+      }
+    }
+  }
+}
+
+oci_shared_config_bucket_name = "<REPLACE-BY-BUCKET-NAME>"
+
+oci_compartments_object_name = "<REPLACE-BY-OBJECT-NAME-FOR-COMPARTMENTS>"
+
+oci_streams_object_name = "<REPLACE-BY-OBJECT-NAME-FOR-STREAMS>"
