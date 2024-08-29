@@ -10,12 +10,12 @@ Secure Cloud Computing Architecture (SCCA) standards for the US
 Department of Defense (DOD).  We have two solutions for DOD customers to 
 select from:
 
-## 1. [Mission Owner deployable SCCA Landing Zone, or MO deployable SCCA LZ](https://github.com/oci-landing-zones/oci-scca-landingzone/blob/Repo_Changes/SCCAv1/README.md) 
+## 1. [Mission Owner deployable SCCA Landing Zone, or MO deployable SCCA LZ](./Mission_Owner_SCCA_(SCCAv1)/README.md) 
 - Customers self deploying SCCA for themselves with a standardized templetized automation script.
 - Customers wanting a simplified in-console experience.
 - Customers wanting to download from DoD site and deploy a pre-ATOed automation solution that they can start deploying on Day one of deployment.
 
-## 2. [Managed SCCA Broker Landing Zone, or Managed SCCA LZ](https://github.com/oci-landing-zones/oci-scca-landingzone/blob/Repo_Changes/SCCAv2/README.md) 
+## 2. [Managed SCCA Broker Landing Zone, or Managed SCCA LZ](./Managed_SCCA_Broker_(SCCAv2)/README.md) 
 - Agencies wanting to deploy the SCCA solution for their Mission Owners'workloads simplifying the components sharing, mitigating Compliance 
 verification tasks, and leveraging economies of scale.
 - Agencies needing a SCCA broker to managed and operate per specific contract adn conpliance guidelines
