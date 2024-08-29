@@ -231,8 +231,8 @@ To Deploy Managed SCCA LZ Parent on Single Tenancy use this variable.
 
 ## 2.3 : Managed SCCA LZ Deployment on Single Tenancy
 
-* Step 2.3.1.1) Go to Folder Child_Examples and copy the single_terraform.tfvars.template file.
-* Step 2.3.1.2) Go to Folder Child_Template and paste the single_terraform.tfvars.template file.
+* Step 2.3.1.1) Go to Folder [Child_Examples](../child-template/examples) and copy the single_terraform.tfvars.template file.
+* Step 2.3.1.2) Go to Folder [Child_Template](../child-template) and paste the single_terraform.tfvars.template file.
 * Step 2.3.1.3) Rename the file name from single_terraform.tfvars.template file to single_terraform.tfvars.
 * Step 2.3.1.4) Set the Flag "deployment_type" to "SINGLE" on the single_terraform.tfvars file (Flag Already Set in tfvars file).
 * Step 2.3.1.5) Execute the CLI command "terraform init".
