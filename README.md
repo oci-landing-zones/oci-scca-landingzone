@@ -13,15 +13,15 @@ select from:
 ## 1. [Mission Owner deployable SCCA Landing Zone, or MO deployable SCCA LZ](./Mission_Owner_SCCA_(SCCAv1)/README.md) 
 - Customers self deploying SCCA for themselves with a standardized templetized automation script.
 - Customers wanting a simplified in-console experience.
-- Customers wanting to download from DoD site and deploy a pre-ATOed automation solution that they can start deploying on Day one of deployment.
+- Customers wanting to download from DOD site and deploy a pre-ATOed automation solution that they can start deploying on Day One of deployment.
 
 ## 2. [Managed SCCA Broker Landing Zone, or Managed SCCA LZ](./Managed_SCCA_Broker_(SCCAv2)/README.md) 
-- Agencies wanting to deploy the SCCA solution for their Mission Owners'workloads simplifying the components sharing, mitigating Compliance 
+- Agencies wanting to deploy the SCCA solution for their Mission Owners' workloads simplifying the components sharing, mitigating Compliance 
 verification tasks, and leveraging economies of scale.
-- Agencies needing a SCCA broker to managed and operate per specific contract adn conpliance guidelines
-- Managed Services Provider (MSP) managing more than one IL4/IL5/IL6 workloads needing SCCA Broker for managing and operating  multiple 
+- Agencies needing a SCCA broker to manage and operate per specific contract and compliance guidelines.
+- Managed Services Provider (MSP) managing more than one IL4/IL5/IL6 workload needing SCCA Broker for managing and operating  multiple 
 Mission Owners' workloads.
-- A system integrator (S.I.) deploying multiple mission owners workload in one or more than one compliance realms.
+- A system integrator (S.I.) deploying multiple Mission Owners workload in one or more compliance realms.
 
 
 ## Oracle SCCA Resources
