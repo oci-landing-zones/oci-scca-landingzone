@@ -20,13 +20,8 @@ the MO deployable SCCA LZ.
 - [Implementation Guide](IMPLEMENTATION.md)
 - [Configuration Guide](CONFIGURATION-GUIDE.md)
 ## Deploy Using Oracle Resource Manager
-1. Click to deploy the stack
-[![Deploy to Oracle Cloud](https://oci-resourcemanager-
-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-
-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?zipUrl=h
-ttps://github.com/oci-landing-zones/oci-scca-
-landingzone/archive/refs/heads/master.zip)
-    If you aren't already signed in, when prompted, enter the tenancy and user 
+1. Click to deploy the stack[![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?zipUrl=https://github.com/oci-landing-zones/oci-scca-landingzone/archive/refs/heads/master.zip)
+If you aren't already signed in, when prompted, enter the tenancy and user 
 credentials. Review and accept the terms and conditions.
 2. Select the region where you want to deploy the stack.
 3. For Working directory, select the root folder.
