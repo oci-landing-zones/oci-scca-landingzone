@@ -1,15 +1,6 @@
 # Prerequisites for Deploying Managed SCCA Broker Landing Zone
 
-
-## User
-
-The SCCA Landing Zone should be deployed by a user who is a member of the Administrators group for the tenancy.
-
-## Region
-
-The Landing Zone should be deployed to the tenancy's Home Region. 
-
-## Tenancy
+Prerequistes Guide ([Follow PREREQUISITES Guide](./official_documentation/PREREQUISITES.md))
 
 ### Logging Analytics
 
