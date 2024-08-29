@@ -28,10 +28,10 @@ Multitenancy Deployment
 
 ### <ins>Parent Template Information<ins>
 
-##### Parent Template tfvars File Location
+##### Parent Template tfvars Files:
 
-###### [Parent Baseline tfvars File Location](../parent-template/examples/baseline_terraform.tfvars.template)
-###### [Parent Service tfvars File Location](../parent-template/examples/service_terraform.tfvars.template)
+* [Parent Baseline tfvars File Location](../parent-template/examples/baseline_terraform.tfvars.template)
+* [Parent Service tfvars File Location](../parent-template/examples/service_terraform.tfvars.template)
 
 #### Common Parent Tenancy Related Managed SCCA LZ Variables
 
@@ -93,10 +93,10 @@ Multitenancy Deployment
 
 ### <ins>Child Template Information<ins>
 
-##### Child Template tfvars File Location
+##### Child Template tfvars Files:
 
-###### [Child Baseline tfvars File Location](../child-template/examples/baseline_terraform.tfvars.template)
-###### [Child Service tfvars File Location](../child-template/examples/service_terraform.tfvars.template)
+* [Child Baseline tfvars File Location](../child-template/examples/baseline_terraform.tfvars.template)
+* [Child Service tfvars File Location](../child-template/examples/service_terraform.tfvars.template)
 
 #### Common Child Tenancy Related Managed SCCA LZ Variables
 
