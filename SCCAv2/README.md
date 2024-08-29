@@ -11,13 +11,19 @@ This landing zone is assembled from modules and templates that users can use in 
 
 The Managed SCCA LZ deploys a secure architecture that supports DISA SCCA requirements.
 It supports the same functionality as the Mission Owner deployable SCCA Landing Zone but it also provides multi-tenancy capabilities that supports an operational model where a broker is involved.
-Users can use the guides below to get started with the Managed SCCA LZ.
-- [Implementation Guide](./official_documentation/IMPLEMENTATION-GUIDE.md)
-- [Configuration Guide](./official_documentation/CONFIGURATION-GUIDE.md)
+
+The table below details the prerequisites, configuration requirements and 
+installation steps to deploy the Managed SCCA LZ.  
+
+|#|Document       |Description|
+|-|---------------|-----------|
+|1.|[Prerequisites Guide](./official_documentation/PREREQUISITES.md) | Provides details on the tenancy and environment prerequisites for deploying the SCCA LZ |
+|2.| [Configuration Guide](./official_documentation/CONFIGURATION-GUIDE.md) | Provide details on the available configurations for deploying the SCCA LZ|
+|3.| [Implementation Guide](./official_documentation/IMPLEMENTATION-GUIDE.md) | Provides the installation instructions for deploying the Managed SCCA LZ using the Terraform Command Line Interface (CLI)|
 
 ## Deploy Using Oracle Resource Manager
 
-1. Deploy Managed SCCA LZ via Terraform CLI
+Deploy Managed SCCA LZ via Terraform CLI ([Follow Implementation Guide](./official_documentation/IMPLEMENTATION-GUIDE.md))
 
 ## The Team
 
