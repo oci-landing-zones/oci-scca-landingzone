@@ -1,11 +1,10 @@
-# Landing Zones
+# Secure Cloud Computing Architecture (SCCA) Landing Zones
 
 This repository contains different types of Landing Zones to deploy to the 
 Oracle Cloud Infrastructure platform. The landing zones are assembled from 
 modules and templates that users can use in their default configuration or 
 fork this repo and customize for your own scenarios. 
 
-#  Secure Cloud Computing Architecture (SCCA) Landing Zone
 The SCCA Landing zone is designed to deploy an environment that supports 
 Secure Cloud Computing Architecture (SCCA) standards for the US 
 Department of Defense (DOD).  We have two solutions for DOD customers to 
@@ -24,13 +23,6 @@ verification tasks, and leveraging economies of scale.
 Mission Owners' workloads.
 - A system integrator (S.I.) deploying multiple mission owners workload in one or more than one compliance realms.
 
-The table below details the prerequisites, configuration requirements and 
-installation steps to deploy the Managed SCCA LZ.  
-|#|Document       |Description|
-|-|---------------|-----------|
-|1.|[Prerequisites Guide](./SCCAv2/official_documentation/PREREQUISITES.md) | Provides details on the tenancy and environment prerequisites for deploying the SCCA LZ |
-|2.| [Configuration Guide](./SCCAv2/official_documentation/CONFIGURATION-GUIDE.md) | Provide details on the available configurations for deploying the SCCA LZ|
-|3.| [Implementation Guide](./SCCAv2/official_documentation/IMPLEMENTATION-GUIDE.md) | Provides the installation instructions for deploying the Managed SCCA LZ using the Terraform Command Line Interface (CLI)|
 
 ## Oracle SCCA Resources
 
