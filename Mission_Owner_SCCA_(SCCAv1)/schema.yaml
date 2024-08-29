@@ -1,0 +1,477 @@
+title: SCCA Landing Zone
+description: SCCA Secure Landing Zone developed by OCI
+schemaVersion: 1.1.0
+version: "1.1.0"
+locale: en
+variableGroups:
+  - title: Provider Variables
+    visible: true
+    variables:
+      - api_fingerprint
+      - api_private_key_path
+      - region
+      - secondary_region
+      - tenancy_ocid
+      - current_user_ocid
+  - title: Multi-Region Variables
+    visible: true
+    variables:
+      - home_region_deployment
+      - multi_region_home_compartment_ocid
+      - multi_region_logging_compartment_ocid
+      - multi_region_vdss_compartment_ocid
+      - multi_region_vdms_compartment_ocid
+      - multi_region_workload_compartment_ocid
+  - title: Compartment Variables
+    visible: true
+    variables:
+      - home_compartment_name
+      - vdms_compartment_name
+      - vdss_compartment_name
+      - backup_compartment_name
+      - resource_label
+      - enable_logging_compartment
+      - logging_compartment_name
+  - title: Identity Variables
+    visible: true
+    variables:
+      - realm_key
+      - enable_domain_replication
+  - title: Monitoring Variables
+    visible: true
+    variables:
+      - vdms_critical_topic_endpoints
+      - vdms_warning_topic_endpoints
+      - vdss_critical_topic_endpoints
+      - vdss_warning_topic_endpoints
+      - enable_vdss_warning_alarm
+      - enable_vdss_critical_alarm
+      - enable_vdms_warning_alarm
+      - enable_vdms_critical_alarm
+      - onboard_log_analytics
+  - title: Security Variables
+    visible: true
+    variables:
+      - backup_bucket_name
+      - central_vault_name
+      - central_vault_type
+      - enable_vault_replication
+      - master_encryption_key_name
+      - cloud_guard_target_tenancy
+      - bastion_client_cidr_block_allow_list
+      - retention_policy_duration_amount
+      - retention_policy_duration_time_unit
+      - enable_bucket_replication
+      - bucket_storage_tier
+      - remote_tenancy_ocid
+      - remote_tenancy_name
+      - remote_namespace
+      - remote_audit_log_bucket_name
+      - remote_default_log_bucket_name
+      - remote_service_event_bucket_name
+  - title: Network Variables
+    visible: true
+    variables:
+      - vdss_vcn_cidr_block
+      - firewall_subnet_cidr_block
+      - lb_subnet_cidr_block
+      - vdms_vcn_cidr_block
+      - vdms_subnet_cidr_block
+      - is_vdms_vtap_enabled
+  - title: Workload Variables
+    visible: true
+    variables:
+      - mission_owner_key
+      - workload_name
+      - workload_vcn_cidr_block
+      - workload_subnet_cidr_block
+      - workload_db_vcn_cidr_block
+      - workload_db_subnet_cidr_block
+      - is_workload_vtap_enabled
+      - workload_critical_topic_endpoints
+      - workload_warning_topic_endpoints
+      - enable_workload_warning_alarm
+      - enable_workload_critical_alarm
+
+
+variables:
+  #Provider Variables
+  api_fingerprint:
+    type: string
+    description: The fingerprint of API
+    default: "Value not required in Oracle Resource Manager."
+    title: Api Fingerprint
+  api_private_key_path:
+    type: string
+    description: The local path to the API private key
+    default: "Value not required in Oracle Resource Manager."
+    title: Api Private Key Path
+  region:
+    type: string
+    description: the OCI region LZ is deployed to.
+    title: Region
+    required: true
+  secondary_region:
+    type: string
+    description: the OCI region for data backup.
+    title: Secondary Region
+    required: true
+  tenancy_ocid:
+    type: string
+    description: The OCID of tenancy
+    title: Tenancy OCID
+  current_user_ocid:
+    type: string
+    description: OCID of the current user
+    title: Current User OCID
+
+  #Multi-Region Variables
+  home_region_deployment:
+    type: bool
+    description: Set to true if deploying in home region, set to false for Backup Region Deployment
+    default: "True"
+    title: Home Region Deployment
+  multi_region_home_compartment_ocid:
+    type: string
+    description: OCID of the home compartment created in home region for multi-region deployment
+    title: Home Compartment OCID for Multi-Region
+  multi_region_logging_compartment_ocid:
+    type: string
+    description: OCID of the logging compartment created in home region for multi-region deployment
+    title: Logging Compartment OCID for Multi-Region
+  multi_region_vdss_compartment_ocid:
+    type: string
+    description: OCID of the VDSS compartment created in home region for multi-region deployment
+    title: VDSS Compartment OCID for Multi-Region
+  multi_region_vdms_compartment_ocid:
+    type: string
+    description: OCID of the VDMS compartment created in home region for multi-region deployment
+    title: VDMS Compartment OCID for Multi-Region
+  multi_region_workload_compartment_ocid:
+    type: string
+    description: OCID of the workload compartment created in home region for multi-region deployment
+    title: Workload Compartment OCID for Multi-Region
+
+
+  #Compartment variables
+  enable_logging_compartment:
+    type: boolean
+    description: "Set to true to enable logging compartment, to false if you will be logging to existing buckets in another tenancy"
+    default: true
+  home_compartment_name:
+    type: string
+    description: Name of the top level / home compartment. Maximum 100 characters, including letters, numbers, periods, hyphens, underscores, and is unique within the tenancy.
+    title: Home Compartment Name
+    pattern: ^([\w\.-]){1,100}$
+    default: "OCI-SCCA-LZ-Home"
+    required: true
+  vdms_compartment_name:
+    type: string
+    description: Name of the VDMS compartment. Maximum 100 characters, including letters, numbers, periods, hyphens, underscores, and is unique within its parent compartment.
+    title: VDMS Compartment Name
+    pattern: ^([\w\.-]){1,100}$
+    default: "OCI-SCCA-LZ-VDMS"
+    required: true
+  vdss_compartment_name:
+    type: string
+    description: Name of the VDSS compartment. Maximum 100 characters, including letters, numbers, periods, hyphens, underscores, and is unique within its parent compartment.
+    title: VDSS Compartment Name
+    pattern: ^([\w\.-]){1,100}$
+    default: "OCI-SCCA-LZ-VDSS"
+    required: true
+  logging_compartment_name:
+    type: string
+    description: Name of the Logging compartment (If used). Maximum 100 characters, including letters, numbers, periods, hyphens, underscores, and is unique within its parent compartment.
+    title: Logging Compartment Name
+    pattern: ^([\w\.-]){1,100}$
+    default: "OCI-SCCA-LZ-Logging"
+    visible: enable_logging_compartment
+  backup_compartment_name:
+    type: string
+    description: Name of the Backup compartment, used to store terraform state backups. Maximum 100 characters, including letters, numbers, periods, hyphens, underscores, and is unique within its parent compartment.
+    title: Backup Compartment Name
+    pattern: ^([\w\.-]){1,100}$
+    default: "OCI-SCCA-LZ-IAC-TF-Configbackup"
+    required: true  
+  resource_label:
+    type: string
+    description: "Short label to append to global resource names to prevent name collisions."
+    required: true  
+  enable_compartment_delete:
+    type: boolean
+    description: "Set to true to allow the compartments to delete on terraform destroy."
+    default: true
+    visible: false
+
+  #Identity Variables
+  realm_key:
+    type: enum
+    description: "OCI Realm LZ will be deployed in. Available options are: 1 for OC1 (commercial), 2 for OC2 (Government), and 3 for OC3 (Government)"
+    required: true
+    default: "1"
+    enum:
+      - "1"
+      - "2"
+      - "3"
+  enable_domain_replication:
+    type: boolean
+    description: "Enable to replicate domain to secondary region."
+    default: false
+
+  #Monitoring Variables    
+  vdms_critical_topic_endpoints:
+    type: array
+    items:
+      type: string
+      pattern: ^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$
+    description: "List of email addresses for VDMS Critical notifications." 
+    title: "VDMS Critical Notification Recipient Email List"  
+  vdms_warning_topic_endpoints:
+    type: array
+    items:
+      type: string
+      pattern: ^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$
+    description: "List of email addresses for VDMS warning notifications." 
+    title: "VDMS Warning Notification Recipient Email List"  
+  vdss_critical_topic_endpoints:
+    type: array
+    items:
+      type: string
+      pattern: ^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$
+    description: "List of email addresses for VDSS Critical notifications." 
+    title: "VDSS Critical Notification Recipient Email List"  
+  vdss_warning_topic_endpoints:
+    type: array
+    items:
+      type: string
+      pattern: ^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$
+    description: "List of email addresses for VDSS Warming notifications." 
+    title: "VDSS Warning Notification Recipient Email List"  
+  enable_vdss_warning_alarm:
+    type: boolean
+    description: "Enable warning alarms in VDSS compartment"
+    default: false
+  enable_vdss_critical_alarm:
+    type: boolean
+    description: "Enable critical alarms in VDSS compartment"
+    default: false
+  enable_vdms_warning_alarm:
+    type: boolean
+    description: "Enable warning alarms in VDMS compartment"
+    default: false
+  enable_vdms_critical_alarm:
+    type: boolean
+    description: "Enable critical alarms in VDMS compartment"
+    default: false
+  onboard_log_analytics:
+    type: boolean
+    description: "Set to true ONLY if your tenancy has NOT been onboarded onto log analytics (fails otherwise). Verify by visiting log analytics in the console."
+    default: true
+
+  #Security Variables
+  backup_bucket_name:
+    type: string
+    description: "Name for bucket to store terraform state backups."
+    default: "OCI-SCCA-LZ-IAC-Backup"
+  central_vault_name:
+    type: string
+    default: "OCI-SCCA-LZ-Central-Vault"
+    description: "Name for Vault for Key storage."
+  central_vault_type:
+    type: enum
+    default: "DEFAULT"
+    enum:
+      - DEFAULT
+      - VIRTUAL_PRIVATE
+    description: "Type of vault. Set value to DEFAULT for testing purpose. Production deployments should be VIRTUAL_PRIVATE"  
+  enable_vault_replication:
+    type: boolean
+    description: "Enable to replicate vault to secondary region. Can only be enabled when vault type is VIRTUAL_PRIVATE"
+    default: false
+  master_encryption_key_name:
+    type: string
+    default: "OCI-SCCA-LZ-MSK"
+    description: "Name of Master Encryption Key"
+  cloud_guard_target_tenancy:
+    type: boolean
+    default: false
+    description: "Should Cloud Guard monitor entire tenancy? (If false, it just monitors the Landing Zone compartment tree)"
+  retention_policy_duration_amount:
+    type: string
+    default: "1"
+    description: "Length of time for logging buckets retention policy"
+    visible: enable_logging_compartment
+  retention_policy_duration_time_unit:
+    #TODO: this should probably be an enum. Look up available options. 
+    type: string
+    default: "DAYS"
+    description: "Unit of time for logging buckets retention policy"
+    visible: enable_logging_compartment
+  bucket_storage_tier:
+    #TODO: this should probably be an enum. Look up available options. 
+    type: string
+    default: "Archive"
+    description: "Storage tier for logging buckets."
+    visible: enable_logging_compartment
+  enable_bucket_replication:
+    type: boolean
+    description: "Enable to replicate buckets to secondary region. The bucket should exist in secondary region."
+    default: false
+  remote_tenancy_ocid:
+    type: string
+    visible:
+      not:
+        - enable_logging_compartment
+    default: ""
+    description: "OCID of Remote tenancy to log to"
+  remote_tenancy_name:
+    type: string
+    visible:
+      not:
+        - enable_logging_compartment
+    default: ""
+    description: "Name of Remote tenancy to log to"
+  remote_namespace:
+    type: string
+    visible:
+      not:
+        - enable_logging_compartment
+    default: ""
+    description: "Namespace of Remote Logging buckets"
+  remote_audit_log_bucket_name:
+    type: string
+    visible:
+      not:
+        - enable_logging_compartment
+    default: ""
+    description: "Name of Remote Logging bucket for Audit Logs"
+  remote_default_log_bucket_name:
+    type: string
+    visible:
+      not:
+        - enable_logging_compartment
+    default: ""
+    description: "Name of Remote Logging bucket for general logs"
+  remote_service_event_bucket_name:
+    type: string
+    visible:
+      not:
+        - enable_logging_compartment
+    default: ""
+    description: "Name of Remote Logging bucket for Service Events"
+  bastion_client_cidr_block_allow_list:
+    type: array
+    items:
+      type: string
+      pattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/([0-9]|[1][0-9]|[2][0-9]))$
+    description:
+      A list of address ranges in CIDR notation that bastion is allowed
+      to connect
+    required: true
+    title: Bastion Client CIDR Block Allow List
+
+  #Network Variables
+  vdss_vcn_cidr_block:
+    type: string
+    default: "192.168.0.0/24"
+    description: "CIDR block for VDSS Network"
+    required: true
+    pattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/([0-9]|[1][0-9]|[2][0-9]))$
+  vdms_vcn_cidr_block:
+    type: string
+    default: "192.168.1.0/24"
+    description: "CIDR block for VDMS Network"
+    required: true
+    pattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/([0-9]|[1][0-9]|[2][0-9]))$
+  firewall_subnet_cidr_block:
+    type: string
+    default: "192.168.0.0/25"
+    description: "CIDR block for VDSS Firewall Subnet. Must be within VDSS Network CIDR block."
+    required: true
+    pattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/([0-9]|[1][0-9]|[2][0-9]))$
+  is_vdms_vtap_enabled:
+    type: boolean
+    defaukt: false
+    description: "Add VTAP infrastructure for VDMS Network?"
+    required: true
+  lb_subnet_cidr_block:
+    type: string
+    default: "192.168.0.128/25"
+    description: "CIDR block for VDSS Loadbalancer Subnet. Must be within VDSS Network CIDR block"
+    required: true
+    pattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/([0-9]|[1][0-9]|[2][0-9]))$
+  vdms_subnet_cidr_block:
+    type: string
+    default: "192.168.1.0/24"
+    description: "CIDR block for VDMS Subnet. Must be within VDMS Network CIDR block"
+    required: true
+    pattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/([0-9]|[1][0-9]|[2][0-9]))$
+
+  #Workload Variables
+  mission_owner_key:
+    type: string
+    required: true
+    description: "Short prefix added to workload name to group workload resources."
+  workload_name:
+    type: string
+    required: true
+    description: "Name for initial example workload. Each workload within a Landing Zone should have a unique name. "
+  workload_vcn_cidr_block:
+    type: string
+    default: "192.168.2.0/24"
+    description: "CIDR block for Workload Application Network"
+    required: true
+    pattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/([0-9]|[1][0-9]|[2][0-9]))$
+  workload_subnet_cidr_block:
+    type: string
+    default: "192.168.2.0/24"
+    description: "CIDR block for Workload Application Subnet. Must be within Workload Network CIDR block"
+    required: true
+    pattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/([0-9]|[1][0-9]|[2][0-9]))$
+  workload_db_vcn_cidr_block:
+    type: string
+    default: "192.168.3.0/24"
+    description: "CIDR block for Workload DB Network"
+    required: true
+    pattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/([0-9]|[1][0-9]|[2][0-9]))$
+  workload_db_subnet_cidr_block:
+    type: string
+    default: "192.168.3.0/24"
+    description: "CIDR block for Workload DB Subnet. Must be within Workload DB Network CIDR block"
+    required: true
+    pattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/([0-9]|[1][0-9]|[2][0-9]))$
+  is_workload_vtap_enabled:
+    type: boolean
+    defaukt: false
+    description: "Add VTAP infrastructure for Workload Network?"
+    required: true
+  workload_critical_topic_endpoints:
+    type: array
+    items:
+      type: string
+      pattern: ^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$
+    description: "List of email addresses for Workload Critical notifications." 
+    title: "Workload Critical Notification Recipient Email List"  
+  workload_warning_topic_endpoints:
+    type: array
+    items:
+      type: string
+      pattern: ^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$
+    description: "List of email addresses for Workload Warning notifications." 
+    title: "Workload Warning Notification Recipient Email List"    
+  enable_workload_warning_alarm:
+    type: boolean
+    description: "Enable warning alarms in Workload compartment"
+    default: false
+  enable_workload_critical_alarm:
+    type: boolean
+    description: "Enable critical alarms in Workload compartment"
+    default: false
+
+outputs:
+  bastion_ocid:
+    type: ocid
+    title: Workload Bastion
+  policy_to_add:
+    type: copyableString
+    title: "If remote tenancy is used for logging, this is the policy needed in that tenancy to allow access. "

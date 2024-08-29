@@ -1,0 +1,67 @@
+# ###################################################################################################### #
+# Copyright (c) 2023 Oracle and/or its affiliates, All rights reserved.                                  #
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl. #
+# ###################################################################################################### #
+
+# PROVIDER
+api_fingerprint      = ""
+api_private_key_path = ""
+region               = ""
+secondary_region     = ""
+tenancy_ocid         = ""
+current_user_ocid    = ""
+
+# MULTI-REGION DEPLOYMENT
+home_region_deployment = true
+multi_region_home_compartment_ocid     = ""
+multi_region_logging_compartment_ocid  = ""
+multi_region_vdms_compartment_ocid     = ""
+multi_region_vdss_compartment_ocid     = ""
+multi_region_workload_compartment_ocid = ""
+
+# COMPARTMENT 
+resource_label            = ""
+enable_compartment_delete = true
+home_compartment_name     = "OCI-SCCA-LZ-Home"
+
+# BACKUP
+backup_compartment_name = "OCI-SCCA-LZ-IAC-TF-Configbackup"
+backup_bucket_name      = "OCI-SCCA-LZ-IAC-Backup"
+
+# LOGGING
+enable_logging_compartment = true
+logging_compartment_name   = "OCI-SCCA-LZ-Logging"
+
+# VDMS
+vdms_compartment_name  = "OCI-SCCA-LZ-VDMS"
+vdms_vcn_cidr_block    = "192.168.1.0/24"
+vdms_subnet_cidr_block = "192.168.1.0/24"
+#is_vtap_enabled        = false # To Disable VTAP Service
+
+# VDSS
+vdss_compartment_name      = "OCI-SCCA-LZ-VDSS"
+vdss_vcn_cidr_block        = "192.168.0.0/24"
+firewall_subnet_cidr_block = "192.168.0.0/25"
+lb_subnet_cidr_block       = "192.168.0.128/25"
+
+# WORKLOAD
+mission_owner_key             = ""
+workload_name                 = ""
+workload_vcn_cidr_block       = "192.168.2.0/24"
+workload_subnet_cidr_block    = "192.168.2.0/24"
+workload_db_vcn_cidr_block    = "192.168.3.0/24"
+workload_db_subnet_cidr_block = "192.168.3.0/24"
+workload_additionalsubnets_cidr_blocks = []
+
+# MONITORING
+vdms_critical_topic_endpoints = []
+vdms_warning_topic_endpoints = []
+vdss_critical_topic_endpoints = []
+vdss_warning_topic_endpoints = []
+workload_critical_topic_endpoints = []
+workload_warning_topic_endpoints = []
+onboard_log_analytics = false
+
+# SECURITY
+bastion_client_cidr_block_allow_list = []
+realm_key = ""
