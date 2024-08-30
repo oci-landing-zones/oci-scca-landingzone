@@ -33,7 +33,7 @@ Example to check the limits in tenancy:
 2.	Scroll down and click on Governance and Administration 
 3.	Under Tenancy Management click on Limits, Quotas and Usage Option 
 
-![ScreenShot1](<../images/p1.png> "ScreenShot1")
+![ScreenShot1](<./images/p1.png> "ScreenShot1")
 
 4.	Under Service option select Service Connector Hub and it will show how much is the limit, used and available.
 
