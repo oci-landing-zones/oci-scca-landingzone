@@ -168,8 +168,8 @@ To Deploy Managed SCCA LZ Parent on Single Tenancy use this variable.
 
 ### 2.2.1 : Managed SCCA LZ Parent Baseline Deployment
 
-* Step 2.2.1.1) Go to folder [Parent_Examples](https://orahub.oci.oraclecorp.com/pse-lz-dev/scca_cis_multi_tenancy/-/tree/main/parent-template/examples) and copy the baseline_terraform.tfvars.template file.
-* Step 2.2.1.2) Go to folder [Parent_Template](https://orahub.oci.oraclecorp.com/pse-lz-dev/scca_cis_multi_tenancy/-/tree/main/parent-template) and paste the baseline_terraform.tfvars.template file.
+* Step 2.2.1.1) Go to folder [parent-template/examples](../parent-template/examples) and copy the baseline_terraform.tfvars.template file.
+* Step 2.2.1.2) Go to folder [parent-template](../parent-template) and paste the baseline_terraform.tfvars.template file.
 * Step 2.2.1.3) Rename the file name from baseline_terraform.tfvars.template file to baseline_terraform.tfvars.
 * Step 2.2.1.4) Execute the CLI command "terraform init".
 * Step 2.2.1.5) Execute the CLI command "terraform plan -var-file="baseline_terraform.tfvars".
@@ -180,8 +180,8 @@ To Deploy Managed SCCA LZ Parent on Single Tenancy use this variable.
 
 ### 2.2.2 : Managed SCCA LZ Child Baseline Deployment
 
-* Step 2.2.2.1) Go to folder [Child_Examples](https://orahub.oci.oraclecorp.com/pse-lz-dev/scca_cis_multi_tenancy/-/tree/main/child-template/examples) and copy the baseline_terraform.tfvars.template file.
-* Step 2.2.2.2) Go to folder [Child_Template](https://orahub.oci.oraclecorp.com/pse-lz-dev/scca_cis_multi_tenancy/-/tree/main/child-template) and paste the baseline_terraform.tfvars.template file.
+* Step 2.2.2.1) Go to folder [child-template/examples](../child-template/examples) and copy the baseline_terraform.tfvars.template file.
+* Step 2.2.2.2) Go to folder [child-template](../child-template) and paste the baseline_terraform.tfvars.template file.
 * Step 2.2.2.3) Rename the file name from baseline_terraform.tfvars.template file to baseline_terraform.tfvars.
 * Step 2.2.2.4) Execute the CLI command "terraform init".
 * Step 2.2.2.5) Execute the CLI command "terraform plan -var-file="baseline_terraform.tfvars".
@@ -192,8 +192,9 @@ To Deploy Managed SCCA LZ Parent on Single Tenancy use this variable.
 
 ### 2.2.3 : Managed SCCA LZ Parent Service Deployment
 
-* Step 2.2.3.1) Go to folder [Parent_Examples](https://orahub.oci.oraclecorp.com/pse-lz-dev/scca_cis_multi_tenancy/-/tree/main/parent-template/examples) and copy the service_terraform.tfvars.template file.
-* Step 2.2.3.2) Go to folder [Parent_Template](https://orahub.oci.oraclecorp.com/pse-lz-dev/scca_cis_multi_tenancy/-/tree/main/parent-template) and paste the service_terraform.tfvars.template file.
+
+* Step 2.2.3.1) Go to folder [parent-template/examples](../parent-template/examples) and copy the service_terraform.tfvars.template file.
+* Step 2.2.3.2) Go to folder [parent-template](../parent-template) and paste the service_terraform.tfvars.template file.
 * Step 2.2.3.3) Rename the file name from service_terraform.tfvars.template file to service_terraform.tfvars.
 * Step 2.2.3.4) Execute the CLI command "terraform plan -var-file="service_terraform.tfvars".
 * Step 2.2.3.5) Make sure the "terraform plan" command successfully exited.
@@ -203,8 +204,8 @@ To Deploy Managed SCCA LZ Parent on Single Tenancy use this variable.
 
 ### 2.2.4 : Managed SCCA LZ Child Service Deployment
 
-* Step 2.2.4.1) Go to folder [Child_Examples](https://orahub.oci.oraclecorp.com/pse-lz-dev/scca_cis_multi_tenancy/-/tree/main/child-template/examples) and copy the service_terraform.tfvars.template file.
-* Step 2.2.4.2) Go to folder [Child_Template](https://orahub.oci.oraclecorp.com/pse-lz-dev/scca_cis_multi_tenancy/-/tree/main/child-template) and paste the service_terraform.tfvars.template file.
+* Step 2.2.4.1) Go to folder [child-template/examples](../child-template/examples) and copy the service_terraform.tfvars.template file.
+* Step 2.2.4.2) Go to folder [child-template](../child-template) and paste the service_terraform.tfvars.template file.
 * Step 2.2.4.3) Rename the file name from service_terraform.tfvars.template file to service_terraform.tfvars.
 * Step 2.2.4.4) Execute the CLI command "terraform plan -var-file="service_terraform.tfvars".
 * Step 2.2.4.5) Make sure the "terraform plan" command successfully exited.
@@ -214,8 +215,9 @@ To Deploy Managed SCCA LZ Parent on Single Tenancy use this variable.
 
 ### 2.2.5 : Managed SCCA LZ Workload Template Deployment
 
-* Step 2.2.5.1) Go to folder [Workload_Examples](https://orahub.oci.oraclecorp.com/pse-lz-dev/scca_cis_multi_tenancy/-/tree/main/workload-template/example) and copy the terraform.tfvars file.
-* Step 2.2.5.2) Go to folder [Workload_Project](https://orahub.oci.oraclecorp.com/pse-lz-dev/scca_cis_multi_tenancy/-/tree/main/workload-template) and copy the terraform.tfvars file.
+
+* Step 2.2.5.1) Go to folder [workload-template/example](../workload-template/example) and copy the terraform.tfvars file.
+* Step 2.2.5.2) Go to folder [workload-template](../workload-template) and paste the terraform.tfvars file.
 * Step 2.2.5.3) Update the terraform.tfvars file variables.
 * Step 2.2.2.4) Execute the CLI command "terraform init".
 * Step 2.2.2.5) Execute the CLI command "terraform plan".
@@ -231,8 +233,9 @@ To Deploy Managed SCCA LZ Parent on Single Tenancy use this variable.
 
 ## 2.3 : Managed SCCA LZ Deployment on Single Tenancy
 
-* Step 2.3.1.1) Go to Folder Child_Examples and copy the single_terraform.tfvars.template file.
-* Step 2.3.1.2) Go to Folder Child_Template and paste the single_terraform.tfvars.template file.
+
+* Step 2.3.1.1) Go to Folder [child-template/examples](../child-template/examples) and copy the single_terraform.tfvars.template file.
+* Step 2.3.1.2) Go to Folder [child-template](../child-template/) and paste the single_terraform.tfvars.template file.
 * Step 2.3.1.3) Rename the file name from single_terraform.tfvars.template file to single_terraform.tfvars.
 * Step 2.3.1.4) Set the Flag "deployment_type" to "SINGLE" on the single_terraform.tfvars file (Flag Already Set in tfvars file).
 * Step 2.3.1.5) Execute the CLI command "terraform init".
