@@ -37,7 +37,7 @@ Example to check the limits in tenancy:
 
 4.	Under Service option select Service Connector Hub and it will show how much is the limit, used and available.
 
-![ScreenShot2](</images/p2.png> "ScreenShot2")
+![ScreenShot2](<./images/p2.png> "ScreenShot2")
 
 Also, this link can provide all the details on limits, quotas and usage as to how use, request increase etc.
 
@@ -74,7 +74,7 @@ For information about configuring multi-region and non-home region deployment in
 
 ## SCCA Landing Zone Architecture
 
-![Architecture](</images/SCCA-CA.png> "Architecture")
+![Architecture](<./images/SCCA-CA.png> "Architecture")
 
 This architecture diagram illustrates the resources SCCA LZ deploys and description for the major resources is listed below. Please refer to [CONFIGURATION-GUIDE Document](CONFIGURATION-GUIDE.md) for the details of most of the resources.
 
