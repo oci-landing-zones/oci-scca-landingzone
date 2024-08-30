@@ -11,7 +11,7 @@ Department of Defense (DOD).  We have two solutions for DOD customers to
 select from:
 
 ## 1. [Mission Owner deployable SCCA Landing Zone, or MO deployable SCCA LZ](./Mission_Owner_SCCA_(SCCAv1)/README.md) 
-- Customers self deploying SCCA for themselves with a standardized templetized automation script.
+- Customers self deploying SCCA for themselves with a standardized templatized automation script.
 - Customers wanting a simplified in-console experience.
 - Customers wanting to download from DOD site and deploy a pre-ATOed automation solution that they can start deploying on Day One of deployment.
 
