@@ -57,7 +57,7 @@ These configurations will be enough to deploy a landing zone with the default co
 
 ## SCCA Landing Zone Architecture
 
-![Architecture](</images/SCCA-CA.png> "Architecture")
+![Architecture](<./images/SCCA-CA.png> "Architecture")
 
 This architecture diagram illustrates the resources SCCA LZ deploys and the details for most of these resources is listed below. 
 
