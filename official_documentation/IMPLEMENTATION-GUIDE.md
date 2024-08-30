@@ -192,6 +192,7 @@ To Deploy Managed SCCA LZ Parent on Single Tenancy use this variable.
 
 ### 2.2.3 : Managed SCCA LZ Parent Service Deployment
 
+
 * Step 2.2.3.1) Go to folder [parent-template/examples](../parent-template/examples) and copy the service_terraform.tfvars.template file.
 * Step 2.2.3.2) Go to folder [parent-template](../parent-template) and paste the service_terraform.tfvars.template file.
 * Step 2.2.3.3) Rename the file name from service_terraform.tfvars.template file to service_terraform.tfvars.
@@ -214,6 +215,7 @@ To Deploy Managed SCCA LZ Parent on Single Tenancy use this variable.
 
 ### 2.2.5 : Managed SCCA LZ Workload Template Deployment
 
+
 * Step 2.2.5.1) Go to folder [workload-template/example](../workload-template/example) and copy the terraform.tfvars file.
 * Step 2.2.5.2) Go to folder [workload-template](../workload-template) and paste the terraform.tfvars file.
 * Step 2.2.5.3) Update the terraform.tfvars file variables.
@@ -230,6 +232,7 @@ To Deploy Managed SCCA LZ Parent on Single Tenancy use this variable.
 * Step 2.2.6.4) Make sure the "terraform apply" command gracefully exited from the current shell.
 
 ## 2.3 : Managed SCCA LZ Deployment on Single Tenancy
+
 
 * Step 2.3.1.1) Go to Folder [child-template/examples](../child-template/examples) and copy the single_terraform.tfvars.template file.
 * Step 2.3.1.2) Go to Folder [child-template](../child-template/) and paste the single_terraform.tfvars.template file.
