@@ -713,7 +713,7 @@ module "scca_networking_vtap" {
 module "scca_networking_waa" {
   count = var.enable_waf ? 1 : 0
 
-  source                  = "github.com/oracle-quickstart/terraform-oci-cis-landing-zone-networking/modules/waa"
+  source                  = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.6.7/modules/waa"
   waa_configuration       = local.waa_configuration
   compartments_dependency = module.scca_compartments[0].compartments
 }
@@ -721,7 +721,7 @@ module "scca_networking_waa" {
 module "scca_networking_waf" {
   count = var.enable_waf ? 1 : 0
 
-  source                  = "github.com/oracle-quickstart/terraform-oci-cis-landing-zone-networking/modules/waf"
+  source                  = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.6.7/modules/waf"
   waf_configuration       = local.waf_configuration
   compartments_dependency = module.scca_compartments[0].compartments
 }
