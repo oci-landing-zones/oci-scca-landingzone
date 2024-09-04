@@ -699,7 +699,7 @@ module "scca_networking_firewall" {
 }
 
 module "scca_networking_lb" {
-  source                  = "github.com/oci-landing-zones/terraform-oci-cis-landing-zone-networking?ref=v0.6.7"
+  source                  = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.6.7"
   network_configuration   = local.networking_load_balancer_configuration
   compartments_dependency = module.scca_compartments[0].compartments
 }
