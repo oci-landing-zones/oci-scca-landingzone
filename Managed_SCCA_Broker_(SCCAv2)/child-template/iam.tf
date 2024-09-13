@@ -245,7 +245,6 @@ locals {
 
 module "scca_identity_domains" {
   count                                = var.home_region_deployment ? 1 : 0
-  # source                               = "./modules/identity-domains"
   source                               = "github.com/oci-landing-zones/terraform-oci-modules-iam//identity-domains?ref=v0.2.3"
 
   compartments_dependency              = module.scca_compartments[0].compartments
