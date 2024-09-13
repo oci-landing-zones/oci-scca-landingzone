@@ -443,22 +443,19 @@ locals {
         compartment_id = "SCCA_CHILD_VDSS_CMP"
         ip_address_lists = {
           hubnfw_ip_list = {
-            ip_address_list_name  = "vcn-ips"
-            ip_address_list_value = [var.vdss_vcn_cidr_block]
+            name      = "vcn-ips"
+            addresses = [var.vdss_vcn_cidr_block]
+            type      = "IP"
           }
         }
         security_rules = {
           CHILD-NFW-SECURITY_RULES-1 = {
             action = "REJECT"
             name   = "reject-all-rule"
-            conditions = {
-              prd_cond1_A = {
-                applications = []
-                destinations = []
-                sources      = []
-                urls         = []
-              }
-            }
+            application = []
+            destination_address = []
+            source_address      = []
+            url         = []
           }
         }
       }
@@ -671,18 +668,15 @@ locals {
 # Networking configurations
 #--------------------------------------------------------------------------------------------#
 
-// use 0.6.7 to
 module "scca_networking" {
-  source = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.6.7" 
-                                    // the newest release (0.6.8) doesn't seem to work
-
+  source                  = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.6.9"
   network_configuration   = local.network_configuration
   compartments_dependency = module.scca_compartments[0].compartments
 }
 
 module "scca_networking_rpc" {
   count  = var.enable_service_deployment ? 1 : 0
-  source = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.6.7"
+  source = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.6.9"
 
   network_configuration   = local.network_configuration_rpc
   compartments_dependency = module.scca_compartments[0].compartments
@@ -691,38 +685,37 @@ module "scca_networking_rpc" {
 
 module "scca_networking_firewall" {
   count  = var.enable_network_firewall ? 1 : 0
-  source = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.6.7"
+  source = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.6.9"
 
   network_configuration   = local.network_firewall_network_configuration
   compartments_dependency = module.scca_compartments[0].compartments
 }
 
 module "scca_networking_lb" {
-  source                  = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.6.7"
+  source                  = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.6.9"
   network_configuration   = local.networking_load_balancer_configuration
   compartments_dependency = module.scca_compartments[0].compartments
 }
 
 module "scca_networking_vtap" {
-  count              = var.enable_vtap ? 1 : 0
-    # source                  = "github.com/oci-landing-zones/terraform-oci-modules-networking/modules/vtap"
-  source             = "./modules/vtap"
+  count  = var.enable_vtap ? 1 : 0
+  source = "github.com/oci-landing-zones/terraform-oci-modules-networking//modules/vtap?ref=v0.6.9"
 
-  vtap_configuration = local.vtap_configuration
+  vtaps_configuration = local.vtap_configuration
 }
 
 
 module "scca_networking_waa" {
-  count = var.enable_waf ? 1 : 0
-  source                  = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.6.7/modules/waa"
+  count  = var.enable_waf ? 1 : 0
+  source = "github.com/oci-landing-zones/terraform-oci-modules-networking//modules/waa?ref=v0.6.9"
 
   waa_configuration       = local.waa_configuration
   compartments_dependency = module.scca_compartments[0].compartments
 }
 
 module "scca_networking_waf" {
-  count = var.enable_waf ? 1 : 0
-  source                  = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.6.7/modules/waf"
+  count  = var.enable_waf ? 1 : 0
+  source = "github.com/oci-landing-zones/terraform-oci-modules-networking//modules/waf?ref=v0.6.9"
 
   waf_configuration       = local.waf_configuration
   compartments_dependency = module.scca_compartments[0].compartments
