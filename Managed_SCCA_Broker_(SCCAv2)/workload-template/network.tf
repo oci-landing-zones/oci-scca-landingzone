@@ -158,8 +158,9 @@ locals {
         compartment_id = "WKL-CMP"
         ip_address_lists = {
           hubnfw_ip_list = {
-            ip_address_list_name  = "vcn-ips"
-            ip_address_list_value = [var.wrk_vcn_cidr_block]
+            name      = "vcn-ips"
+            addresses = [var.wrk_vcn_cidr_block]
+            type      = "IP"
           }
         }
         security_rules = {
@@ -239,28 +240,28 @@ locals {
 }
 
 module "scca_networking" {
-  source                  = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.6.7"
+  source                  = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.6.9"
   network_configuration   = local.network_configuration
   compartments_dependency = module.workload_compartment.compartments
 }
 
 module "scca_networking_firewall" {
   count  = var.enable_workload_network_firewall ? 1 : 0
-  source = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.6.7"
+  source = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.6.9"
 
   network_configuration   = local.network_firewall_network_configuration
   compartments_dependency = module.workload_compartment.compartments
 }
 
 module "scca_networking_lb" {
-  source                  = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.6.7"
+  source                  = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.6.9"
   network_configuration   = local.networking_load_balancer_configuration
   compartments_dependency = module.workload_compartment.compartments
 }
 
 module "bastion" {
   count                   = var.enable_bastion_wrk ? 1 : 0
-  source                  = "github.com/oci-landing-zones/terraform-oci-modules-security//bastion?ref=release-0.1.5-rms"
+  source                  = "github.com/oci-landing-zones/terraform-oci-modules-security//bastion?ref=v0.1.7"
   bastions_configuration  = local.bastions_configuration
   enable_output           = true
   compartments_dependency = module.workload_compartment.compartments
