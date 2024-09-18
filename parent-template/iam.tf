@@ -25,6 +25,7 @@ locals {
         is_notification_bypassed  = false
         is_primary_email_required = true
         replica_region            = var.enable_domain_replication ? var.secondary_region : null
+        allow_signing_cert_public_access = false
       }
     }
   }
@@ -250,7 +251,7 @@ locals {
 
 module "scca_identity_domains" {
   count                                = var.home_region_deployment ? 1 : 0
-  source                               = "./modules/identity-domains"
+  source                               = "github.com/oci-landing-zones/terraform-oci-modules-iam//identity-domains?ref=v0.2.3"
   compartments_dependency              = module.scca_compartments[0].compartments
   tenancy_ocid                         = var.tenancy_ocid
   identity_domains_configuration       = local.identity_domains_configuration
@@ -259,7 +260,7 @@ module "scca_identity_domains" {
 
 module "sccalz_policies" {
   count                   = var.home_region_deployment ? 1 : 0
-  source                  = "github.com/oracle-quickstart/terraform-oci-cis-landing-zone-iam//policies?ref=v0.2.2"
+  source                  = "github.com/oci-landing-zones/terraform-oci-modules-iam//policies?ref=v0.2.3"
   tenancy_ocid            = var.tenancy_ocid
   policies_configuration  = local.policies_configuration
   compartments_dependency = module.scca_compartments[0].compartments
@@ -267,7 +268,7 @@ module "sccalz_policies" {
 
 module "key_policy" {
   count                   = var.home_region_deployment ? 1 : 0
-  source                  = "github.com/oracle-quickstart/terraform-oci-cis-landing-zone-iam//policies?ref=v0.2.2"
+  source                  = "github.com/oci-landing-zones/terraform-oci-modules-iam//policies?ref=v0.2.3"
   tenancy_ocid            = var.tenancy_ocid
   compartments_dependency = module.scca_compartments[0].compartments
   policies_configuration  = local.key_policies_configuration
@@ -276,7 +277,7 @@ module "key_policy" {
 
 module "bucket_replication_policy" {
   count                   = var.home_region_deployment && var.enable_logging_compartment ? 1 : 0
-  source                  = "github.com/oracle-quickstart/terraform-oci-cis-landing-zone-iam//policies?ref=v0.2.2"
+  source                  = "github.com/oci-landing-zones/terraform-oci-modules-iam//policies?ref=v0.2.3"
   tenancy_ocid            = var.tenancy_ocid
   compartments_dependency = module.scca_compartments[0].compartments
   policies_configuration  = local.bucket_replication_policies_configuration
@@ -284,14 +285,14 @@ module "bucket_replication_policy" {
 
 module "rpc_requestor_policy" {
   count                  = var.home_region_deployment && var.enable_service_deployment ? 1 : 0
-  source                 = "github.com/oracle-quickstart/terraform-oci-cis-landing-zone-iam//policies?ref=v0.2.2"
+  source                 = "github.com/oci-landing-zones/terraform-oci-modules-iam//policies?ref=v0.2.3"
   tenancy_ocid           = var.tenancy_ocid
   policies_configuration = local.rpc_acceptor_policies_configuration
 }
 
 module "cross_tenancy_service_connector_policy" {
   count                  = var.home_region_deployment && var.enable_service_deployment ? 1 : 0
-  source                 = "github.com/oracle-quickstart/terraform-oci-cis-landing-zone-iam//policies?ref=v0.2.2"
+  source                 = "github.com/oci-landing-zones/terraform-oci-modules-iam//policies?ref=v0.2.3"
   tenancy_ocid           = var.tenancy_ocid
   policies_configuration = local.cross_tenancy_service_connector_policies_configuration
 }

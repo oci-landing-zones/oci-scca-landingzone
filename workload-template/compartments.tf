@@ -28,7 +28,7 @@ locals {
 }
 
 module "workload_compartment" {
-  source                     = "github.com/oracle-quickstart/terraform-oci-cis-landing-zone-iam//compartments?ref=v0.2.2"
+  source                     = "github.com/oci-landing-zones/terraform-oci-modules-iam//compartments?ref=v0.2.3"
   tenancy_ocid               = var.tenancy_ocid
   compartments_configuration = local.workload_compartment_configuration
 }
