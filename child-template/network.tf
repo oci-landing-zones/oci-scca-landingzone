@@ -441,7 +441,7 @@ locals {
       CHILD-NFW-POLICY-KEY = {
         display_name   = "CHILD-NFW_POLICY"
         compartment_id = "SCCA_CHILD_VDSS_CMP"
-        ip_address_lists = {
+        address_lists = {
           hubnfw_ip_list = {
             name      = "vcn-ips"
             addresses = [var.vdss_vcn_cidr_block]
@@ -452,10 +452,10 @@ locals {
           CHILD-NFW-SECURITY_RULES-1 = {
             action = "REJECT"
             name   = "reject-all-rule"
-            application = []
-            destination_address = []
-            source_address      = []
-            url         = []
+            application_lists = []
+            destination_address_lists = []
+            source_address_lists      = []
+            url_lists        = []
           }
         }
       }

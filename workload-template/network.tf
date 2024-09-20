@@ -156,7 +156,7 @@ locals {
       WRK-NFW-POLICY-KEY = {
         display_name   = "WRK-NFW-POLICY-${local.region_key[0]}-${var.resource_label}"
         compartment_id = "WKL-CMP"
-        ip_address_lists = {
+        address_lists = {
           hubnfw_ip_list = {
             name      = "vcn-ips"
             addresses = [var.wrk_vcn_cidr_block]
@@ -167,14 +167,10 @@ locals {
           WRK-NFW-SECURITY_RULES-1 = {
             action = "REJECT"
             name   = "reject-all-rule"
-            conditions = {
-              prd_cond1_A = {
-                applications = []
-                destinations = []
-                sources      = []
-                urls         = []
-              }
-            }
+            application_lists = []
+            destination_address_lists = []
+            source_address_lists      = []
+            url_lists         = []
           }
         }
       }

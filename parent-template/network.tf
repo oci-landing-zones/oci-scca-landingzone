@@ -527,7 +527,7 @@ locals {
       PARENT-NFW-POLICY-KEY = {
         display_name   = "PARENT-NFW_POLICY"
         compartment_id = "SCCA_PARENT_VDSS_CMP"
-        ip_address_lists = {
+        address_lists = {
           hubnfw_ip_list = {
             name  = "vcn-ips"
             addresses = [var.vdss_vcn_cidr_block]
@@ -538,14 +538,10 @@ locals {
           PARENT-NFW-SECURITY_RULES-1 = {
             action = "REJECT"
             name   = "reject-all-rule"
-            conditions = {
-              prd_cond1_A = {
-                applications = []
-                destinations = []
-                sources      = []
-                urls         = []
-              }
-            }
+            application_lists   = []
+            destination_address_lists = []
+            source_address_lists      = []
+            url_lists         = []
           }
         }
       }
