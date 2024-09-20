@@ -240,21 +240,21 @@ locals {
 }
 
 module "scca_networking" {
-  source                  = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.6.9"
+  source                  = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.7.0"
   network_configuration   = local.network_configuration
   compartments_dependency = module.workload_compartment.compartments
 }
 
 module "scca_networking_firewall" {
   count  = var.enable_workload_network_firewall ? 1 : 0
-  source = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.6.9"
+  source = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.7.0"
 
   network_configuration   = local.network_firewall_network_configuration
   compartments_dependency = module.workload_compartment.compartments
 }
 
 module "scca_networking_lb" {
-  source                  = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.6.9"
+  source                  = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.7.0"
   network_configuration   = local.networking_load_balancer_configuration
   compartments_dependency = module.workload_compartment.compartments
 }

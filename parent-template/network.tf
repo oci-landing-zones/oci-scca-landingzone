@@ -686,21 +686,21 @@ locals {
 ######################################################################################################
 
 module "scca_networking" {
-  source                  = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.6.9"
+  source                  = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.7.0"
   network_configuration   = local.network_configuration
   compartments_dependency = module.scca_compartments[0].compartments
 }
 
 module "scca_networking_firewall" {
   count  = var.enable_network_firewall ? 1 : 0
-  source = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.6.9"
+  source = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.7.0"
 
   network_configuration   = local.network_firewall_network_configuration
   compartments_dependency = module.scca_compartments[0].compartments
 }
 
 module "scca_networking_lb" {
-  source                  = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.6.9"
+  source                  = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.7.0"
   network_configuration   = local.networking_load_balancer_configuration
   compartments_dependency = module.scca_compartments[0].compartments
 }
@@ -714,7 +714,7 @@ module "scca_networking_vtap" {
 module "scca_networking_waa" {
   count = var.enable_waf ? 1 : 0
 
-  source                  = "github.com/oci-landing-zones/terraform-oci-modules-networking//modules/waa?ref=v0.6.9"
+  source                  = "github.com/oci-landing-zones/terraform-oci-modules-networking//modules/waa?ref=v0.7.0"
   waa_configuration       = local.waa_configuration
   compartments_dependency = module.scca_compartments[0].compartments
 }
@@ -722,7 +722,7 @@ module "scca_networking_waa" {
 module "scca_networking_waf" {
   count = var.enable_waf ? 1 : 0
 
-  source                  = "github.com/oci-landing-zones/terraform-oci-modules-networking//modules/waf?ref=v0.6.9"
+  source                  = "github.com/oci-landing-zones/terraform-oci-modules-networking//modules/waf?ref=v0.7.0"
   waf_configuration       = local.waf_configuration
   compartments_dependency = module.scca_compartments[0].compartments
 }
