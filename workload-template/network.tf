@@ -156,7 +156,7 @@ locals {
       WRK-NFW-POLICY-KEY = {
         display_name   = "WRK-NFW-POLICY-${local.region_key[0]}-${var.resource_label}"
         compartment_id = "WKL-CMP"
-        ip_address_lists = {
+        address_lists = {
           hubnfw_ip_list = {
             name      = "vcn-ips"
             addresses = [var.wrk_vcn_cidr_block]
@@ -167,14 +167,10 @@ locals {
           WRK-NFW-SECURITY_RULES-1 = {
             action = "REJECT"
             name   = "reject-all-rule"
-            conditions = {
-              prd_cond1_A = {
-                applications = []
-                destinations = []
-                sources      = []
-                urls         = []
-              }
-            }
+            application_lists = []
+            destination_address_lists = []
+            source_address_lists      = []
+            url_lists         = []
           }
         }
       }
@@ -240,21 +236,21 @@ locals {
 }
 
 module "scca_networking" {
-  source                  = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.6.9"
+  source                  = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.7.0"
   network_configuration   = local.network_configuration
   compartments_dependency = module.workload_compartment.compartments
 }
 
 module "scca_networking_firewall" {
   count  = var.enable_workload_network_firewall ? 1 : 0
-  source = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.6.9"
+  source = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.7.0"
 
   network_configuration   = local.network_firewall_network_configuration
   compartments_dependency = module.workload_compartment.compartments
 }
 
 module "scca_networking_lb" {
-  source                  = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.6.9"
+  source                  = "github.com/oci-landing-zones/terraform-oci-modules-networking?ref=v0.7.0"
   network_configuration   = local.networking_load_balancer_configuration
   compartments_dependency = module.workload_compartment.compartments
 }
