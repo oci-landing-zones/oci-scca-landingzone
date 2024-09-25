@@ -324,7 +324,7 @@ class DestroyLandingZone:
                 'INACTIVE'
             )
 
-    
+
     def delete_domains(self, cmp_id: str):
         list_domains_response = self.identity_client.list_domains(
             compartment_id=cmp_id
@@ -423,7 +423,7 @@ if __name__ == "__main__":
 
     '''
     The script cleans up lingering resources that block terraform destroy.  Once the
-    script has been run, service connectors, buckets, and log analytics log groups 
+    script has been run, service connectors, buckets, and log analytics log groups
     will be deleted, identity domains deactivated, and vaults moved to the root
     compartment. Terraform destroy will need to be run after.
     '''
@@ -447,7 +447,7 @@ if __name__ == "__main__":
     parser.add_argument("-l", "--scca_label",
                         help="Delete SCCA Landing Zone with specified resource label",
                         required=True)
-    
+
     parser.add_argument("--template_name",
                         choices=["CHILD", "PARENT", "WORKLOAD"],
                         help="Template name, eg. CHILD, PARENT, or WORKLOAD",
