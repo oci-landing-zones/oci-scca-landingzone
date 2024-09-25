@@ -2,7 +2,8 @@
 
 
 ### 1.	Navigate to the destroy_lz.py script here:
-      https://github.com/oci-landing-zones/oci-scca-landingzone/blob/master/Mission_Owner_SCCA_(SCCAv1)/destroy_lz.py
+     https://github.com/oci-landing-zones/oci-scca-landingzone/blob/destroy_script/Managed_SCCA_Broker_(SCCAv2)/destroy_lz.py
+The script is also in the same directory as this guide, titled "destroy_lz.py"
 
 ### 2.	Download and move this script into your local landing zone directory.
 For example: /User/mylandingzone/scca_cis_multi_tenancy/destroy_lz.py
