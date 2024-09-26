@@ -56,7 +56,7 @@ Note:
 1. Running terraform destroy before running the destroy_lz.py script will throw errors because the vault resources were not moved to the root compartment.
 ```text
 Error: During deletion, Terraform expected the resource to reach state(s): DELETED, but the service reported unexpected state: ACTIVE.
-│ Delete failed due to the following resource(s): ocid1.vault.oc3.us-gov-ashburn-1.j.......   <-(this is the vault ocid)
+│ Delete failed due to the following resource(s): ocid1.vault.oc3.us-gov-ashburn-1.j.......
 ```
 Avoid this error by running the destroy_lz.py script. Follow this guid from step 3.
 
