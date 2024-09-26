@@ -18,7 +18,7 @@ Run this command in the command line (replace the information in the brackets wi
 ```text
 python3 destroy_lz.py -c [YOUR LANDING ZONE COMPARTMENT NAME] -r [YOUR REGION KEY] -l [YOUR RESOURCE LABEL]  --template_name [TEMPLATE NAME (options: CHILD, PARENT, or WORKLOAD]
 ```
-For example: python3 destroy_lz.py -c OCI-SCCA-LZ-CHILD-Home-RIC-miachildtest -r RIC -l miachildtest --template_name CHILD 
+For example: python3 destroy_lz.py -c OCI-SCCA-LZ-CHILD-Home-RIC-miachildtest -r RIC -l miachildtest --template_name CHILD
 
 Note: You can find your region key in your named compartment
 
@@ -29,13 +29,13 @@ Successful results of this script:
 ### 4. Modify the terraform state file to omit the identity domains:
 Note: Terraform destroy will throw an error if this is not run (see known issues at the bottom)
 
-Run this command in the command line: 
+Run this command in the command line:
 ```text
 terraform state rm 'module.scca_identity_domains[0]'
 ```
 
 ### 5.	Run terraform destroy:
-Run this command in the command line: 
+Run this command in the command line:
 ```text
 terraform destroy
 ```
@@ -58,7 +58,7 @@ Note:
 Error: During deletion, Terraform expected the resource to reach state(s): DELETED, but the service reported unexpected state: ACTIVE.
 │ Delete failed due to the following resource(s): ocid1.vault.oc3.us-gov-ashburn-1.j.......   <-(this is the vault ocid)
 ```
-Avoid this error by running the destroy_lz.py script. Follow this guid from step 3. 
+Avoid this error by running the destroy_lz.py script. Follow this guid from step 3.
 
 2. Running terraform destroy before running the destroy_lz.py script will throw errors because the identity domain resources were not deleted.
 ```text
@@ -67,7 +67,7 @@ Error: 412-PreConditionFailed, Cannot perform DELETE_DOMAIN operation on Domain 
 ```
 Avoid this error by running the destroy_lz.py script and omitting the identity domains from the state file before running terraform destroy. Follow this guide from step 3.
 
-3. Failing to omit the identity users before running terraform destroy will throw errors. 
+3. Failing to omit the identity users before running terraform destroy will throw errors.
 ```text
 Error: 403-BadErrorResponse,
 │ Suggestion: Please retry or contact support for help with service: Identity Domains Users
