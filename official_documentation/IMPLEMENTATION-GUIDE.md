@@ -177,6 +177,8 @@ To Deploy Managed SCCA LZ Parent on Single Tenancy use this variable.
 
 ### 2.2.1 : Managed SCCA LZ Parent Baseline Deployment
 
+See [Parent Template](../parent-template/readme.md#baseline-deployment) for more details on the parent baseline deployment
+
 1. Navigate to the `parent-template/examples` folder.
 2. Copy the `baseline_terraform.tfvars.template` file to the root of the `parent-template` folder.
 3. Rename the file to `baseline_terraform.tfvars`.
@@ -192,6 +194,8 @@ To Deploy Managed SCCA LZ Parent on Single Tenancy use this variable.
 7. Ensure that the deployment successfully completes.
 
 ### 2.2.2 : Managed SCCA LZ Child Baseline Deployment
+
+See [Child Template](../child-template/readme.md#baseline-deployment) for more details on the child baseline deployment
 
 1. Navigate to the `child-template/examples` folder.
 2. Copy the `baseline_terraform.tfvars.template` file to the root of the `child-template` folder.
@@ -210,6 +214,8 @@ To Deploy Managed SCCA LZ Parent on Single Tenancy use this variable.
 
 ### 2.2.3 : Managed SCCA LZ Parent Service Deployment
 
+See [Parent Template](../parent-template/readme.md#service-deployment) for more details on the parent service deployment
+
 1. Navigate to the `parent-template/examples` folder.
 2. Copy the `service_terraform.tfvars.template` file to the root of the `parent-template` folder.
 3. Rename the file to `service_terraform.tfvars`.
@@ -225,6 +231,8 @@ To Deploy Managed SCCA LZ Parent on Single Tenancy use this variable.
 7. Ensure that the deployment successfully completes.
 
 ### 2.2.4 : Managed SCCA LZ Child Service Deployment
+
+See [Child Template](../parent-template/readme.md#service-deployment) for more details on the child service deployment
 
 1. Navigate to the `child-template/examples` folder.
 2. Copy the `service_terraform.tfvars.template` file to the root of the `child-template` folder.

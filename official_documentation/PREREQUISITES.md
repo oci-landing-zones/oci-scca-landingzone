@@ -73,7 +73,7 @@ Below is a table listing the Terraform OCI resource names and numbers deployed, 
 
 
 |                              OCI Definition                              |         OCI Terraform Resource Name         | Count | Tenancy Limits |
-| :-------------------------------------------------------------------------: | :--------------------------------------------: | ------: | ---------------- |
+| :-------------------------------------------------------------------------: | :--------------------------------------------: | ------: | ----------------: |
 |                           Creates a new Target                           |            oci_cloud_guard_target            |     1 | 30             |
 |          Creates a new compartment in the specified compartment          |                     iden                     |     6 | 1000           |
 |             Creates a new alarm in the specified compartment             |             oci_monitoring_alarm             |    23 | 50             |
