@@ -85,7 +85,7 @@ For each child tenancy you want to connect to the parent hub, the following depl
 
 1. Navigate to the `parent-template/examples` folder.
 2. Copy the `service_terraform.tfvars.template` file to the root of the `parent-template` folder or reuse the `baseline_terraform.tfvars` from the baseline deployment as this file will have most of the variables with their correct values. 
-If you start with the copy of the `service_terraform.tfvars.template`, make sure that you copy the values from the `baseline_terraform.tfvars` as otherwise, terraform will overwrite or change the initial deployment! 
+If you start with the copy of the `service_terraform.tfvars.template`, make sure that you copy the values from the `baseline_terraform.tfvars` as otherwise, Terraform will overwrite or change the initial deployment! 
 3. Rename the file to `service_terraform.tfvars`.
 4. Customize the `service_terraform.tfvars` file with your environment-specific variables.
 5. Run the following commands from the root of this folder:
