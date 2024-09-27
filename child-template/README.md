@@ -127,7 +127,7 @@ Following variables can be customized to suit the deployment of your baseline ch
 - **examples/**: Contains template files and example configuration setups.
     - **baseline_terraform.tfvars.template**: The template file used to define environment-specific variables for the baseline deployment
     - **service_terraform.tfvars.template**: The template file used to define environment-specific variables for the service deployment
-- **modules/**: Provides reusable Terraform modules that the parent template depends on.
+- **modules/**: Provides reusable Terraform modules that the child template depends on.
 
 ## Best Practices
 
