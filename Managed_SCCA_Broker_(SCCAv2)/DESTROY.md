@@ -1,7 +1,7 @@
 # Guide to Destroy SCCAv2 Landing Zone Using destroy_lz.py
 
 ### Prerequisites:
-1. Ensure all four sub-compartments (VDMS,VDSS, Logging, and Config) are present in the parent compartment
+1. Ensure all four sub-compartments (VDMS, VDSS, Logging, and Config) are present in the parent compartment
 2. Do not run terraform destroy before running the destroy_lz.py script
    1. If you have already run terraform destroy, navigate to the vault resource in the cloud console and manually set the status to "active"
 
