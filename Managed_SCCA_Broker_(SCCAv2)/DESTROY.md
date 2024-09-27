@@ -45,11 +45,7 @@ Successful results of this script:
 2. The Central-Vault resource will be marked for deletion in 30 days
 
 ### 6.	OPTIONAL: Manually schedule vault deletion:
-Navigate to the cloud console and manually delete your vault resource. It will give options on when to schedule it for deletion.
-
-Note:
-1. Terraform destroy will mark the Central-Vault resource to be deleted in 30 days of the current time
-2. You can navigate to the resource and manually mark it for deletion earlier (Note: The earliest a vault can be deleted is 7 days)
+The vault should already be marked for deletion in 30 days; however, you can schedule it for an earlier deletion by navigating to the cloud console and manually deleting your vault resource. It will give options on when to schedule it for deletion, but the earliest it can be deleted is 7 days of the current date.
 
 ###	Known Issues:
 
@@ -58,7 +54,7 @@ Note:
 Error: During deletion, Terraform expected the resource to reach state(s): DELETED, but the service reported unexpected state: ACTIVE.
 │ Delete failed due to the following resource(s): ocid1.vault.oc3.us-gov-ashburn-1.j.......
 ```
-Avoid this error by running the destroy_lz.py script. Follow this guid from step 3.
+Avoid this error by running the destroy_lz.py script. Follow this guide from step 3.
 
 2. Running terraform destroy before running the destroy_lz.py script will throw errors because the identity domain resources were not deleted.
 ```text
