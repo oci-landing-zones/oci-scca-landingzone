@@ -63,7 +63,7 @@ Error: 412-PreConditionFailed, Cannot perform DELETE_DOMAIN operation on Domain 
 ```
 Avoid this error by running the destroy_lz.py script and omitting the identity domains from the state file before running terraform destroy. Follow this guide from step 3.
 
-3. Failing to omit the identity users before running terraform destroy will throw errors.
+3. Failing to omit the identity domains before running terraform destroy will throw errors.
 ```text
 Error: 403-BadErrorResponse,
 │ Suggestion: Please retry or contact support for help with service: Identity Domains Users
