@@ -10,7 +10,7 @@
 The script is in the same directory as this guide, titled "destroy_lz.py"
 
 ### 2.	Download and move this script into your local landing zone directory:
-For example: /User/mylandingzone/scca_cis_multi_tenancy/destroy_lz.py
+For example: /User/mylandingzone/oci-scca-landingzone/destroy_lz.py
 
 ### 3.	Run the destroy_lz.py script:
 Run this command in the command line (replace the information in the brackets with your compartment's information):
