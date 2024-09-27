@@ -232,7 +232,7 @@ See [Parent Template](../parent-template/readme.md#service-deployment) for more 
 
 ### 2.2.4 : Managed SCCA LZ Child Service Deployment
 
-See [Child Template](../parent-template/readme.md#service-deployment) for more details on the child service deployment
+See [Child Template](../child-template/readme.md#service-deployment) for more details on the child service deployment
 
 1. Navigate to the `child-template/examples` folder.
 2. Copy the `service_terraform.tfvars.template` file to the root of the `child-template` folder.
