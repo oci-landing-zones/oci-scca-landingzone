@@ -15,7 +15,7 @@
 
 ## Overview
 
-This folder contains the main templates required to set up the **Parent SCCA Deployment** in the **Managed SCCA Landing Zone**. It includes the tTerraform and configuration files necessary for managing and deploying core infrastructure components at the parent level. The deployment is structured to ensure flexibility and scalability, providing a consistent setup for further child service deployments.
+This folder contains the main templates required to set up the **Parent SCCA Deployment** in the **Managed SCCA Landing Zone**. It includes the Terraform and configuration files necessary for managing and deploying core infrastructure components at the parent level. The deployment is structured to ensure flexibility and scalability, providing a consistent setup for further child service deployments.
 
 ## Deployment Guide
 
