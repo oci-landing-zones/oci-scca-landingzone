@@ -45,7 +45,19 @@ Successful results of this script:
 2. The Central-Vault resource will be marked for deletion in 30 days
 
 ### 6.	OPTIONAL: Manually schedule vault deletion:
-The vault should already be marked for deletion in 30 days; however, you can schedule it for an earlier deletion by navigating to the cloud console and manually deleting your vault resource. It will give options on when to schedule it for deletion, but the earliest it can be deleted is 7 days of the current date.
+The vault should already be marked for deletion in 30 days; however, 
+you can schedule it for an earlier deletion by following these steps:
+
+1) Navigate to the OCI Cloud Console
+2) Go to Identity & Security > Key Management & Secret Management > Vault
+3) Select your deployment's parent compartment in the drop down menu on the left side
+4) Select the listed vault resource
+5) Click "Cancel Deletion"
+6) Wait for the vault status to become active (it may take a minute)
+7) Click on "Delete Vault"
+8) Choose the preferred calendar date and time you'd like to delete the vault
+9) Click "Delete Vault"
+10) Done. Your vault is now scheduled for deletion
 
 ###	Known Issues:
 
