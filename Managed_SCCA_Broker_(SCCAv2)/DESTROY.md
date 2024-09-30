@@ -3,7 +3,12 @@
 ### Prerequisites:
 1. Ensure all four sub-compartments (VDMS, VDSS, Logging, and Config) are present in the parent compartment
 2. Do not run terraform destroy before running the destroy_lz.py script
-   1. If you have already run terraform destroy, navigate to the vault resource in the cloud console and manually set the status to "active"
+   1. If you have already run terraform destroy, follow these steps:
+      1) Navigate to the OCI Cloud Console
+      2) Go to Identity & Security > Key Management & Secret Management > Vault
+      3) Select your deployment's parent compartment in the drop down menu on the left side
+      4) Select the listed vault resource
+      5) Click "Cancel Deletion"
 
 ### 1.	Navigate to the destroy_lz.py script:
      /Managed_SCCA_Broker_(SCCAv2)/destroy_lz.py
