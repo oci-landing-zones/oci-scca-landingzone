@@ -20,7 +20,7 @@ This document describes the prerequisites required to deploy Managed SCCA Broker
 
 To deploy the Managed SCCA LZ from the Terraform CLI you will need the following prerequisites.
 
-- [Use Terrafom Version less than 1.3](https://releases.hashicorp.com/terraform/1.2.9/)
+- [Use Terrafom Version 1.5](https://releases.hashicorp.com/terraform/1.5.0/)
 - [OCI Terraform provider](https://registry.terraform.io/providers/oracle/oci/latest/docs) v5.16.0 or later
 - [Oracle Cloud Infrastructure CLI](https://github.com/oracle/oci-cli)
 
