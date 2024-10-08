@@ -62,15 +62,15 @@ Following variables can be customized to suit the deployment of your baseline ch
 | onboard_log_analytics | Onboard on the log analytics service | false |
 | vdss_vcn_cidr_block | CIDR block used for the VDSS VCN | "15.1.0.0/16" |
 | lb_subnet_cidr_block | Load balancer subnet CIDR range | "15.1.1.0/24" |
-| lb_subnet_name | Name used for the Load Balancer subnet | "OCI-SCCA-PARENT-LZ-VDSS-LB-SUBNET" |
+| lb_subnet_name | Name used for the Load Balancer subnet | "OCI-SCCA-CHILD-LZ-VDSS-LB-SUBNET" |
 | lb_dns_label | Name used for the DNS label for the Load Balancer | "lbsubnet" |
-| firewall_subnet_name | Subnet name for the firewall | "OCI-SCCA-PARENT-LZ-VDSS-FW-SUBNET" |
+| firewall_subnet_name | Subnet name for the firewall | "OCI-SCCA-CHILD-LZ-VDSS-FW-SUBNET" |
 | firewall_subnet_cidr_block | CIDR block used for the firewall | "15.1.2.0/24" |
 | firewall_dns_label | DNS label used for the firewall | "firewallsubnet" |
 | vdms_vcn_cidr_block | CIDR block used for the VDMS VCN | "16.1.0.0/16" |
 | vdms_subnet_cidr_block | CIDR block used for the VDMS subnet | "16.1.1.0/24" |
 | vdms_dns_label | DNS label used for the VDMS DNS | "vdmssubnet" |
-| vdms_subnet_name | Subnet name for the VDMS subnet | "OCI-SCCA-PARENT-LZ-VDMS-SUBNET" |
+| vdms_subnet_name | Subnet name for the VDMS subnet | "OCI-SCCA-CHILD-LZ-VDMS-SUBNET" |
 | enable_vtap | Enable VTAP | true |
 | enable_network_firewall | Enable the network firewall | true |
 | enable_waf | Enable the Web Application Firewall | true |
