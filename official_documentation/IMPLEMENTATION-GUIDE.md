@@ -3,7 +3,9 @@
 # Table of Contents
 
 1. [Introduction](#introduction)
-2. [Deployment Samples](#samples)
+1. [Deployment Samples](#samples)
+1. [Deleting the stack](#3deleting-the-stack)
+1. [Known Issues](#known_issues)
 
 ## <a name="introduction"></a>1. Introduction
 
@@ -175,49 +177,76 @@ To Deploy Managed SCCA LZ Parent on Single Tenancy use this variable.
 
 ### 2.2.1 : Managed SCCA LZ Parent Baseline Deployment
 
-* Step 2.2.1.1) Go to folder [parent-template/examples](../parent-template/examples) and copy the baseline_terraform.tfvars.template file.
-* Step 2.2.1.2) Go to folder [parent-template](../parent-template) and paste the baseline_terraform.tfvars.template file.
-* Step 2.2.1.3) Rename the file name from baseline_terraform.tfvars.template file to baseline_terraform.tfvars.
-* Step 2.2.1.4) Execute the CLI command "terraform init".
-* Step 2.2.1.5) Execute the CLI command "terraform plan -var-file="baseline_terraform.tfvars".
-* Step 2.2.1.6) Make sure the "terraform plan" command successfully exited.
-* Step 2.2.1.7) Execute the CLI command "terraform apply -var-file="baseline_terraform.tfvars".
-* Step 2.2.1.8) When prompted enter "yes" and then enter.
-* Step 2.2.1.9) Make sure the "terraform apply" command gracefully exited from the current shell.
+See [Parent Template](../parent-template/readme.md#baseline-deployment) for more details on the parent baseline deployment
+
+1. Navigate to the `parent-template/examples` folder.
+2. Copy the `baseline_terraform.tfvars.template` file to the root of the `parent-template` folder.
+3. Rename the file to `baseline_terraform.tfvars`.
+4. Customize the `baseline_terraform.tfvars` file with your environment-specific variables. See [Baseline Deployment Variables](#baseline-deployment-variables) for more details about the variables. 
+5. Run the following commands from the root of this folder:
+
+    ```bash
+    terraform plan -var-file="baseline_terraform.tfvars"
+    terraform apply -var-file="baseline_terraform.tfvars"
+    ```
+
+6. When prompted, confirm the changes by typing "yes" and pressing Enter.
+7. Ensure that the deployment successfully completes.
 
 ### 2.2.2 : Managed SCCA LZ Child Baseline Deployment
 
-* Step 2.2.2.1) Go to folder [child-template/examples](../child-template/examples) and copy the baseline_terraform.tfvars.template file.
-* Step 2.2.2.2) Go to folder [child-template](../child-template) and paste the baseline_terraform.tfvars.template file.
-* Step 2.2.2.3) Rename the file name from baseline_terraform.tfvars.template file to baseline_terraform.tfvars.
-* Step 2.2.2.4) Execute the CLI command "terraform init".
-* Step 2.2.2.5) Execute the CLI command "terraform plan -var-file="baseline_terraform.tfvars".
-* Step 2.2.2.6) Make sure the "terraform plan" command successfully exited.
-* Step 2.2.2.7) Execute the CLI command "terraform apply -var-file="baseline_terraform.tfvars".
-* Step 2.2.2.8) When prompted enter "yes" and then enter.
-* Step 2.2.2.9) Make sure the "terraform apply" command gracefully exited from the current shell.
+See [Child Template](../child-template/readme.md#baseline-deployment) for more details on the child baseline deployment
+
+1. Navigate to the `child-template/examples` folder.
+2. Copy the `baseline_terraform.tfvars.template` file to the root of the `child-template` folder.
+3. Rename the file to `baseline_terraform.tfvars`.
+4. Customize the `baseline_terraform.tfvars` file with your environment-specific variables. See [Baseline Deployment Variables](#baseline-deployment-variables) for more details about the variables. 
+5. Run the following commands from the root of `child-template` folder:
+
+    ```bash
+    terraform plan -var-file="baseline_terraform.tfvars"
+    terraform apply -var-file="baseline_terraform.tfvars"
+    ```
+
+6. When prompted, confirm the changes by typing "yes" and pressing Enter.
+7. Ensure that the deployment successfully completes.
+
 
 ### 2.2.3 : Managed SCCA LZ Parent Service Deployment
 
-* Step 2.2.3.1) Go to folder [parent-template/examples](../parent-template/examples) and copy the service_terraform.tfvars.template file.
-* Step 2.2.3.2) Go to folder [parent-template](../parent-template) and paste the service_terraform.tfvars.template file.
-* Step 2.2.3.3) Rename the file name from service_terraform.tfvars.template file to service_terraform.tfvars.
-* Step 2.2.3.4) Execute the CLI command "terraform plan -var-file="service_terraform.tfvars".
-* Step 2.2.3.5) Make sure the "terraform plan" command successfully exited.
-* Step 2.2.3.6) Execute the CLI command "terraform apply -var-file="service_terraform.tfvars".
-* Step 2.2.3.7) When prompted enter "yes" and then enter.
-* Step 2.2.3.8) Make sure the "terraform apply" command gracefully exited from the current shell.
+See [Parent Template](../parent-template/readme.md#service-deployment) for more details on the parent service deployment
+
+1. Navigate to the `parent-template/examples` folder.
+2. Copy the `service_terraform.tfvars.template` file to the root of the `parent-template` folder.
+3. Rename the file to `service_terraform.tfvars`.
+4. Customize the `service_terraform.tfvars` file with your environment-specific variables.
+5. Run the following commands from the root of this folder:
+
+    ```bash
+    terraform plan -var-file="service_terraform.tfvars"
+    terraform apply -var-file="service_terraform.tfvars"
+    ```
+
+6. When prompted, confirm the changes by typing "yes" and pressing Enter.
+7. Ensure that the deployment successfully completes.
 
 ### 2.2.4 : Managed SCCA LZ Child Service Deployment
 
-* Step 2.2.4.1) Go to folder [child-template/examples](../child-template/examples) and copy the service_terraform.tfvars.template file.
-* Step 2.2.4.2) Go to folder [child-template](../child-template) and paste the service_terraform.tfvars.template file.
-* Step 2.2.4.3) Rename the file name from service_terraform.tfvars.template file to service_terraform.tfvars.
-* Step 2.2.4.4) Execute the CLI command "terraform plan -var-file="service_terraform.tfvars".
-* Step 2.2.4.5) Make sure the "terraform plan" command successfully exited.
-* Step 2.2.4.6) Execute the CLI command "terraform apply -var-file="service_terraform.tfvars".
-* Step 2.2.4.7) When prompted enter "yes" and then enter.
-* Step 2.2.4.8) Make sure the "terraform apply" command gracefully exited from the current shell.
+See [Child Template](../child-template/readme.md#service-deployment) for more details on the child service deployment
+
+1. Navigate to the `child-template/examples` folder.
+2. Copy the `service_terraform.tfvars.template` file to the root of the `child-template` folder.
+3. Rename the file to `service_terraform.tfvars`.
+4. Customize the `service_terraform.tfvars` file with your environment-specific variables.
+5. Run the following commands from the root of the `child-template` folder:
+
+    ```bash
+    terraform plan -var-file="service_terraform.tfvars"
+    terraform apply -var-file="service_terraform.tfvars"
+    ```
+
+6. When prompted, confirm the changes by typing "yes" and pressing Enter.
+7. Ensure that the deployment successfully completes.
 
 ### 2.2.5 : Managed SCCA LZ Workload Template Deployment
 
@@ -248,3 +277,30 @@ To Deploy Managed SCCA LZ Parent on Single Tenancy use this variable.
 * Step 2.3.1.8) Execute the CLI command "terraform apply -var-file="single_terraform.tfvars".
 * Step 2.3.1.9) When prompted enter "yes" and then enter.
 * Step 2.3.1.10) Make sure the "terraform apply" command gracefully exited from the current shell.
+
+## <a name="deleting_stack"></a>3. Deleting the Stack
+
+Certain resources created by the Landing Zone stack can block deletion of the stack.
+If testing the stack, it is recommended to not enable these services.
+
+1. Enabling logging can prevent deletion of the stack as it creates **logs in the object storage buckets**. To delete, remove the retention rule then delete the contents of the bucket.
+2. The **log analytics log group** can also prevent deletion if there are logs present in the group. Navigate to storage in the log analytics administration page and purge the logs to delete the groups.
+3. The **vault** can be marked for deletion but not immediately deleted. This also prevents deletion of the containing compartments.
+
+## <a name="known_issues"></a>4. Known Issues
+
+1. Attempting to onboard your tenancy to log analytics more than once will cause errors.
+   ```
+   `Error: 409-Conflict, Error on-boarding LogAnalytics for tenant idbktv455emw as it is already on-boarded or in the process of getting on-boarded`
+   ```
+   Avoid this error by setting the `onboard_log_analytics` variable to `false`.
+
+2. Object storage namespace can sometimes fail in long running deployments because of Terraform provision order.
+   ```
+    Error: Missing required argument
+    with module.backup_bucket.oci_objectstorage_bucket.bucket,
+    on modules/bucket/main.tf line 12, in resource "oci_objectstorage_bucket" "bucket"
+    12:   namespace      = data.oci_objectstorage_namespace.ns.namespace
+    The argument "namespace" is required, but no definition was found.
+    ```
+    Rerunning the deployment will remove the error.
