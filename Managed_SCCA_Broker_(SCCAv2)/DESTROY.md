@@ -21,7 +21,7 @@ For example: /User/mylandingzone/oci-scca-landingzone/destroy_lz.py
 Run this command in the command line (replace the information in the brackets with your compartment's information):
 
 ```text
-python3 destroy_lz.py -c [YOUR LANDING ZONE COMPARTMENT NAME] -r [YOUR REGION KEY] -l [YOUR RESOURCE LABEL]  --template_name [TEMPLATE NAME (options: CHILD, PARENT, or WORKLOAD]
+python3 destroy_lz.py -c [YOUR LANDING ZONE COMPARTMENT NAME] -r [YOUR REGION KEY] -l [YOUR RESOURCE LABEL]  --template_name [TEMPLATE NAME (options: CHILD, PARENT, WORKLOAD, or SINGLE (standalone)]
 ```
 For example: python3 destroy_lz.py -c OCI-SCCA-LZ-CHILD-Home-RIC-examplename -r RIC -l examplename --template_name CHILD
 

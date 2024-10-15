@@ -98,15 +98,23 @@ class DestroyLandingZone:
         )
         parent_cmp_id = parent_cmps_response.data[0].id
 
-        vdms_cmp_name = f"OCI-SCCA-LZ-{self.template_name}-VDMS-{self.region_key}-{self.resource_label}"
+
+        if self.template_name == "SINGLE":
+            vdms_cmp_name = f"OCI-SCCA-LZ-VDMS-{self.region_key}-{self.resource_label}"
+        else: 
+            vdms_cmp_name = f"OCI-SCCA-LZ-{self.template_name}-VDMS-{self.region_key}-{self.resource_label}"
+
         vdms_cmps_response = self.identity_client.list_compartments(
             compartment_id=parent_cmp_id,
             name=vdms_cmp_name
         )
-
         vdms_cmp_id = vdms_cmps_response.data[0].id
 
-        vdss_cmp_name = f"OCI-SCCA-LZ-{self.template_name}-VDSS-{self.region_key}-{self.resource_label}"
+        if self.template_name == "SINGLE":
+            vdss_cmp_name = f"OCI-SCCA-LZ-VDSS-{self.region_key}-{self.resource_label}"
+        else:
+            vdss_cmp_name = f"OCI-SCCA-LZ-{self.template_name}-VDSS-{self.region_key}-{self.resource_label}"
+        
         vdss_cmps_response = self.identity_client.list_compartments(
             compartment_id=parent_cmp_id,
             name=vdss_cmp_name
@@ -449,8 +457,8 @@ if __name__ == "__main__":
                         required=True)
 
     parser.add_argument("--template_name",
-                        choices=["CHILD", "PARENT", "WORKLOAD"],
-                        help="Template name, eg. CHILD, PARENT, or WORKLOAD",
+                        choices=["CHILD", "PARENT", "WORKLOAD", "SINGLE"],
+                        help="Template name, eg. CHILD, PARENT, WORKLOAD, or SINGLE (standalone)",
                         required=True)
 
     parser.add_argument("--delete_buckets", nargs="+",
