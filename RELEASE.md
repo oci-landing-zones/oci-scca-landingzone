@@ -1,5 +1,10 @@
 # OCI SCCA Landing Zone Release Notes
 
+## v2.0.3 - 2024-12-06
+
+- Update terraform version support for >= 1.5
+- Add destroy script and documentation for stack deletion
+
 ## v2.0.2 - 2024-10-04
 
 - Updated Parent template network file WAA and WAF API Calls to specific CIS Release 0.6.7 .
