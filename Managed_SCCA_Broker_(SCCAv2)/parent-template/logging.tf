@@ -423,7 +423,7 @@ locals {
 
 module "scca_logging" {
   count                 = var.enable_logging_compartment ? 1 : 0
-  source                = "github.com/oci-landing-zones/terraform-oci-modules-observability//logging?ref=v0.1.7"
+  source                = "github.com/oci-landing-zones/terraform-oci-modules-observability//logging?ref=v0.1.8"
   logging_configuration = var.enable_network_firewall ? local.logging_configuration_nfw : local.logging_configuration_no_nfw
 
   compartments_dependency = module.scca_compartments[0].compartments
@@ -434,7 +434,7 @@ module "scca_logging" {
 
 module "scca_vcn_flow_log" {
   count                   = var.enable_vcn_flow_logs ? 1 : 0
-  source                  = "github.com/oci-landing-zones/terraform-oci-modules-observability//logging?ref=v0.1.7"
+  source                  = "github.com/oci-landing-zones/terraform-oci-modules-observability//logging?ref=v0.1.8"
   logging_configuration   = local.vcn_flow_logging_configuration
   compartments_dependency = module.scca_compartments[0].compartments
   tenancy_ocid            = var.tenancy_ocid
@@ -443,7 +443,7 @@ module "scca_vcn_flow_log" {
 
 module "scca_vcn_flow_log_service_connectors" {
   count                            = var.enable_vcn_flow_logs && var.enable_logging_compartment ? 1 : 0
-  source                           = "github.com/oci-landing-zones/terraform-oci-modules-observability//service-connectors?ref=v0.1.7"
+  source                           = "github.com/oci-landing-zones/terraform-oci-modules-observability//service-connectors?ref=v0.1.8"
   tenancy_ocid                     = var.tenancy_ocid
   service_connectors_configuration = local.vcn_flow_log_service_connectors_configuration
   compartments_dependency          = module.scca_compartments[0].compartments
@@ -458,21 +458,21 @@ module "scca_vcn_flow_log_service_connectors" {
 
 
 module "service_connector_policies" {
-  source                  = "github.com/oracle-quickstart/terraform-oci-cis-landing-zone-iam//policies?ref=v0.2.2"
+  source                  = "github.com/oci-landing-zones/terraform-oci-modules-iam//policies?ref=v0.2.3"
   tenancy_ocid            = var.tenancy_ocid
   policies_configuration  = local.service_connector_policies_configuration
   compartments_dependency = module.scca_compartments[0].compartments
 }
 
 module "service_streams" {
-  source                  = "github.com/oci-landing-zones/terraform-oci-modules-observability//streams?ref=v0.1.7"
+  source                  = "github.com/oci-landing-zones/terraform-oci-modules-observability//streams?ref=v0.1.8"
   streams_configuration   = local.streams_configuration
   compartments_dependency = module.scca_compartments[0].compartments
   kms_dependency          = module.central_vault_and_key.keys
 }
 
 module "service_events" {
-  source                  = "github.com/oci-landing-zones/terraform-oci-modules-observability//events?ref=v0.1.7"
+  source                  = "github.com/oci-landing-zones/terraform-oci-modules-observability//events?ref=v0.1.8"
   events_configuration    = local.service_events_configuration
   compartments_dependency = module.scca_compartments[0].compartments
   streams_dependency      = module.service_streams.streams
@@ -481,7 +481,7 @@ module "service_events" {
 
 module "service_connectors" {
   count                            = var.enable_logging_compartment ? 1 : 0
-  source                           = "github.com/oci-landing-zones/terraform-oci-modules-observability//service-connectors?ref=v0.1.7"
+  source                           = "github.com/oci-landing-zones/terraform-oci-modules-observability//service-connectors?ref=v0.1.8"
 
   tenancy_ocid                     = var.tenancy_ocid
   service_connectors_configuration = local.service_connectors_configuration

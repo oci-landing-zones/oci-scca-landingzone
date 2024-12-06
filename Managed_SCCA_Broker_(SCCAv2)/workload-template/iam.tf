@@ -130,13 +130,13 @@ locals {
 ###################          TERRAFORM MODULE CREATION           #############################
 ##############################################################################################
 module "workload_identity_domains" {
-  source                               = "github.com/oracle-quickstart/terraform-oci-cis-landing-zone-iam//identity-domains?ref=v0.2.2"
+  source                               = "github.com/oci-landing-zones/terraform-oci-modules-iam//identity-domains?ref=v0.2.3"
   tenancy_ocid                         = var.tenancy_ocid
   identity_domain_groups_configuration = local.workload_identity_domains_groups_configuration
 }
 
 module "sccalz_workload_policies" {
-  source                  = "github.com/oracle-quickstart/terraform-oci-cis-landing-zone-iam//policies?ref=v0.2.2"
+  source                  = "github.com/oci-landing-zones/terraform-oci-modules-iam//policies?ref=v0.2.3"
   tenancy_ocid            = var.tenancy_ocid
   policies_configuration  = local.workload_policies_configuration
   compartments_dependency = module.workload_compartment.compartments

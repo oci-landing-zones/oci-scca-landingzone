@@ -94,7 +94,7 @@ locals {
 }
 
 module "central_vault_and_key" {
-  source                  = "github.com/oci-landing-zones/terraform-oci-modules-security//vaults?ref=v0.1.6"
+  source                  = "github.com/oci-landing-zones/terraform-oci-modules-security//vaults?ref=v0.1.7"
   vaults_configuration    = local.vaults_configuration
   enable_output           = true
   compartments_dependency = module.scca_compartments[0].compartments
@@ -106,7 +106,7 @@ module "central_vault_and_key" {
 
 module "cloud_guard" {
   count                     = var.enable_cloud_guard ? 1 : 0
-  source                    = "github.com/oci-landing-zones/terraform-oci-modules-security//cloud-guard?ref=v0.1.6"
+  source                    = "github.com/oci-landing-zones/terraform-oci-modules-security//cloud-guard?ref=v0.1.7"
   cloud_guard_configuration = local.cloud_guard_configuration
   enable_output             = true
   tenancy_ocid              = var.tenancy_ocid
@@ -115,14 +115,14 @@ module "cloud_guard" {
 
 # TODO: CIS Module needs to be updated
 module "vss" {
-  source                  = "github.com/oci-landing-zones/terraform-oci-modules-security//vss?ref=v0.1.6"
+  source                  = "github.com/oci-landing-zones/terraform-oci-modules-security//vss?ref=v0.1.7"
   scanning_configuration  = local.scanning_configuration
   enable_output           = true
   compartments_dependency = module.scca_compartments[0].compartments
 }
 
 module "vss_policy" {
-  source                  = "github.com/oracle-quickstart/terraform-oci-cis-landing-zone-iam//policies?ref=v0.2.2"
+  source                  = "github.com/oci-landing-zones/terraform-oci-modules-iam//policies?ref=v0.2.3"
   policies_configuration  = local.vss_policies_configuration
   tenancy_ocid            = var.tenancy_ocid
   compartments_dependency = module.scca_compartments[0].compartments
@@ -130,7 +130,7 @@ module "vss_policy" {
 
 module "bastion" {
   count                   = var.enable_bastion ? 1 : 0
-  source                  = "github.com/oci-landing-zones/terraform-oci-modules-security//bastion?ref=release-0.1.5-rms"
+  source                  = "github.com/oci-landing-zones/terraform-oci-modules-security//bastion?ref=v0.1.7"
   bastions_configuration  = local.bastions_configuration
   enable_output           = true
   compartments_dependency = module.scca_compartments[0].compartments

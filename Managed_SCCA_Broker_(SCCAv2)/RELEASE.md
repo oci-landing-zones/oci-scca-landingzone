@@ -1,5 +1,17 @@
 # OCI SCCA Landing Zone Release Notes
 
+## v2.0.2 - 2024-10-04
+
+- Updated Parent template network file WAA and WAF API Calls to specific CIS Release 0.6.7 .
+- Updated Implementation Guide Default Variables values to match with Both Parent and Child Templates tfvars values.
+- Added variables.md file to document all the possible inputs to parent template.
+- Added variables.md file to document all the possible inputs to child template.
+
+## v2.0.1 - 2024-09-29
+- Refined and Clarified the IMPLEMENTATION-GUIDE and PREREQUISITES Documentation Semantics.
+- Removed Stale File From Child-Template.
+
+
 ## v2.0.0 - 2024-09-29
 - The initial release of version 2.0.0 of the Managed SCCA Broker Landing Zone Landing Zone is designed to deploy an environment that supports Secure Cloud Computing Architecture (SCCA) standards for the U.S. Department of Defense (DoD) in a OCI multi-tenancy environment. 
 

@@ -264,13 +264,13 @@ locals {
 ###################          TERRAFORM MODULE CREATION           #############################
 ##############################################################################################
 module "notifications" {
-  source                      = "github.com/oci-landing-zones/terraform-oci-modules-observability//notifications?ref=v0.1.7"
+  source                      = "github.com/oci-landing-zones/terraform-oci-modules-observability//notifications?ref=v0.1.8"
   notifications_configuration = local.notifications_configuration
   compartments_dependency     = module.workload_compartment.compartments
 }
 
 module "alarms" {
-  source                  = "github.com/oci-landing-zones/terraform-oci-modules-observability//alarms?ref=v0.1.7"
+  source                  = "github.com/oci-landing-zones/terraform-oci-modules-observability//alarms?ref=v0.1.8"
   count                   = length(local.alarms_map) > 0 ? 1 : 0
   alarms_configuration    = local.alarms_configuration
   tenancy_ocid            = var.tenancy_ocid

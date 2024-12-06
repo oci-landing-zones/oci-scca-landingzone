@@ -611,14 +611,14 @@ resource "time_sleep" "first_log_delay" {
 }
 
 module "notifications" {
-  source                      = "github.com/oci-landing-zones/terraform-oci-modules-observability//notifications?ref=v0.1.7"
+  source                      = "github.com/oci-landing-zones/terraform-oci-modules-observability//notifications?ref=v0.1.8"
   
   notifications_configuration = local.notifications_configuration
   compartments_dependency     = module.scca_compartments[0].compartments
 }
 
 module "events" {
-  source                  = "github.com/oci-landing-zones/terraform-oci-modules-observability//events?ref=v0.1.7"
+  source                  = "github.com/oci-landing-zones/terraform-oci-modules-observability//events?ref=v0.1.8"
 
   events_configuration    = local.events_configuration
   compartments_dependency = module.scca_compartments[0].compartments
@@ -626,7 +626,7 @@ module "events" {
 }
 
 module "alarms" {
-  source                  = "github.com/oci-landing-zones/terraform-oci-modules-observability//alarms?ref=v0.1.7"
+  source                  = "github.com/oci-landing-zones/terraform-oci-modules-observability//alarms?ref=v0.1.8"
 
   count                   = length(local.alarms_map) > 0 ? 1 : 0
   alarms_configuration    = local.alarms_configuration
@@ -636,7 +636,7 @@ module "alarms" {
 }
 
 module "alarm_policies" {
-  source = "github.com/oracle-quickstart/terraform-oci-cis-landing-zone-iam//policies?ref=v0.2.2"
+  source = "github.com/oci-landing-zones/terraform-oci-modules-iam//policies?ref=v0.2.3"
 
   count                   = var.enable_vdss_critical_alarm || var.enable_vdss_warning_alarm ? 1 : 0
   tenancy_ocid            = var.tenancy_ocid
@@ -645,7 +645,7 @@ module "alarm_policies" {
 }
 
 module "logging_analytics" {
-  source = "github.com/oci-landing-zones/terraform-oci-modules-observability//logging?ref=v0.1.7"
+  source = "github.com/oci-landing-zones/terraform-oci-modules-observability//logging?ref=v0.1.8"
 
   logging_configuration   = local.logging_analytics_configuration
   compartments_dependency = module.scca_compartments[0].compartments
@@ -653,7 +653,7 @@ module "logging_analytics" {
 }
 
 module "logging_analytics_service_connectors" {
-  source =  "github.com/oci-landing-zones/terraform-oci-modules-observability//service-connectors?ref=v0.1.7"
+  source =  "github.com/oci-landing-zones/terraform-oci-modules-observability//service-connectors?ref=v0.1.8"
 
   tenancy_ocid                     = var.tenancy_ocid
   service_connectors_configuration = local.logging_analytics_service_connectors_configuration
