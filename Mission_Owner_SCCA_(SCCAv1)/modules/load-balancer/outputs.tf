@@ -8,7 +8,9 @@ output "lb_id" {
   description = "The OCID of the load balancer created"
 }
 
+/*
 output "waf_id" {
   value       = oci_waf_web_app_firewall.waf[0].id
   description = "The OCID of the web app firewall"
 }
+*/

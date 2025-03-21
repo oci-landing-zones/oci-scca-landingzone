@@ -150,7 +150,7 @@ locals {
     display_name = "AuditLog_${var.resource_label}"
     description  = "Logging Analytics Log Group created by Landing Zone for AuditLog"
   }
-
+/*
   default_logging_analytics_policy = {
     name        = "OCI-SCCA-LZ-Default-Logging-Analytics-Policy-${var.resource_label}"
     description = "OCI SCCA Landing Zone Default Logging Analytics Policy"
@@ -166,7 +166,7 @@ locals {
       EOT
     ]
   }
-
+  
   audit_logging_analytics_policy = {
     name        = "OCI-SCCA-LZ-Audit-Logging-Analytics-Policy-${var.resource_label}"
     description = "OCI SCCA Landing Zone Audit Logging Analytics Policy"
@@ -182,6 +182,7 @@ locals {
       EOT
     ]
   }
+*/
 
   default_logging_analytics_service_connector = {
     display_name = "schDefaultLog_LA"
@@ -207,6 +208,7 @@ module "logging_analytics_namespace" {
   home_region_deployment = var.home_region_deployment
 }
 
+/*
 module "logging_analytics_default_group" {
   source         = "./modules/logging-analytics-log-group"
   compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
@@ -273,6 +275,7 @@ module "audit_logging_analytics_service_connector" {
   target_log_group_id = module.logging_analytics_audit_group.log_group_ocid
   target_kind         = local.audit_logging_analytics_service_connector.target_kind
 }
+*/
 
 # -----------------------------------------------------------------------------
 # Alarms

@@ -171,6 +171,7 @@ locals {
   }
 }
 
+
 module "bucket_replication_policy" {
   count            = var.home_region_deployment && var.enable_logging_compartment ? 1 : 0
   source           = "./modules/policies"
