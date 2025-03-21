@@ -24,7 +24,9 @@
 - Refactored the identity domain group creation modules
 - Removed the Python Dependencies for identity domain group creation
 
-
+## v1.2.0 - 03/21/2025
+- Added Changes as per the OC11 Realm.
+  
 ## License
 
 Copyright (c) 2023 Oracle and/or its affiliates.
