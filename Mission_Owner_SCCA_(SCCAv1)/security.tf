@@ -575,6 +575,7 @@ module "vss_log" {
   log_source_type     = local.vss_log.log_source_type
 }
 
+/*
 module "waf_log" {
   source = "./modules/service-log"
 
@@ -586,6 +587,7 @@ module "waf_log" {
   log_source_service  = local.waf_log.log_source_service
   log_source_type     = local.waf_log.log_source_type
 }
+*/
 
 module "event_log" {
   source = "./modules/service-log"

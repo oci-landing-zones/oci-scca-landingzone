@@ -348,8 +348,8 @@ module "vdss_load_balancer" {
   load_balancer_display_name = local.vdss_load_balancer.lb_name
   load_balancer_subnet_ids   = [local.vdss_load_balancer.lb_subnet]
   load_balancer_is_private   = true
-  lb_add_waf                 = true
-  lb_add_waa                 = true
+  lb_add_waf                 = false
+  lb_add_waa                 = false
 }
 
 # -----------------------------------------------------------------------------
@@ -470,7 +470,7 @@ module "vdms_load_balancer" {
   load_balancer_display_name = local.vdms_load_balancer.lb_name
   load_balancer_subnet_ids   = [local.vdms_load_balancer.lb_subnet]
   load_balancer_is_private   = true
-  lb_add_waf                 = true
+  lb_add_waf                 = false
   lb_add_waa                 = false
 }
 
