@@ -1,31 +1,47 @@
-# Secure Cloud Computing Architecture (SCCA) Landing Zones
-
-This repository contains different types of Landing Zones to deploy to the 
-Oracle Cloud Infrastructure platform. The landing zones are assembled from 
-modules and templates that users can use in their default configuration or 
-fork this repo and customize for your own scenarios. 
-
-The SCCA Landing zone is designed to deploy an environment that supports 
-Secure Cloud Computing Architecture (SCCA) standards for the US 
-Department of Defense (DOD).  We have two solutions for DOD customers to 
-select from:
-
-## 1. [Mission Owner deployable SCCA Landing Zone, or MO deployable SCCA LZ](./Mission_Owner_SCCA_(SCCAv1)/README.md) 
-- Customers self deploying SCCA for themselves with a standardized templatized automation script.
-- Customers wanting a simplified in-console experience.
-- Customers wanting to download from DOD site and deploy a pre-ATOed automation solution that they can start deploying on Day One of deployment.
-
-## 2. [Managed SCCA Broker Landing Zone, or Managed SCCA LZ](./Managed_SCCA_Broker_(SCCAv2)/README.md) 
-- Agencies wanting to deploy the SCCA solution for their Mission Owners' workloads simplifying the components sharing, mitigating Compliance 
-verification tasks, and leveraging economies of scale.
-- Agencies needing a SCCA broker to manage and operate per specific contract and compliance guidelines.
-- Managed Services Provider (MSP) managing more than one IL4/IL5/IL6 workload needing SCCA Broker for managing and operating  multiple 
-Mission Owners' workloads.
-- A system integrator (S.I.) deploying multiple Mission Owners workload in one or more compliance realms.
-
-
-## Oracle SCCA Resources
-
-[Oracle Cloud Native SCCA LandingZone](https://www.oracle.com/government/federal/dod-scca/)<br />
-[SCCA Admin Guide](https://www.oracle.com/a/ocom/docs/industries/public-sector/oci-scca-architecture-guide.pdf)<br /> 
-[MO Deployable SCCA LZ Press Release](https://www.oracle.com/news/announcement/oracle-introduces-first-cloud-native-secure-cloud-computing-architecture-solution-for-the-us-dod-2023-07-31/)
+# Mission Owner Deployable SCCA Landing Zone (Formerly OCI SCCA 
+Landing Zone)
+Welcome to the [OCI Landing Zones (OLZ) 
+Community](https://github.com/oci-landing-zones)! OCI Landing Zones 
+simplify onboarding and running on OCI by providing design guidance, best 
+practices, and pre-configured Terraform deployment templates for various 
+architectures and use cases. These enable customers to easily provision a 
+secure tenancy foundation in the cloud along with all required services, and 
+reliably scale as workloads expand.
+This repository contains the Landing Zone to deploy to the Oracle Cloud 
+Infrastructure platform that supports the requirements of DISA's SCCA. This 
+landing zone is assembled from modules and templates that users can use in 
+their default configuration or fork this repo and customize for their own use 
+cases.
+## Oracle Mission Owner deployable Secure Cloud Computing Architecture 
+(SCCA) Landing Zone 
+The MO deployable SCCA LZ deploys a secure architecture that supports 
+DISA SCCA requirements. Users can use the guides below to get started with 
+the MO deployable SCCA LZ.
+- [Implementation Guide](IMPLEMENTATION.md)
+- [Configuration Guide](CONFIGURATION-GUIDE.md)
+## Deploy Using Oracle Resource Manager
+1. Click to deploy the stack[![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?zipUrl=https://github.com/oci-landing-zones/oci-scca-landingzone/archive/refs/heads/master.zip)
+If you aren't already signed in, when prompted, enter the tenancy and user 
+credentials. Review and accept the terms and conditions.
+2. Select the region where you want to deploy the stack.
+3. For Working directory, select the root folder.
+4. Follow the on-screen prompts and instructions to create the stack.
+5. After creating the stack, click Terraform Actions, and select Plan.
+6. Wait for the job to be completed, and review the plan.
+7. To make any changes, return to the Stack Details page, click Edit Stack, and 
+make the required changes. Then, run the Plan action again.
+8. If no further changes are necessary, return to the Stack Details page, click 
+Terraform Actions, and select Apply.
+## The Team
+This repository is developed and supported by the Oracle OCI Landing Zones 
+team.
+## Contributing
+Interested in contributing? See our contribution 
+[guidelines](CONTRIBUTING.md) for details.
+## Security
+Please consult the [security guide](./SECURITY.md) for our responsible 
+security vulnerability disclosure process
+## License
+Copyright (c) 2023, 2024 Oracle and/or its affiliates.
+Licensed under the Universal Permissive License (UPL), Version 1.0.
+See [LICENSE](./LICENSE.txt) for more details.
