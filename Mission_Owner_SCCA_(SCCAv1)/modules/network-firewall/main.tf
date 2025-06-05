@@ -6,6 +6,7 @@
 # Reference
 # https://github.com/oracle-quickstart/oci-network-firewall/tree/master/oci-network-firewall-reference-architecture
 terraform {
+  required_version = "< 1.3.0"
   required_providers {
     oci = {
       source = "oracle/oci"
