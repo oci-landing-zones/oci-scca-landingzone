@@ -33,10 +33,12 @@ enable_logging_compartment = true
 logging_compartment_name   = "OCI-SCCA-LZ-Logging"
 
 # VDMS
-vdms_compartment_name  = "OCI-SCCA-LZ-VDMS"
-vdms_vcn_cidr_block    = "192.168.1.0/24"
-vdms_subnet_cidr_block = "192.168.1.0/24"
-#is_vtap_enabled        = false # To Disable VTAP Service
+vdms_compartment_name      = "OCI-SCCA-LZ-VDMS"
+vdms_vcn_cidr_block        = "192.168.1.0/24"
+vdms_subnet_cidr_block     = "192.168.1.0/24"
+# is_vdms_vtap_enabled     = false # Uncomment this variable and set to true to enable the VTAP on the VDMS
+# is_workload_vtap_enabled = false # Uncomment this variable and set to true to enable the VTAP on the Workload
+
 
 # VDSS
 vdss_compartment_name      = "OCI-SCCA-LZ-VDSS"

@@ -125,7 +125,7 @@ This is a "Spoke" network for workload applications.
 * Connected to that subnet is a Load Balancer with WAF enabled, for use by any workload applications.
 
 #### Workload DB Network:
-This is a an additional "Spoke" network for workload applications to allow greater isolation for potentially sensitive databases. 
+This is an additional "Spoke" network for workload applications to allow greater isolation for potentially sensitive databases. 
 * This network is named "OCI-SCCA-LZ-Workload-DB-VCN-*workload_name*-*region*".
 * It is found in the Workload ("OCI-SCCA-LZ-*workload_name*") compartment.
 * Like all "Spoke" networks, it is only connected to the DRG.
