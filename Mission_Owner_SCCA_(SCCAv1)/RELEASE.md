@@ -25,8 +25,8 @@
 - Removed the Python Dependencies for identity domain group creation
 
 ## v1.2.1 - 06/11/2025
-- Added Terraform version pinning in the module files
-- Clarified commented out variables in terraform.tfvars.example file
+- Updated Terraform Version to < 1.3.0 in all module files
+- Removed zombie variables from terraform.tfvars.example file
 
 ## License
 
