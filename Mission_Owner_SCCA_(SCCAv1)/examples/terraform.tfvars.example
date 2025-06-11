@@ -37,8 +37,6 @@ vdms_compartment_name      = "OCI-SCCA-LZ-VDMS"
 vdms_vcn_cidr_block        = "192.168.1.0/24"
 vdms_subnet_cidr_block     = "192.168.1.0/24"
 # is_vdms_vtap_enabled     = false # Uncomment this variable and set to true to enable the VTAP on the VDMS
-# is_workload_vtap_enabled = false # Uncomment this variable and set to true to enable the VTAP on the Workload
-
 
 # VDSS
 vdss_compartment_name      = "OCI-SCCA-LZ-VDSS"
@@ -54,6 +52,7 @@ workload_subnet_cidr_block    = "192.168.2.0/24"
 workload_db_vcn_cidr_block    = "192.168.3.0/24"
 workload_db_subnet_cidr_block = "192.168.3.0/24"
 workload_additionalsubnets_cidr_blocks = []
+# is_workload_vtap_enabled = false # Uncomment this variable and set to true to enable the VTAP on the Workload
 
 # MONITORING
 vdms_critical_topic_endpoints = []
