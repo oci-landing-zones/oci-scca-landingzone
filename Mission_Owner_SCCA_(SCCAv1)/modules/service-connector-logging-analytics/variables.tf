@@ -29,7 +29,7 @@ variable "source_log_group_id" {
 }
 
 variable "target_log_group_id" {
-  type = string
+  type        = string
   description = "The OCID of target log group"
 }
 

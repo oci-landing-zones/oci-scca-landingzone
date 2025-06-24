@@ -67,7 +67,7 @@ variable "nlb_subnet_id" {
 }
 
 variable "nlb_listener_name" {
-  type = string
+  type        = string
   description = "The name of network load balancer listener"
 }
 
@@ -78,14 +78,14 @@ variable "nlb_listener_port" {
 }
 
 variable "nlb_listener_protocol" {
-  type    = string
-  default = "UDP"
+  type        = string
+  default     = "UDP"
   description = "The protocol of network load balancer listener"
 }
 
 variable "nlb_backend_set_health_checker_protocol" {
-  type = string
-  default = "TCP"
+  type        = string
+  default     = "TCP"
   description = "The backend set health checker protocol of network load balancer"
 }
 
@@ -95,7 +95,7 @@ variable "nlb_backend_set_name" {
 }
 
 variable "nlb_backend_set_policy" {
-  type = string
+  type        = string
   description = "Supported values are: FIVE_TUPLE,THREE_TUPLE,TWO_TUPLE"
-  default = "FIVE_TUPLE"
+  default     = "FIVE_TUPLE"
 }

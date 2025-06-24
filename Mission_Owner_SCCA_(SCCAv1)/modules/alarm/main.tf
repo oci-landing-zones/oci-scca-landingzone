@@ -23,7 +23,7 @@ resource "oci_monitoring_alarm" "monitoring_alarm" {
   query                 = each.value.query
   severity              = each.value.severity
 
-  message_format        = var.message_format
-  pending_duration      = var.pending_duration
+  message_format                   = var.message_format
+  pending_duration                 = var.pending_duration
   metric_compartment_id_in_subtree = var.metric_compartment_id_in_subtree
 }

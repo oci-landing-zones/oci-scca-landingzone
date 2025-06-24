@@ -10,8 +10,8 @@ variable "backup_bucket_name" {
 }
 
 variable "central_vault_name" {
-  type    = string
-  default = "OCI-SCCA-LZ-Central-Vault"
+  type        = string
+  default     = "OCI-SCCA-LZ-Central-Vault"
   description = "Vault Name"
 }
 
@@ -28,8 +28,8 @@ variable "enable_vault_replication" {
 }
 
 variable "master_encryption_key_name" {
-  type    = string
-  default = "OCI-SCCA-LZ-MSK"
+  type        = string
+  default     = "OCI-SCCA-LZ-MSK"
   description = "Master Encryption Key Name"
 }
 
