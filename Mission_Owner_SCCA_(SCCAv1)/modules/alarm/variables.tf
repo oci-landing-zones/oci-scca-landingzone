@@ -26,31 +26,31 @@ variable "alarm_map" {
   EOT
 }
 
-variable "metric_compartment_id_in_subtree"{
-  type = bool
+variable "metric_compartment_id_in_subtree" {
+  type        = bool
   description = "Only needed if metric_compartment_id = <tenancy OCID>"
-  default = false
+  default     = false
 }
 
-variable "is_enabled"{
-  type = bool
+variable "is_enabled" {
+  type        = bool
   description = "Alarms enabled or disabled."
-  default = false
+  default     = false
 }
 
 variable "notification_topic_id" {
-  type = string
+  type        = string
   description = "the OCID of notification topic."
 }
 
-variable "message_format"{
-  type = string
+variable "message_format" {
+  type        = string
   description = "format of alarm message"
-  default = "ONS_OPTIMIZED"
+  default     = "ONS_OPTIMIZED"
 }
 
 variable "pending_duration" {
-  type = string
+  type        = string
   description = "The period of time that the condition defined in the alarm must persist before the alarm state changes from 'OK' to 'FIRING'."
-  default = "PT5M"
+  default     = "PT5M"
 }

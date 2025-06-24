@@ -20,7 +20,7 @@ resource "oci_identity_domains_dynamic_resource_group" "group" {
   schemas       = ["urn:ietf:params:scim:schemas:oracle:idcs:DynamicResourceGroup"]
 
   lifecycle {
-    ignore_changes = [ idcs_endpoint
+    ignore_changes = [idcs_endpoint
     ]
   }
 }

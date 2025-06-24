@@ -193,7 +193,7 @@ locals {
     route_table_display_name = "VDSS-VCN-Ingress"
     route_rules              = merge(local.vdss_route_table_rules.route_rules, local.vdss_route_table_rules.route_rules_workload)
   }
-  
+
   vdss_route_table_rules_default = {
     route_rules = {
       "all-to-nfw" = {
@@ -371,7 +371,7 @@ locals {
     }
   }
 
-  vdms_route_table_egress_route_rule ={
+  vdms_route_table_egress_route_rule = {
     route_rules = {
       "vdss" = {
         network_entity_id = module.drg.drg_id

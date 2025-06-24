@@ -19,7 +19,7 @@ variable "topic_description" {
 }
 
 variable "subscription_endpoint" {
-  type         = list(string)
+  type        = list(string)
   description = "A locator that corresponds to the subscription protocol."
 }
 

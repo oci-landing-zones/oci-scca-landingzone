@@ -4,7 +4,7 @@
 # ###################################################################################################### #
 
 variable "tenancy_ocid" {
-  type         = string
+  type        = string
   description = "The OCID of tenancy"
 }
 
