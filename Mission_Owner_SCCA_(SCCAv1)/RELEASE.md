@@ -32,6 +32,9 @@
 - Supported ONSR OCI Region(OCI-6 and OCI-11)
 - Updated Terraform Version to atleast 1.5 .
 
+## v1.2.3 - 11/18/2025
+- Removed 3rd party module tqdm from **destroy_lz.py** destroy script
+
 
 ## License
 
