@@ -89,6 +89,16 @@ locals {
       "Allow service blockstorage, objectstorage-${var.region}, objectstorage-${var.secondary_region}, FssOc${var.realm_key}Prod, oke, streaming to use keys in compartment ${var.vdms_compartment_name}-${local.region_key[0]}-${var.resource_label}"
     ]
   }
+  key_policy_onsr = {
+    name        = "OCI-SCCA-LZ-Key-ONSR-Policy-${var.resource_label}"
+    description = "OCI SCCA ONSR Landing Zone Key Policy"
+
+    statements = [
+      "Allow service objectstorage-${var.region} to use keys in compartment ${var.vdms_compartment_name}-${local.region_key[0]}-${var.resource_label} where target.key.id = ${module.master_encryption_key.key_ocid}",
+      "Allow service objectstorage-${var.secondary_region} to use keys in compartment ${var.vdms_compartment_name}-${local.region_key[0]}-${var.resource_label} where target.key.id = ${module.master_encryption_key.key_ocid}",
+      "Allow service blockstorage, objectstorage-${var.region}, oke, streaming to use keys in compartment ${var.vdms_compartment_name}-${local.region_key[0]}-${var.resource_label}"
+    ]
+  }
 
   cloud_guard_policy = {
     name        = "OCI-SCCA-LZ-Cloud-Guard-Policy-${var.resource_label}"
@@ -196,9 +206,9 @@ module "key_policy" {
   source           = "./modules/policies"
   count            = var.home_region_deployment ? 1 : 0
   compartment_ocid = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.multi_region_home_compartment_ocid
-  policy_name      = local.key_policy.name
-  description      = local.key_policy.description
-  statements       = local.key_policy.statements
+  policy_name      = local.onsr_flag == "false" ? local.key_policy.name : local.key_policy_onsr.name
+  description      = local.onsr_flag == "false" ? local.key_policy.description : local.key_policy_onsr.description
+  statements       = local.onsr_flag == "false" ? local.key_policy.statements : local.key_policy_onsr.statements
   depends_on       = [module.master_encryption_key]
 }
 

@@ -171,7 +171,7 @@ locals {
       }
       "local-to-nfw" = {
         network_entity_id = module.network_firewall.firewall_ip_id
-        destination       = var.vdss_vcn_cidr_block
+        destination       = var.vdms_vcn_cidr_block
         destination_type  = "CIDR_BLOCK"
       }
       "all-service-to-nfw" = {
@@ -203,7 +203,7 @@ locals {
       }
       "local-to-nfw" = {
         network_entity_id = module.network_firewall.firewall_ip_id
-        destination       = var.vdss_vcn_cidr_block
+        destination       = var.vdms_vcn_cidr_block
         destination_type  = "CIDR_BLOCK"
       }
       "all-service-to-nfw" = {
@@ -286,6 +286,7 @@ module "vdss_sgw" {
   vcn_id                   = module.vdss_network.vcn_id
 }
 
+
 module "network_firewall" {
   source = "./modules/network-firewall"
 
@@ -296,6 +297,7 @@ module "network_firewall" {
   ip_address_lists             = local.network_firewall.ip_address_lists
   security_rules               = local.network_firewall.security_rules
 }
+
 
 module "vdss_route_table_default" {
   source = "./modules/route-table"
@@ -348,8 +350,8 @@ module "vdss_load_balancer" {
   load_balancer_display_name = local.vdss_load_balancer.lb_name
   load_balancer_subnet_ids   = [local.vdss_load_balancer.lb_subnet]
   load_balancer_is_private   = true
-  lb_add_waf                 = true
-  lb_add_waa                 = true
+  lb_add_waf                 = local.onsr_flag == "false" ? true : false
+  lb_add_waa                 = local.onsr_flag == "false" ? true : false
 }
 
 # -----------------------------------------------------------------------------
@@ -470,12 +472,12 @@ module "vdms_load_balancer" {
   load_balancer_display_name = local.vdms_load_balancer.lb_name
   load_balancer_subnet_ids   = [local.vdms_load_balancer.lb_subnet]
   load_balancer_is_private   = true
-  lb_add_waf                 = true
+  lb_add_waf                 = local.onsr_flag == "false" ? true : false
   lb_add_waa                 = false
 }
 
 module "vdms_vtap" {
-  count  = var.is_vtap_enabled ? 1 : 0
+  count  = var.is_vtap_enabled && local.onsr_flag == false ? 1 : 0
   source = "./modules/vtap"
 
   compartment_id              = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid

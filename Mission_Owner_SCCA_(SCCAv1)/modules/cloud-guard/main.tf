@@ -4,7 +4,7 @@
 # ###################################################################################################### #
 
 terraform {
-  required_version = "< 1.3.0"
+  required_version = ">= 1.5.0"
   required_providers {
     oci = {
       source                = "oracle/oci"
@@ -27,22 +27,14 @@ resource "oci_cloud_guard_target" "cloud_guard_target" {
   target_resource_id   = var.target_resource_id
   target_resource_type = var.target_resource_type
   description          = var.description
+  state                = "ACTIVE"
 
   target_detector_recipes {
-    detector_recipe_id = data.oci_cloud_guard_detector_recipes.configuration_detector_recipe.detector_recipe_collection.0.items.0.id
+    detector_recipe_id = data.oci_cloud_guard_detector_recipes.list_preloaded_detector_recipes.detector_recipe_collection.0.items.0.id
   }
-
-  target_detector_recipes {
-    detector_recipe_id = data.oci_cloud_guard_detector_recipes.activity_detector_recipe.detector_recipe_collection.0.items.0.id
-  }
-
-  target_detector_recipes {
-    detector_recipe_id = data.oci_cloud_guard_detector_recipes.threat_detector_recipe.detector_recipe_collection.0.items.0.id
-  }
-
   target_responder_recipes {
-    responder_recipe_id = data.oci_cloud_guard_responder_recipes.responder_recipe.responder_recipe_collection.0.items.0.id
+    responder_recipe_id = data.oci_cloud_guard_responder_recipes.list_preloaded_responder_recipes.responder_recipe_collection.0.items.0.id
   }
+  depends_on              = [oci_cloud_guard_cloud_guard_configuration.cloud_guard_configuration]
 
-  depends_on = [oci_cloud_guard_cloud_guard_configuration.cloud_guard_configuration]
 }

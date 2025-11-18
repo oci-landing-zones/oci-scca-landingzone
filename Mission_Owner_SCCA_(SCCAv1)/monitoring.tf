@@ -4,6 +4,9 @@
 # ###################################################################################################### #
 
 locals {
+  la_default_group_ocid = try(module.logging_analytics_default_group[0].log_group_ocid, "null")
+  la_audit_group_ocid   = try(module.logging_analytics_audit_group[0].log_group_ocid, "null")
+
   vdms_critical_topic = {
     topic_name            = "VDMS-Critical-${var.resource_label}"
     topic_description     = "Critical notification for VDMS"
@@ -140,13 +143,13 @@ locals {
   }
 
   logging_analytics_default_group = {
-    namespace    = data.oci_log_analytics_namespaces.logging_analytics_namespaces.namespace_collection[0].items[0].namespace
+    namespace    = local.onsr_flag == "false" ? data.oci_log_analytics_namespaces.logging_analytics_namespaces[0].namespace_collection[0].items[0].namespace : null
     display_name = "Default_Group_${var.resource_label}"
     description  = "Logging Analytics Log Group created by Landing Zone for Default_Group"
   }
 
   logging_analytics_audit_group = {
-    namespace    = data.oci_log_analytics_namespaces.logging_analytics_namespaces.namespace_collection[0].items[0].namespace
+    namespace    = local.onsr_flag == "false" ? data.oci_log_analytics_namespaces.logging_analytics_namespaces[0].namespace_collection[0].items[0].namespace : null
     display_name = "AuditLog_${var.resource_label}"
     description  = "Logging Analytics Log Group created by Landing Zone for AuditLog"
   }
@@ -160,7 +163,7 @@ locals {
       allow any-user to {LOG_ANALYTICS_LOG_GROUP_UPLOAD_LOGS} in compartment id ${var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid} where all
       {
         request.principal.type='serviceconnector',
-        target.loganalytics-log-group.id='${module.logging_analytics_default_group.log_group_ocid}',
+        target.loganalytics-log-group.id='${local.la_default_group_ocid}',
         request.principal.compartment.id='${var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid}'
       }
       EOT
@@ -176,7 +179,7 @@ locals {
       allow any-user to {LOG_ANALYTICS_LOG_GROUP_UPLOAD_LOGS} in compartment id ${var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid} where all
       {
         request.principal.type='serviceconnector',
-        target.loganalytics-log-group.id='${module.logging_analytics_audit_group.log_group_ocid}',
+        target.loganalytics-log-group.id='${local.la_audit_group_ocid}',
         request.principal.compartment.id='${var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid}'
       }
       EOT
@@ -198,7 +201,7 @@ locals {
 }
 
 module "logging_analytics_namespace" {
-  count                  = var.onboard_log_analytics ? 1 : 0
+  count                  = var.onboard_log_analytics || local.onsr_flag == "false" ? 1 : 0
   source                 = "./modules/log-analytics-namespace"
   compartment_id         = var.tenancy_ocid
   is_onboarded           = local.logging_analytics.is_onboarded
@@ -208,6 +211,7 @@ module "logging_analytics_namespace" {
 }
 
 module "logging_analytics_default_group" {
+  count          = local.onsr_flag == "false" ? 1 : 0
   source         = "./modules/logging-analytics-log-group"
   compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
   tenancy_ocid   = var.tenancy_ocid
@@ -220,6 +224,7 @@ module "logging_analytics_default_group" {
 }
 
 module "logging_analytics_audit_group" {
+  count          = local.onsr_flag == "false" ? 1 : 0
   source         = "./modules/logging-analytics-log-group"
   compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
   tenancy_ocid   = var.tenancy_ocid
@@ -232,8 +237,8 @@ module "logging_analytics_audit_group" {
 }
 
 module "default_logging_analytics_policy" {
+  count            = local.onsr_flag == "false" && var.home_region_deployment ? 1 : 0
   source           = "./modules/policies"
-  count            = var.home_region_deployment ? 1 : 0
   compartment_ocid = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
   policy_name      = local.default_logging_analytics_policy.name
   description      = local.default_logging_analytics_policy.description
@@ -241,8 +246,8 @@ module "default_logging_analytics_policy" {
 }
 
 module "audit_logging_analytics_policy" {
+  count            = local.onsr_flag == "false" && var.home_region_deployment ? 1 : 0
   source           = "./modules/policies"
-  count            = var.home_region_deployment ? 1 : 0
   compartment_ocid = var.home_region_deployment ? module.home_compartment[0].compartment_id : var.multi_region_home_compartment_ocid
   policy_name      = local.audit_logging_analytics_policy.name
   description      = local.audit_logging_analytics_policy.description
@@ -250,12 +255,13 @@ module "audit_logging_analytics_policy" {
 }
 
 module "default_logging_analytics_service_connector" {
+  count               = local.onsr_flag == "false" ? 1 : 0
   source              = "./modules/service-connector-logging-analytics"
   compartment_id      = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
   display_name        = local.default_logging_analytics_service_connector.display_name
   source_kind         = local.default_logging_analytics_service_connector.source_kind
   source_log_group_id = module.default_log_group.log_group_id
-  target_log_group_id = module.logging_analytics_default_group.log_group_ocid
+  target_log_group_id = module.logging_analytics_default_group[0].log_group_ocid
   target_kind         = local.default_logging_analytics_service_connector.target_kind
   # Service connector needs at least one log on the log group, or it errors. 
   # Also it takes time for it to recognize this. 
@@ -265,12 +271,13 @@ module "default_logging_analytics_service_connector" {
 }
 
 module "audit_logging_analytics_service_connector" {
+  count               = local.onsr_flag == "false" ? 1 : 0
   source              = "./modules/service-connector-logging-analytics"
   compartment_id      = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
   display_name        = local.audit_logging_analytics_service_connector.display_name
   source_kind         = local.audit_logging_analytics_service_connector.source_kind
   source_log_group_id = local.audit_logging_analytics_service_connector.log_group_id
-  target_log_group_id = module.logging_analytics_audit_group.log_group_ocid
+  target_log_group_id = module.logging_analytics_audit_group[0].log_group_ocid
   target_kind         = local.audit_logging_analytics_service_connector.target_kind
 }
 
@@ -370,6 +377,43 @@ locals {
         query                 = "GetMessagesFault.Count[1m].sum() > 0"
         severity              = "CRITICAL"
       }
+      vss_SecurityVulnerability_alarm = {
+        display_name          = "vss_SecurityVulnerability_alarm"
+        metric_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
+        namespace             = "oci_vss"
+        query                 = "SecurityVulnerability[1m].sum() > 0"
+        severity              = "CRITICAL"
+      }
+      network_lbUnHealthyBackendServers_alarm = {
+        display_name          = "network_lbUnHealthyBackendServers_alarm"
+        metric_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
+        namespace             = "oci_lbaas"
+        query                 = "UnHealthyBackendServers[1m].mean() > 0"
+        severity              = "CRITICAL"
+      }
+      network_lbFailedSSLClientCertVerify_alarm = {
+        display_name          = "network_lbFailedSSLClientCertVerify_alarm"
+        metric_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
+        namespace             = "oci_lbaas"
+        query                 = "FailedSSLClientCertVerify[1m].mean() > 0"
+        severity              = "CRITICAL"
+      }
+      network_lbFailedSSLHandshake_alarm = {
+        display_name          = "network_lbFailedSSLHandshake_alarm"
+        metric_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
+        namespace             = "oci_lbaas"
+        query                 = "FailedSSLHandshake[1m].mean() > 0"
+        severity              = "CRITICAL"
+      }
+      network_vcnVnicConntrackIsFull_alarm = {
+        display_name          = "network_vcnVnicConntrackIsFull_alarm"
+        metric_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
+        namespace             = "oci_vcn"
+        query                 = "VnicConntrackIsFull[1m].mean() > 0"
+        severity              = "CRITICAL"
+      }
+    }
+    alarm_map_onsr = {
       vss_SecurityVulnerability_alarm = {
         display_name          = "vss_SecurityVulnerability_alarm"
         metric_compartment_id = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid
@@ -570,7 +614,7 @@ module "vdms_critical_alarms" {
   pending_duration                 = local.vdms_critical_alarms.pending_duration
   metric_compartment_id_in_subtree = local.vdms_critical_alarms.metric_compartment_id_in_subtree
 
-  alarm_map = local.vdms_critical_alarms.alarm_map
+  alarm_map = local.onsr_flag == "false" ? local.vdms_critical_alarms.alarm_map : local.vdms_critical_alarms.alarm_map_onsr
 }
 
 module "vdms_warning_alarms" {
