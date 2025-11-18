@@ -9,6 +9,6 @@ output "lb_id" {
 }
 
 output "waf_id" {
-  value       = oci_waf_web_app_firewall.waf[0].id
+  value       = try(oci_waf_web_app_firewall.waf[0].id, null)
   description = "The OCID of the web app firewall"
 }

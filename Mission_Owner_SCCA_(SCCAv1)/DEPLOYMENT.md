@@ -52,7 +52,7 @@ Deploy the SCCA Landing Zone using the OCI Resource Manager or the OCI Terraform
 
 5. Terraform will provision your resources and provide outputs once it completes.
 
-### For more information 
+### For more information
 - [Deploy to OCI using Terraform tutorials](https://docs.oracle.com/en-us/iaas/developer-tutorials/tutorials/tf-provider/01-summary.htm).
 
 - [OCI provider documentation](https://registry.terraform.io/providers/oracle/oci/latest/docs).
@@ -70,7 +70,7 @@ Or you can select the select the stack manually through the console starting fro
 4. In Working Directory, make sure the root folder is selected.
 5. In Name, give the stack a name or accept the default.
 6. In Create in Compartment dropdown, select the compartment to store the Stack.
-7. In Terraform Version dropdown, make sure to select 1.0.x at least. Lower Terraform versions are not supported.
+7. In Terraform Version dropdown, make sure to select 1.5.x(SCCA version 1.2.2 onwards) at least. Lower Terraform versions are not supported.
 
 After completing the Stack Creation Wizard, the subsequent step prompts for variables values. **For reference on the variable values read the [User Guide](VARIABLES.md#inputs).**
 

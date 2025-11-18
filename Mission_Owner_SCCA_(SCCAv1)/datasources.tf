@@ -21,5 +21,6 @@ data "oci_events_rules" "event_rules" {
 }
 
 data "oci_log_analytics_namespaces" "logging_analytics_namespaces" {
+  count          = local.onsr_flag == "false" ? 1 : 0
   compartment_id = var.tenancy_ocid
 }

@@ -14,3 +14,9 @@ variable "enable_domain_replication" {
   default     = false
   description = "Enable to replicate domain to secondary region."
 }
+
+variable "has_correct_domain_name" {
+  type        = string
+  default     = "null"
+  description = "OC11 Usecase Only : Handling KMS FQDNS : value oraclecloud.smil.mil"
+}

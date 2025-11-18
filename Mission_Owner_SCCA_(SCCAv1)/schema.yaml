@@ -37,6 +37,7 @@ variableGroups:
     variables:
       - realm_key
       - enable_domain_replication
+      - has_correct_domain_name
   - title: Monitoring Variables
     visible: true
     variables:
@@ -92,6 +93,10 @@ variableGroups:
       - workload_warning_topic_endpoints
       - enable_workload_warning_alarm
       - enable_workload_critical_alarm
+  - title: "Hidden Variables"
+    visible: false
+    variables:
+      - is_vtap_enabled
 
 
 variables:
@@ -127,9 +132,9 @@ variables:
 
   #Multi-Region Variables
   home_region_deployment:
-    type: bool
+    type: boolean
     description: Set to true if deploying in home region, set to false for Backup Region Deployment
-    default: "True"
+    default: true
     title: Home Region Deployment
   multi_region_home_compartment_ocid:
     type: string
@@ -213,6 +218,20 @@ variables:
       - "1"
       - "2"
       - "3"
+      - "5"
+      - "6"
+      - "11"
+
+  has_correct_domain_name:
+    type: string
+    description: "OC11 Usecase Only : Handling KMS FQDNS : value oraclecloud.smil.mil"
+    default: ""
+    visible:
+      and:
+        - eq:
+          - ${realm_key}
+          - "11"
+
   enable_domain_replication:
     type: boolean
     description: "Enable to replicate domain to secondary region."

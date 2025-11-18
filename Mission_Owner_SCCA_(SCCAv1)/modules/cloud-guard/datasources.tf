@@ -3,26 +3,24 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl. #
 # ###################################################################################################### #
 
-data "oci_cloud_guard_detector_recipes" "configuration_detector_recipe" {
-  provider       = oci.home_region
-  compartment_id = var.tenancy_ocid
-  display_name   = var.configuration_detector_recipe_display_name
+#######################################################
+######### List Cloud Guard Responder Recipes ##########
+#######################################################
+
+data "oci_cloud_guard_responder_recipes" "list_preloaded_responder_recipes" {
+  compartment_id          = var.tenancy_ocid
+  state                   = "ACTIVE"
+  depends_on              = [oci_cloud_guard_cloud_guard_configuration.cloud_guard_configuration]
 }
 
-data "oci_cloud_guard_detector_recipes" "activity_detector_recipe" {
-  provider       = oci.home_region
-  compartment_id = var.tenancy_ocid
-  display_name   = var.activity_detector_recipe_display_name
+
+#######################################################
+######### List Cloud Guard Detector Recipes ###########
+#######################################################
+
+data "oci_cloud_guard_detector_recipes" "list_preloaded_detector_recipes" {
+  compartment_id          = var.tenancy_ocid
+  state                   = "ACTIVE"
+  depends_on              = [oci_cloud_guard_cloud_guard_configuration.cloud_guard_configuration]
 }
 
-data "oci_cloud_guard_detector_recipes" "threat_detector_recipe" {
-  provider       = oci.home_region
-  compartment_id = var.tenancy_ocid
-  display_name   = var.threat_detector_recipe_display_name
-}
-
-data "oci_cloud_guard_responder_recipes" "responder_recipe" {
-  provider       = oci.home_region
-  compartment_id = var.tenancy_ocid
-  display_name   = var.responder_recipe_display_name
-}
