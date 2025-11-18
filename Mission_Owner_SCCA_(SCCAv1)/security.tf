@@ -5,6 +5,7 @@
 
 locals {
 
+  onsr_flag = ((var.realm_key == "6") || (var.realm_key == "11")) ? "true" : "false"
   // TODO: need backup bucket spec
   backup_bucket = {
     name                                = "${var.backup_bucket_name}-${var.resource_label}"
@@ -54,7 +55,7 @@ locals {
     name            = "${var.master_encryption_key_name}-${var.resource_label}"
     algorithm       = "AES"
     length          = 32
-    protection_mode = "HSM"
+    protection_mode = local.onsr_flag == "false" ? "HSM" : "SOFTWARE"
   }
 
   service_event_stream = {
@@ -156,7 +157,6 @@ locals {
     log_source_service  = "ocinetworkfirewall"
     log_source_type     = "OCISERVICE"
   }
-
 
   audit_log_service_connector = {
     display_name = "schAuditLog_archive"
@@ -576,13 +576,14 @@ module "vss_log" {
 }
 
 module "waf_log" {
+  count  = local.onsr_flag == "false" ? 1 : 0
   source = "./modules/service-log"
 
   log_display_name    = local.waf_log.log_display_name
   log_type            = local.waf_log.log_type
   log_group_id        = module.default_log_group.log_group_id
   log_source_category = local.waf_log.log_source_category
-  log_source_resource = module.vdms_load_balancer.waf_id
+  log_source_resource = local.onsr_flag == "false" ? module.vdms_load_balancer.waf_id : null
   log_source_service  = local.waf_log.log_source_service
   log_source_type     = local.waf_log.log_source_type
 }

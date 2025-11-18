@@ -190,12 +190,12 @@ module "workload_load_balancer" {
   load_balancer_display_name = local.workload_load_balancer.lb_name
   load_balancer_subnet_ids   = [local.workload_load_balancer.lb_subnet]
   load_balancer_is_private   = true
-  lb_add_waf                 = true
-  lb_add_waa                 = true
+  lb_add_waf                 = local.onsr_flag == false ? true : false
+  lb_add_waa                 = local.onsr_flag == false ? true : false
 }
 
 module "workload_vtap" {
-  count  = var.is_vtap_enabled ? 1 : 0
+  count  = var.is_vtap_enabled && local.onsr_flag == false ? 1 : 0
   source = "./modules/vtap"
 
   compartment_id              = var.home_region_deployment ? module.vdms_compartment[0].compartment_id : var.multi_region_vdms_compartment_ocid

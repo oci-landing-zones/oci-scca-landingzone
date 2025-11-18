@@ -9,8 +9,6 @@ from datetime import datetime
 from typing import Dict, List
 
 import oci
-from tqdm import tqdm
-
 
 class DestroyLandingZone:
     def __init__(self, parent_cmp: str, region_key: str, resource_label: str, template_name: str, oci_config: str = "~/.oci/config", profile_name: str = "DEFAULT"):
@@ -195,7 +193,7 @@ class DestroyLandingZone:
                 break
             bucket_files += list_files.data.objects
 
-        for filenames in tqdm(bucket_files, desc=f'bucket {bucket_name}'):
+        for filenames in bucket_files:
             self.os_client.delete_object(
                 self.os_namespace,
                 bucket_name,

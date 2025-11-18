@@ -28,6 +28,11 @@
 - Updated Terraform Version to < 1.3.0 in all module files
 - Removed zombie variables from terraform.tfvars.example file
 
+## v1.2.2 - 09/12/2025
+- Supported ONSR OCI Region(OCI-6 and OCI-11)
+- Updated Terraform Version to atleast 1.5 .
+
+
 ## License
 
 Copyright (c) 2023 Oracle and/or its affiliates.
