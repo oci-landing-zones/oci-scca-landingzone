@@ -189,7 +189,7 @@ locals {
   bastion = {
     name                                 = "OCI-SCCA-LZ-BASTION-${var.resource_label}"
     bastion_client_cidr_block_allow_list = var.bastion_client_cidr_block_allow_list
-    target_subnet_id                     = module.workload_network.subnets["OCI-SCCA-LZ-Workload-SUB-${var.workload_name}-${local.region_key[0]}"]
+    target_subnet_id                     = module.workload_network.subnets["${var.wrk_compartment_name_prefix}-SUB-${local.region_key[0]}-${var.workload_postfix}"]
   }
 }
 

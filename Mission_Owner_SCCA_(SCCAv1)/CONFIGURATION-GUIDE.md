@@ -40,10 +40,10 @@ This is the basic information Terraform needs to connect to OCI. If you deploy t
 * [api_fingerprint](VARIABLES.md#input_api_fingerprint) - Fingerprint string for user's API Key. 
 * [api_private_key_path](VARIABLES.md#input_api_private_key_path) - Path to user's private API key file.
 
-### Other needed configurations 
+### Other needed configurations
 
-* [mission_owner_key](VARIABLES.md#input_mission_owner_key) - A short string (3-4 char) appended to Workload resource names to help distinguish them.
-* [workload_name](VARIABLES.md#input_workload_name) - A name for the sample workload. Each workload in the LZ should have a unique name.
+* [workload_postfix](VARIABLES.md#input_mission_owner_key) - A string used to allow multiple workload stacks to coexist without duplicate literals or naming collisions.
+* [wrk_compartment_name_prefix](VARIABLES.md#input_workload_name) - A name for the sample workload. Each workload in the LZ should have a unique name.
 * [resource_label](VARIABLES.md#input_resource_label) - Some resources, such as policies and CloudGuard configurations, need to be deployed globally to the tenancy. This is a short (3-4 char) string appended to resource names to distinguish them in case more than one Landing Zone is deployed. This should be unique per tenancy. 
 * [bastion_client_cidr_block_allow_list](VARIABLES.md#input_bastion_client_cidr_block_allow_list) - A list of strings, describing CIDR blocks allowed to connect to the Bastion deployed in the sample Workload network. 
 * [home_region_deployment](VARIABLES.md#input_home_region_deployment) - A boolean to indicate whether the current stack deployment is to the home region or a non-home region.
@@ -117,7 +117,7 @@ Alarms are initially deployed in a `disabled` state, and can be enabled as desir
 
 Announcements are events sent by Oracle concerning things such as planned maintinance and outages that may impact the operation of OCI services.
 
-### Notifications 
+### Notifications
 
 Notifications allow events, such as Alarm triggers or Announcements, to be sent to a list of recipients via email. Sets of events are directed to a topic and a list of email address (called endpoints) is subscribed to that topic. Each email address will receive an email with a link to activate their subscription.  
 

@@ -82,8 +82,8 @@ variableGroups:
   - title: Workload Variables
     visible: true
     variables:
-      - mission_owner_key
-      - workload_name
+      - workload_postfix
+      - wrk_compartment_name_prefix
       - workload_vcn_cidr_block
       - workload_subnet_cidr_block
       - workload_db_vcn_cidr_block
@@ -427,14 +427,14 @@ variables:
     pattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/([0-9]|[1][0-9]|[2][0-9]))$
 
   #Workload Variables
-  mission_owner_key:
-    type: string
-    required: true
-    description: "Short prefix added to workload name to group workload resources."
-  workload_name:
+  workload_postfix:
     type: string
     required: true
     description: "Name for initial example workload. Each workload within a Landing Zone should have a unique name. "
+  wrk_compartment_name_prefix:
+    type: string
+    required: true
+    description: "The name of the workload compartment by default <Compartment Name Prefix>-<Region>-<Workload-Postfix>."
   workload_vcn_cidr_block:
     type: string
     default: "192.168.2.0/24"

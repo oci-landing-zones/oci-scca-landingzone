@@ -5,18 +5,18 @@
 
 locals {
   workload_compartment = {
-    name        = "OCI-SCCA-LZ-${var.workload_name}-${var.mission_owner_key}"
+    name        = "${var.wrk_compartment_name_prefix}-${local.region_key[0]}-${var.workload_postfix}"
     description = "Workload Compartment"
   }
 
   workload_network = {
-    name                     = "OCI-SCCA-LZ-Workload-VCN-${var.workload_name}-${local.region_key[0]}"
+    name                     = "${var.wrk_compartment_name_prefix}-VCN-${local.region_key[0]}-${var.workload_postfix}"
     vcn_dns_label            = "workloadvcn"
     lockdown_default_seclist = false
     subnet_map = {
       OCI-SCCA-LZ-Workload-SUB = {
-        name                       = "OCI-SCCA-LZ-Workload-SUB-${var.workload_name}-${local.region_key[0]}"
-        description                = "Workload ${var.workload_name} Subnet"
+        name                       = "${var.wrk_compartment_name_prefix}-SUB-${local.region_key[0]}-${var.workload_postfix}"
+        description                = "Workload ${var.wrk_compartment_name_prefix} VCN Subnet"
         dns_label                  = "workloadsubnet"
         cidr_block                 = var.workload_subnet_cidr_block
         prohibit_public_ip_on_vnic = true
@@ -25,13 +25,13 @@ locals {
   }
 
   workload_db_network = {
-    name                     = "OCI-SCCA-LZ-Workload-DB-VCN-${var.workload_name}-${local.region_key[0]}"
+    name                     = "${var.wrk_compartment_name_prefix}-DB-VCN-${local.region_key[0]}-${var.workload_postfix}"
     vcn_dns_label            = "workloaddbvcn"
     lockdown_default_seclist = false
     subnet_map = {
       OCI-SCCA-LZ-Workload-DB-SUB = {
-        name                       = "OCI-SCCA-LZ-Workload-DB-SUB-${var.workload_name}-${local.region_key[0]}"
-        description                = "Workload ${var.workload_name} Subnet"
+        name                       = "${var.wrk_compartment_name_prefix}-DB-SUB-${local.region_key[0]}-${var.workload_postfix}"
+        description                = "Workload ${var.wrk_compartment_name_prefix} VCN DB Subnet"
         dns_label                  = "dbsubnet" # workloaddbsubnet is too long (not 15 chars)
         cidr_block                 = var.workload_db_subnet_cidr_block
         prohibit_public_ip_on_vnic = true
@@ -41,7 +41,7 @@ locals {
 
   workload_route_table = {
     Workload-VCN-Egress = {
-      route_table_display_name = "Workload-${var.workload_name}-VCN-Egress"
+      route_table_display_name = "${var.wrk_compartment_name_prefix}-RT-${local.region_key[0]}-${var.workload_postfix}"
       subnet_id                = module.workload_network.subnets[local.workload_network.subnet_map["OCI-SCCA-LZ-Workload-SUB"].name]
       subnet_name              = "OCI-SCCA-LZ-Workload-SUB"
       route_rules = {
@@ -71,7 +71,7 @@ locals {
 
   workload_db_route_table = {
     Workload-DB-VCN-Egress = {
-      route_table_display_name = "Workload-${var.workload_name}-DB-VCN-Egress"
+      route_table_display_name = "${var.wrk_compartment_name_prefix}-DB-RT-${local.region_key[0]}-${var.workload_postfix}"
       subnet_id                = module.workload_db_network.subnets[local.workload_db_network.subnet_map["OCI-SCCA-LZ-Workload-DB-SUB"].name]
       subnet_name              = "OCI-SCCA-LZ-Workload-DB-SUB"
       route_rules = {
@@ -100,12 +100,12 @@ locals {
   }
 
   workload_load_balancer = {
-    lb_name   = "OCI-SCCA-LZ-Workload-LB-${var.workload_name}-${local.region_key[0]}"
+    lb_name   = "${var.wrk_compartment_name_prefix}-WRK-LB-${local.region_key[0]}-${var.workload_postfix}"
     lb_subnet = module.workload_network.subnets[local.workload_network.subnet_map["OCI-SCCA-LZ-Workload-SUB"].name]
   }
 
   workload_vtap = {
-    vtap_display_name           = "OCI-SCCA-LZ-WORKLOAD-VTAP-${local.region_key[0]}"
+    vtap_display_name           = "${var.wrk_compartment_name_prefix}-WRK-VTAP-${local.region_key[0]}-${var.workload_postfix}"
     vtap_source_type            = "LOAD_BALANCER"
     capture_filter_display_name = "WORKLOAD-VTAP-Capture-Filter"
     vtap_capture_filter_rules = {
