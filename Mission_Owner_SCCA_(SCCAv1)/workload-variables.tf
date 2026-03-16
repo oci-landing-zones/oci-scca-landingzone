@@ -3,14 +3,16 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl. #
 # ###################################################################################################### #
 
-variable "mission_owner_key" {
+variable "workload_postfix" {
   type        = string
-  description = ""
+  description = "Atleast 4 Alphanumeric Charater to Describe the Workload : WRK1"
+  default     = "SWR1"
 }
 
-variable "workload_name" {
+variable "wrk_compartment_name_prefix" {
   type        = string
-  description = "The name of workload stack"
+  description = "The name of the workload compartment by default <Workload Compartment name Prefix>-<Region>-<Workload-Postfix>."
+  default     = "OCI-SCCA-LZ-WRK"
 }
 
 variable "workload_vcn_cidr_block" {
